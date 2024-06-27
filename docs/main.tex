@@ -1,4 +1,4 @@
-\documentclass[11pt,english,a4paper]{article}
+\documentclass[11pt,english,a4paper]{book}
 \usepackage[a4paper,top=3.5cm,bottom=3.5cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 \newcommand{\myFontSize}[0] {12pt}
 \usepackage[IL2]{fontenc}
@@ -31,6 +31,7 @@
 \addtolength{\topskip}{0pt plus 10pt}
 \newcounter{parno}
 \makeatletter
+\renewcommand{\thesection}{\arabic{section}}
 \newcommand{\newparb}[2]{\global\@namedef{mypar@b#1}{#2}}
 \newcommand{\newpare}[2]{\global\@namedef{mypar@e#1}{#2}}
 \newpare{0}{0}
@@ -53,11 +54,13 @@
 \apptocmd{\@title}{\par {\large #1 \par}}{}{}
 }
 \makeatother
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
 
 \begin{document}
 \title{EVA Gallery Design Document}
-\subtitle{Enhancing the Digital Art Experience with Artificial Intelligence and NFTs}
-% \author{Ing. Tibor Sloboda}
+\subtitle{Digital Art Experience enhanced with AI and web3}
+% \author{Tibor Csóka, Tibor Sloboda}
 \date{\today}
 \maketitle
 
@@ -74,7 +77,8 @@
 
 \pagestyle{plain}
 \pagenumbering{arabic}
-\include{content}
+\input{content}
+
 
 \newpage
 \begingroup
