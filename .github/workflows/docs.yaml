@@ -1,0 +1,30 @@
+---
+
+name: "Docs"
+
+# yamllint disable-line rule:truthy
+on:
+  pull_request:
+    paths:
+      - docs/**
+  workflow_dispatch:
+  workflow_call:
+
+concurrency:
+  group: ${{ github.head_ref }}-docs
+  cancel-in-progress: true
+
+jobs:
+  architecture:
+    name: Architecture | System design
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build System Design draft
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: docs
