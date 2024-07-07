@@ -1,11 +1,64 @@
+\newcommand{\SubItem}[1]{
+    {\setlength\itemindent{15pt} \item[-] #1}
+}
+
+\chapter{About}
+The primary goal of the project is to create a new platform for exploring, presenting, and supporting European visual art in virtual space.
+
+Our vision emphasizes sustainability and leverages cutting-edge technologies like AI, virtual reality, and blockchain for long-term development.
+Audience
+
+The project caters to European visual artists, creators, galleries, collectors, curators, visitors, and art enthusiasts. Main focus: European visual art encompassing fine arts, photography, street art, video, etc.
+
+\section{Innovations}
+\subsection[NFT]{NFT Integration for Gallery Presentation}
+The rise of digital art traded as NFTs has created a new market landscape, dominated by a few platforms like OpenSea. This project aims to bridge the gap between web3 NFT collections and traditional art, ensuring a seamless experience for both artists and digital gallery visitors.
+AI Integration for Art Recognition and Browsing
+
+\subsection[AI]{AI features for securing Art and improving the Browsing Experience}
+The integration of advanced AI technology now facilitates the incorporation of smart tools capable of recognizing and categorizing art pieces. These tools significantly enhance the user experience by seamlessly navigating through extensive artistic collections and galleries. Users benefit from additional guidance and suggestions provided by the AI, streamlining the exploration process and enriching their interaction with art.
+Referential implementation overview
+
+Referential implementation integrates the minimum basic functionality of the virtual gallery environment.
+
+\section{Target Audience}
+The prototype accommodates the general functionality flows based on the user type and further decomposed in the requirements section:
+
+\begin{itemize}
+    \item \textbf{Visitors:}
+      \SubItem{User-friendly experience emphasizing art presentation}
+      \SubItem{Public access to a diverse range of European art}
+      \SubItem{AI virtual assistant for discovering new art and staying updated on favorite artists and genres}
+    \item \textbf{Artists:}
+      \SubItem{Assembling of 3D virtual spaces for showcasing the art}
+      \SubItem{Utilization of blockchain technology for NFT digital art inclusion}
+    \item \textbf{Galleries:}
+      \SubItem{Creation of 3D digital twins or entirely new digital spaces for exhibitions} 
+      \SubItem{Initial partnership with 1 main gallery in each member state, totaling 27 galleries initially} 
+\end{itemize}
+
+
 \chapter{Features}
+
+\section{3D: Rendering Engine}
+\section{Blockchain Integration for NFTs}
+Integration of the blockchain technology into the platform:
+    
+    \begin{itemize}
+        \item \textbf{Wallet Integration:} Artists and galleries can connect their wallets to existing accounts or use them as primary accounts.
+        \item \textbf{Blockchain integration:} With every connected wallet the users entire NFT portfolio is synchronized and tracked with the Gallery account.
+        \item \textbf{Mixed NFT galleries:} The platform supports both NFT and non-NFT art, allowing artists to create mixed displays. 
+        \item \textbf{NFT minting:} Artists can mint non-tokenized art as NFTs, either through an external marketplace or a secure infrastructure.
+    \end{itemize}
+
+\newpage
 
 \section{AI: Art Theft Protection}
 Implementation of a multi-layered approach to safeguarding artists' work, including:
 
     \begin{itemize}
         \item \textbf{Nightshade:} A cutting-edge technique~\cite{shan2024nightshade} that subtly alters artwork to render it useless for AI training while maintaining visual fidelity for human viewers.
-        \item \textbf{NFT Minting (Non-AI pre-existing):} Using blockchain technology to create NFTs for each artwork, ensuring verifiable authenticity and ownership.
+        \item \textbf{NFT Minting:} Using blockchain technology to create NFTs for each artwork, ensuring verifiable authenticity and ownership.
         \item \textbf{Metadata Integration:} Leveraging standardized metadata formats to store essential information about the artwork, including artist attribution, ownership details, and licensing terms.
     \end{itemize}
 
@@ -159,3 +212,44 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
 \chapter{Specifications}
 
 \newpage
+
+\chapter{Workflows}
+Given the referential user types defined in the general overview, the acceptance tests for the E.V.A. Gallery are:
+\section{Website}
+
+    The website should be optimized for speed and simplicity
+    The website should use privacy non-intrusive storage to not force GDPR compliant pop ups
+    The website is dynamically optimized for all device sizes (smartphone, tablet, laptop, large screen)
+    The landing page contains the project logo
+    The landing page contains a login option
+    The landing page contains a search input
+    The landing page contains an example query in the search input
+    The exihibitions are rendered in browser
+
+\section{Visitor}
+
+    The visitor access should not require login
+    The visitor can access and browse individual art pieces directly or by URL
+    The visitor can access and browse any artist collection directly or by URL
+    The visitor can access and browse any gallery exhibition directly or by URL
+    The visitor can view an artist profile with linked art, collections and exhibitions
+    The visitor can search for an exhibition by its name
+    The visitor can create an artist account to unlock the artist facing functionality
+    The visitor's clicks and art browsing is recorded and used for further recommendations on the website
+    The visitors are lightly fingerprinted to avoid overtraning the recommnedation engine
+
+\section{Artist}
+
+    The artist functionality is only available to registered users after login
+    The artist can decide to have own account deleted
+    The artist can create a public gallery exhibition
+    The artist can remove own public gallery exhibition
+    The artist can store and view own art items
+    The artist can upload digital media representing the art items
+    The artist can attach a web3 wallet to load NFTs
+    The artist can choose any of the gallery environments to create an exhibition
+    The artist can create multiple different exhibitions in the same gallery space each carrying a unique exhibition name
+    The artist must assign a unique name to each exhibition in order to save it
+    The artist can edit the exhibition once it is published
+    The artist can delete the exhibition once it is published
+
