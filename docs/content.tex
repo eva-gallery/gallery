@@ -1,7 +1,3 @@
-\newcommand{\SubItem}[1]{
-    {\setlength\itemindent{15pt} \item[-] #1}
-}
-
 \chapter{About}
 The primary goal of the project is to create a new platform for exploring, presenting, and supporting European visual art in virtual space.
 
@@ -11,6 +7,12 @@ Audience
 The project caters to European visual artists, creators, galleries, collectors, curators, visitors, and art enthusiasts. Main focus: European visual art encompassing fine arts, photography, street art, video, etc.
 
 \section{Innovations}
+
+\subsection[3D]{Spatial 3D Gallery Environment}
+The game like 3D environment allows artists to create their own exhibitions in a virtual space, providing a unique and immersive experience for visitors. The platform offers a variety of gallery environments to choose from, each with its own distinct style and atmosphere, enabling artists to curate their exhibitions in a space that complements their artwork.
+
+For galleries and museums, the platform offers the possibility to create digital twins of their physical spaces or design entirely new digital environments for exhibitions, opening up new opportunities for showcasing art and engaging with audiences in innovative ways.
+
 \subsection[NFT]{NFT Integration for Gallery Presentation}
 The rise of digital art traded as NFTs has created a new market landscape, dominated by a few platforms like OpenSea. This project aims to bridge the gap between web3 NFT collections and traditional art, ensuring a seamless experience for both artists and digital gallery visitors.
 AI Integration for Art Recognition and Browsing
@@ -26,34 +28,41 @@ The prototype accommodates the general functionality flows based on the user typ
 
 \begin{itemize}
     \item \textbf{Visitors:}
-      \SubItem{User-friendly experience emphasizing art presentation}
-      \SubItem{Public access to a diverse range of European art}
-      \SubItem{AI virtual assistant for discovering new art and staying updated on favorite artists and genres}
+        \begin{itemize}
+            \item User-friendly experience emphasizing art presentation
+            \item Public access to a diverse range of European art
+            \item AI virtual assistant for discovering new art and staying updated on favorite artists and genres
+        \end{itemize}
     \item \textbf{Artists:}
-      \SubItem{Assembling of 3D virtual spaces for showcasing the art}
-      \SubItem{Utilization of blockchain technology for NFT digital art inclusion}
+        \begin{itemize}
+            \item Assembling of 3D virtual spaces for showcasing the art
+        \item Utilization of blockchain technology for NFT digital art inclusion
+        \end{itemize}
     \item \textbf{Galleries:}
-      \SubItem{Creation of 3D digital twins or entirely new digital spaces for exhibitions} 
-      \SubItem{Initial partnership with 1 main gallery in each member state, totaling 27 galleries initially} 
+        \begin{itemize}
+            \item Creation of 3D digital twins or entirely new digital spaces for exhibitions
+            \item Initial partnership with 1 main gallery in each member state, totaling 27 galleries initially
+        \end{itemize}
 \end{itemize}
-
 
 \chapter{Features}
 
-\section{3D: Rendering Engine}
-\section{Blockchain Integration for NFTs}
-Integration of the blockchain technology into the platform:
-    
+\section{Virtual Exhibitions}
+Implementation of a 3D virtual gallery environment that allows artists to create and curate exhibitions in a digital space. The exhibitions can be customized with various gallery environments, providing a unique and immersive experience for visitors using a standard web browser. The exhibitions are viewed as an isolated environment within a browser and emulates a private exhibition experience without other visitors.
     \begin{itemize}
-        \item \textbf{Wallet Integration:} Artists and galleries can connect their wallets to existing accounts or use them as primary accounts.
-        \item \textbf{Blockchain integration:} With every connected wallet the users entire NFT portfolio is synchronized and tracked with the Gallery account.
-        \item \textbf{Mixed NFT galleries:} The platform supports both NFT and non-NFT art, allowing artists to create mixed displays. 
-        \item \textbf{NFT minting:} Artists can mint non-tokenized art as NFTs, either through an external marketplace or a secure infrastructure.
+        \item \textbf{Spatial 3D web browser exhibitions:} The platform supports both NFT and non-NFT art, allowing artists to create mixed displays in a custom gallery prepared 3D environment. 
     \end{itemize}
 
-\newpage
 
-\section{AI: Art Theft Protection}
+\section{Blockchain Integration}
+Implementation of the integration mechanism for the blockchain and NFT based art with the classical art world using novel technological approaches to art presentation and distribution. The blockchian extends the possibilities for artists to better present their art in front of a wider audience, as well as offer a new way of monetizing their work.
+
+    \begin{itemize}
+        \item \textbf{Wallet Integration:} Artists can connect their wallets to existing accounts or use them as primary accounts.
+        \item \textbf{NFT art storage} Once connected, the entire NFT portfolio of the connected wallet is loaded, cached, tracked and synchronized with the Gallery account.
+    \end{itemize}
+
+\section{Art Theft Protection}
 Implementation of a multi-layered approach to safeguarding artists' work, including:
 
     \begin{itemize}
@@ -93,8 +102,7 @@ This two-pronged approach provides a comprehensive check for plagiarism, conside
 
 By implementing this rigorous plagiarism detection system, EVA Gallery aims to create a fair and transparent platform where artists can showcase their work with confidence, knowing that their creations are protected from unauthorized copying and misuse.
 
-\newpage
-\section{AI: Plagiarism Protection}
+\section{Plagiarism Protection}
 Employ advanced techniques to detect and prevent plagiarism, ensuring the originality of uploaded artwork.
 
     \begin{itemize}
@@ -103,9 +111,7 @@ Employ advanced techniques to detect and prevent plagiarism, ensuring the origin
         \item \textbf{Two-pronged Protection:} This system will guarantee that no modified artwork can be uploaded without proper attribution and permission, safeguarding artists' rights and fostering a fair creative environment.
     \end{itemize}
 
-\newpage
-
-\section{AI: Art Recommendation Engine}
+\section{Art Recommendation Engine}
 Provide personalized recommendations to users based on their preferences and interactions with the artwork.
 
 \begin{itemize}
@@ -128,9 +134,51 @@ For users who are primarily interested in visual styles, we offer recommendation
 
 This feature is particularly useful for users who are seeking inspiration for their own artistic creations or who are interested in exploring different artistic styles within a specific genre. By focusing on visual similarity, we can provide recommendations that corresponds best with the currently displayed artwork.
 
-\newpage
-
 \chapter{User Stories}
+Given the referential user types defined in the general overview, the expected user stories for the E.V.A. Gallery are:
+
+\section{Website}
+    \begin{itemize}
+        \item The website should be optimized for speed and simplicity
+        \item The website should use privacy non-intrusive storage to not force GDPR compliant pop ups
+        \item The website is dynamically optimized for all device sizes (smartphone, tablet, laptop, large screen)
+        \item The landing page contains the project logo
+        \item The landing page contains a login option
+        \item The landing page contains a search input
+        \item The landing page contains an example query in the search input
+        \item The exhibitions are rendered in browser
+    \end{itemize}
+
+\section{Visitor}
+    \begin{itemize}
+        \item The visitor access should not require login
+        \item The visitor can access and browse individual art pieces directly or by URL
+        \item The visitor can access and browse any artist collection directly or by URL
+        \item The visitor can access and browse any gallery exhibition directly or by URL
+        \item The visitor can view an artist profile with linked art, collections and exhibitions
+        \item The visitor can search for an exhibition by its name
+        \item The visitor can create an artist account to unlock the artist facing functionality
+        \item The visitor's clicks and art browsing is recorded and used for further recommendations on the website
+        \item The visitors are lightly fingerprinted to avoid overtraining the recommendation engine
+    \end{itemize}
+
+\section{Artist}
+    \begin{itemize}
+        \item The artist functionality is only available to registered users after login
+        \item The artist can decide to have own account deleted
+        \item The artist can create a public gallery exhibition
+        \item The artist can remove own public gallery exhibition
+        \item The artist can store and view own art items
+        \item The artist can upload digital media representing the art items
+        \item The artist can attach a web3 wallet to load NFTs
+        \item The artist can choose any of the gallery environments to create an exhibition
+        \item The artist can create multiple different exhibitions in the same gallery space each carrying a unique exhibition name
+        \item The artist must assign a unique name to each exhibition in order to save it
+        \item The artist can edit the exhibition once it is published
+        \item The artist can delete the exhibition once it is published
+    \end{itemize}
+
+
 \chapter{Workflows}
 \section{Data pipeline: Image upload and processing workflow}
 
@@ -179,6 +227,45 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
     \end{itemize}
 \end{enumerate}
 
+\section{NFT}
+\begin{enumerate}
+    \item \textbf{Database Access:}
+    \begin{itemize}
+    \item Access to a database of existing images (UUID identified).
+    \end{itemize}
+
+\item \textbf{RPC provider:}
+    \begin{itemize}
+    \item Access to a RPC provider for the selected chain to fetch data from.
+    \end{itemize}
+
+\item \textbf{IPFS:}
+    \begin{itemize}
+    \item IPFS node where the NFT contents are typically located.
+    \end{itemize}
+\end{enumerate}
+
+\section{Website}
+\begin{enumerate}
+    \item \textbf{Database Access:}
+    \begin{itemize}
+    \item Access to a database of existing images (UUID identified).
+    \end{itemize}
+
+\item \textbf{Frontend:}
+    \begin{itemize}
+    \item Scalable provider with frontend hosting capabilities.
+    \item WASM support for 3D rendering.
+    \end{itemize}
+
+\item \textbf{Backend:}
+    \begin{itemize}
+    \item Scalable provider with backend hosting capabilities.
+    \item Connectability for other services in the project.
+    \item OAUTH enabled access
+    \end{itemize}
+\end{enumerate}
+
 \newpage
 
 \chapter{Technology stack}
@@ -188,6 +275,7 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
 \item \textbf{Database Access:}
     \begin{itemize}
         \item \textbf{PostgreSQL:} A robust open-source relational database management system, offering support for structured data, ACID compliance, and scalability. Ideal for storing image metadata and maintaining associations between original and modified images.
+        \item \textbf{Redis:} Local caching functionality for the frontend and backend, ensuring fast access to frequently accessed data.
     \end{itemize}
 
 \item \textbf{Vector Database:}
@@ -199,6 +287,7 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
     \begin{itemize}
         \item \textbf{BentoML:} A flexible framework for building and deploying machine learning services. Simplifies packaging and deployment of models, allowing easy integration with various cloud providers, and supports batched input processing and API generation.
         \item \textbf{Self-hosted:} Kubernetes provides control and flexibility in configuring the software environment and automating deployment and building. We can utilize our existing servers with a proper MLDevOps architecture to ensure CI and CD alongside AI models.
+        \item \textbf{IPFS instance:} Interactions with the NFT data stored in the Inter-Planetary FileSystem.
     \end{itemize}
 
 \item \textbf{Scalable GPU Compute:}
@@ -209,47 +298,24 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
 
 \newpage
 
-\chapter{Specifications}
+\chapter{API Specifications}
+\section{NFT}
+\begin{enumerate}
+    \item \textbf{RPC Provider:}
+    \begin{itemize}
+        \item \textbf{Ethereum:} Infura, Alchemy, or similar providers for Ethereum-based chains.
+        \item \textbf{Polygon:} Alchemy, QuickNode, or similar providers for Polygon-based chains.
+    \end{itemize}
+
+    \item \textbf{IPFS:}
+    \begin{itemize}
+        \item \textbf{IPFS HTTP API:} IPFS HTTP API for interacting with the IPFS node, including adding and retrieving NFT contents.
+    \end{itemize}
+
+    \item \textbf{Functionality:}
+    \begin{itemize}
+        \item abc
+    \end{itemize}
+\end{enumerate}
 
 \newpage
-
-\chapter{Workflows}
-Given the referential user types defined in the general overview, the acceptance tests for the E.V.A. Gallery are:
-\section{Website}
-
-    The website should be optimized for speed and simplicity
-    The website should use privacy non-intrusive storage to not force GDPR compliant pop ups
-    The website is dynamically optimized for all device sizes (smartphone, tablet, laptop, large screen)
-    The landing page contains the project logo
-    The landing page contains a login option
-    The landing page contains a search input
-    The landing page contains an example query in the search input
-    The exihibitions are rendered in browser
-
-\section{Visitor}
-
-    The visitor access should not require login
-    The visitor can access and browse individual art pieces directly or by URL
-    The visitor can access and browse any artist collection directly or by URL
-    The visitor can access and browse any gallery exhibition directly or by URL
-    The visitor can view an artist profile with linked art, collections and exhibitions
-    The visitor can search for an exhibition by its name
-    The visitor can create an artist account to unlock the artist facing functionality
-    The visitor's clicks and art browsing is recorded and used for further recommendations on the website
-    The visitors are lightly fingerprinted to avoid overtraning the recommnedation engine
-
-\section{Artist}
-
-    The artist functionality is only available to registered users after login
-    The artist can decide to have own account deleted
-    The artist can create a public gallery exhibition
-    The artist can remove own public gallery exhibition
-    The artist can store and view own art items
-    The artist can upload digital media representing the art items
-    The artist can attach a web3 wallet to load NFTs
-    The artist can choose any of the gallery environments to create an exhibition
-    The artist can create multiple different exhibitions in the same gallery space each carrying a unique exhibition name
-    The artist must assign a unique name to each exhibition in order to save it
-    The artist can edit the exhibition once it is published
-    The artist can delete the exhibition once it is published
-
