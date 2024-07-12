@@ -317,5 +317,48 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
         \item abc
     \end{itemize}
 \end{enumerate}
-
 \newpage
+\chapter{Choosing network for NFT infrastructure}
+As many people know, the NFT(Non-fungible) market has been booming in recent years. This has led to a surge in interest from artists, collectors, and investors alike. However, the current infrastructure supporting NFTs is not without its challenges. One of the key issues facing the NFT market is the high gas fees associated with minting and trading NFTs on the Ethereum network. These fees can be prohibitively expensive, especially for smaller artists and collectors. As a result, many are looking for alternative networks that offer lower fees and faster transaction times.
+We have observed available options which are as follows:
+\begin{itemize}
+    \item \textbf{Ethereum\footnote{Ethereum \url{https://ethereum.org/en/}}:} The most popular network for NFTs, but high gas fees and slow transaction times.
+    \item \textbf{Polygon\footnote{Polygon \url{https://polygon.technology/}}:} A layer 2 scaling solution for Ethereum, offering low fees and fast transactions.
+    \item \textbf{Gnosis chain\footnote{Gnosis chain \url{https://www.gnosis.io/}}:} A new blockchain network that aims to provide low fees and fast transactions for NFTs.
+    \item \textbf{Polkadot\footnote{Polkadot \url{https://polkadot.network/}}:} A multi-chain network that aims to provide low fees and fast transactions for NFTs.
+    \item \textbf{Solana\footnote{Solana \url{https://solana.com/}}:} A high-performance blockchain network that offers low fees and fast transactions.
+\end{itemize}
+
+We focused mostly on EVM chains as users are more likely to know Ethereum and have a wallet for it. We also considered Polkadot as it is a promising network with a lot of potential for future scalability, but Polkadot uses a different wallet address system with which users may not be as familiar. There is plenty of articles\footnote{Articles such as \url{https://webisoft.com/articles/best-blockchain-for-nft/}} about the best network for NFTs. Many research papers focus on non-fungible asset topics as well as comparisons of NFT infrastructure across different networks \cite{fintech1030017}.
+
+To make precise and accurate decisions we need to consider the following factors:
+
+\begin{itemize}
+    \item Scalability of the network
+    \item Availability of the tooling for NFT implementation and interaction with blockchain
+    \item Programming language of the tooling
+    \item Costs associated with creating collections and minting NFTs
+    \item Speed of transactions
+    \item Community support and adoption of NFT technology
+    \item Environmental impact of the network
+\end{itemize}
+
+This data is compared across all mentioned networks in the table \ref{tab:networks}:
+
+\begin{table*}[htb!]
+    \caption{Comparison of various selected Blockchain Network parameters and NFT infrastructure}
+\centering
+    \begin{tabular}{|l|l|l|l|l|l|l|l|}
+    \hline
+    Network      & Scalability                                                                                                                                                                                          & Tooling                                                                                             & Prog. lang.                                                    & Avg. per NFT        & Block processing time & NFT adoption                                                                                                                                                     & Env. impact                                                                                                              \\ \hline
+    Ethereum     & \begin{tabular}[c]{@{}l@{}}Often overloaded\\ when something \\ popular is released\\ (Drives GAS fees \\ up). 15-30 TPS \\ throughtput.\end{tabular}                                                & \begin{tabular}[c]{@{}l@{}}ERC721A standard \\ for cost optimization\end{tabular}                   & \begin{tabular}[c]{@{}l@{}}Solidity,\\ Javascript\end{tabular} & $\sim$$10 - $100+   & $\sim$12 seconds      & \begin{tabular}[c]{@{}l@{}}Very popular,\\ hosts some of \\ the most expensive \\ collections ever \\ made\end{tabular}                                          & \begin{tabular}[c]{@{}l@{}}After migrating\\ to PoS consensus\\ 99\% less\\ $\sim$2.8 kilotonnes\\ per year\end{tabular} \\ \hline
+    Polygon      & \begin{tabular}[c]{@{}l@{}}Created as ETH\\ L2 chain to offlift\\ ETH. \\ $\sim$65000 TPS\end{tabular}                                                                                               & \begin{tabular}[c]{@{}l@{}}Crossmint API for \\ collection and nft \\ mint abstraction\end{tabular} & \begin{tabular}[c]{@{}l@{}}Solidity,\\ Javascript\end{tabular} & $\sim$$0.01 - $0.05 & $\sim$2.1 seconds     & \begin{tabular}[c]{@{}l@{}}Significantly lesser\\ adoption compared\\ to ETH, downtrend \\ in NFT adoption\end{tabular}                                          & \begin{tabular}[c]{@{}l@{}}$\sim$60.9 tonnes \\ per year\end{tabular}                                                    \\ \hline
+    Gnosis chain & \begin{tabular}[c]{@{}l@{}}L2 solution hosted\\ by over 215.000\\ active validators\\ $\sim$155 TPS\end{tabular}                                                                                     & \begin{tabular}[c]{@{}l@{}}GoldRush to get\\ NFTs associated with\\ account\end{tabular}            & \begin{tabular}[c]{@{}l@{}}Solidity,\\ Javascript\end{tabular} & $\sim$$0.10 - $0.50 & $\sim$5 seconds       & \begin{tabular}[c]{@{}l@{}}Infrastructure strongly\\ tied to PoaPs, other\\ collections hardly\\ present\end{tabular}                                            & \begin{tabular}[c]{@{}l@{}}$\sim$25 tonnes\\ per year\end{tabular}                                                       \\ \hline
+    Polkadot     & \begin{tabular}[c]{@{}l@{}}As multichain network\\ Polkadot is able to\\ disperse transactions to\\ different chains \\ (Up to 300 chains can \\ be in one network)\\ $\sim$100.000 TPS\end{tabular} & \begin{tabular}[c]{@{}l@{}}Substrate framework,\\ PolkadotJS libraries\end{tabular}                 & \begin{tabular}[c]{@{}l@{}}Rust,\\ Javascript\end{tabular}     & $\sim$$0.20-$1.30   & $\sim$12 seconds      & \begin{tabular}[c]{@{}l@{}}NFT infrastructure\\ well built but not\\ as utilized. Uses\\ different wallet \\ addresses (32B \\ compared to EVM 20B)\end{tabular} & \begin{tabular}[c]{@{}l@{}}$\sim$33 tonnes \\ per year\end{tabular}                                                      \\ \hline
+    Solana       & \begin{tabular}[c]{@{}l@{}}Solana aims to be\\ one of the most \\ scalable blockchains \\ when it comes to TPS\\ $\sim$65000 TPS\end{tabular}                                                        & \begin{tabular}[c]{@{}l@{}}Compressed NFTs -\\ Minting 1.000\\ NFTs costs only 300\$.\end{tabular}  & Rust, C                                                        & $0.01 - $0.10       & $\sim$0.6 seconds     & \begin{tabular}[c]{@{}l@{}}NFT adoption on\\ very strong level,\\ some collections\\ have more than \\ 130.000.000 eur \\ total volume\end{tabular}              & \begin{tabular}[c]{@{}l@{}}$\sim$8.875 tonnes\\ per year\end{tabular}                                                    \\ \hline
+    \end{tabular}
+    \label{tab:networks}
+    \end{table*}
+
+
+While Ethereum has the most documentation and tooling available, it also has the highest gas fees and slower transaction times. The Polygon chain excels at throughput the NFT infrastructure does not seem to be maturing. Gnosis chain is a new network with potential, but it lacks the community support and adoption of other networks. Polkadot is a promising network with a lot of potential for future scalability, but it uses a different wallet address system that may be unfamiliar to users. Solana is a high-performance network with low fees, fast transactions, an eco-friendly orientation and a growing NFT infrastructure. Solana's NFT ecosystem is also known for its revolutionary compressed NFT architecture which significantly reduces costs of minting. The tooling seems to also be sufficient enough for EVA Galery. 
