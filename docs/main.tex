@@ -1,0 +1,90 @@
+\author{@Teebor-Choka, @slobodaapl}
+\documentclass[11pt,english,a4paper]{book}
+\usepackage[a4paper,top=3.5cm,bottom=3.5cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\newcommand{\myFontSize}[0] {12pt}
+\usepackage[IL2]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{ifthen}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{amsthm}
+\usepackage[style=iso-numeric,sorting=none]{biblatex}
+\addbibresource{references.bib}
+\usepackage{etoolbox}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\vspace{8pt}\\}
+\newcommand{\mysubparagraph}[1]{\paragraph*{#1}\mbox{}\vspace{8pt}\\}
+\edef\restoreparindent{\parindent=\the\parindent\relax}
+\usepackage{parskip}
+\restoreparindent
+\usepackage{enumitem}
+\setlist[itemize]{parsep=3pt}
+\setlist[enumerate]{parsep=3pt}
+\addtolength{\topskip}{0pt plus 10pt}
+\newcounter{parno}
+\makeatletter
+\renewcommand{\thesection}{\arabic{section}}
+\newcommand{\newparb}[2]{\global\@namedef{mypar@b#1}{#2}}
+\newcommand{\newpare}[2]{\global\@namedef{mypar@e#1}{#2}}
+\newpare{0}{0}
+\let\oldpar\par
+\def\par{\oldpar\protected@write\@auxout{}{\string\newpare{\theparno}{\thepage}}}
+\makeatother
+\emergencystretch=1em
+\usepackage[splitrule]{footmisc}
+\interfootnotelinepenalty=10000
+\widowpenalties 1 10000
+\raggedbottom
+\usepackage{listings}
+\usepackage{color}
+\usepackage{titling}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+\apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+\title{EVA Gallery Design Document}
+\subtitle{Digital Art Experience enhanced with AI and web3}
+\date{\today}
+\maketitle
+
+\thispagestyle{empty} % Ensures the title page has no page number
+
+\newpage
+
+\newpage
+\newgeometry{top=2.5cm,bottom=2.5cm,left=3cm,right=3cm}
+\tableofcontents
+\thispagestyle{empty}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\restoregeometry
+
+\pagestyle{plain}
+\pagenumbering{arabic}
+\input{content}
+
+
+\newpage
+\begingroup
+    \hbadness 10000
+    \relax
+    \printbibliography
+\endgroup
+
+\end{document}
