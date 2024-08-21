@@ -158,4 +158,27 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
 
 \chapter{Specifications}
 
+\chapter{Current state of progress}
+This chapter addresses the project's current state and plans for the initial launch of EVA Gallery in the alpha/beta state. It will outline the features that are currently planned to be included and which are to be excluded initially, and the reasons for those decisions.
+
+\section{Artificial Intelligence}
+
+As we prepare for the initial launch of EVA Gallery in its alpha/beta state, the following key features have been prioritized for inclusion:
+
+\begin{description}
+    \item[Ability to Find Similar Images Based on Currently Viewed Image:] Users will be able to easily discover visually similar artwork by utilizing a feature that identifies and suggests images related to the one currently being viewed. This capability leverages advanced image recognition and comparison algorithms.
+    \item[AI-Powered Image Search:] The search functionality within EVA Gallery will be enhanced by embedding both text queries and images into a shared vector space. This allows users to perform more intuitive and accurate searches, finding artworks that match their textual descriptions or visual preferences.
+    \item[Embedding-Based Plagiarism Detection:] To protect artists’ intellectual property, the platform will include an embedding-based plagiarism detection system. This system converts artwork into numerical embeddings and compares them against a database to identify potential copies or derivatives, ensuring that the originality of artwork is preserved.
+    \item[NoAI and NoTrain Meta Tags:] EVA Gallery will implement NoAI and NoTrain meta tags within its site metadata. These tags will serve as signals to scraping bots, indicating that the site’s content is off-limits for AI training purposes. This proactive measure will help protect the artwork from being exploited by AI models without consent.
+    item[Other Scraping Protections:] In addition to meta tags, EVA Gallery will employ various other scraping protection techniques to prevent unauthorized data extraction. These protections will be part of a broader strategy to safeguard artists' work and maintain the integrity of the platform.
+\end{description}
+
+\noindent
+The following features will instead be excluded due to time constraints or limitations outside of our control, for the alpha/beta launch:
+
+\begin{description}
+    \item[Nightshade and Glaze AI-Training Protection:] While these tools offer promising methods for preventing AI models from using protected artwork, their implementation requires access to specific model weights that are not currently publicly available. We have contacted the authors of these tools and are awaiting their response. Until these resources are accessible, these protections cannot be integrated into the platform.
+    \item[Gramian-Based Similarity and Search:] This advanced feature, which involves using Gramian matrices to evaluate and search for stylistic similarities between artworks, remains theoretical and unproven. Further research and validation are needed before it can be included in EVA Gallery's feature set. As such, it will not be available in the initial launch but may be considered for future updates.
+\end{description}
+
 \newpage
