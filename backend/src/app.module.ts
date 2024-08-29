@@ -5,6 +5,7 @@ import { AppConfig } from '@common/config';
 import { LogRequestMiddleware } from '@common/middleware';
 import { MainModule } from '@modules/.';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import { MintModule } from '@modules/nft-module/mint_trial/mint.module';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
       }),
       inject: [ConfigService],
     }),
-    MainModule,
+    MainModule, MintModule
   ],
 })
 export class AppModule implements NestModule {
