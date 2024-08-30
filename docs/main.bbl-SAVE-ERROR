@@ -1,0 +1,168 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{shan2024nightshade}{inproceedings}{}
+      \name{author}{6}{}{%
+        {{hash=4a4528f2d5b47053027b928ec27ab02b}{%
+           family={Shan},
+           familyi={S\bibinitperiod},
+           given={Shawn},
+           giveni={S\bibinitperiod}}}%
+        {{hash=98f74b2791d29aaa44bb50598d26bcd1}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Wenxin},
+           giveni={W\bibinitperiod}}}%
+        {{hash=6b0a5bd5266ccf179d82e552f1a222db}{%
+           family={Passananti},
+           familyi={P\bibinitperiod},
+           given={Josephine},
+           giveni={J\bibinitperiod}}}%
+        {{hash=f539da1916973e62ee77921d29c4a5df}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Stanley},
+           giveni={S\bibinitperiod}}}%
+        {{hash=93ca7f5d25f954dad2cfc45826793ef3}{%
+           family={Zheng},
+           familyi={Z\bibinitperiod},
+           given={Haitao},
+           giveni={H\bibinitperiod}}}%
+        {{hash=38d476a4bcff35c24f5cd582414e021e}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Ben\bibnamedelima Y},
+           giveni={B\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE Computer Society}%
+      }
+      \strng{namehash}{b379883c307fcb38889c82e650f171e3}
+      \strng{fullhash}{b379883c307fcb38889c82e650f171e3}
+      \strng{bibnamehash}{b379883c307fcb38889c82e650f171e3}
+      \strng{authorbibnamehash}{b379883c307fcb38889c82e650f171e3}
+      \strng{authornamehash}{b379883c307fcb38889c82e650f171e3}
+      \strng{authorfullhash}{b379883c307fcb38889c82e650f171e3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2024 IEEE Symposium on Security and Privacy (SP)}
+      \field{title}{Nightshade: Prompt-Specific Poisoning Attacks on Text-to-Image Generative Models}
+      \field{year}{2024}
+      \field{pages}{212\bibrangedash 212}
+      \range{pages}{1}
+    \endentry
+    \entry{shan2023glaze}{inproceedings}{}
+      \name{author}{6}{}{%
+        {{hash=4a4528f2d5b47053027b928ec27ab02b}{%
+           family={Shan},
+           familyi={S\bibinitperiod},
+           given={Shawn},
+           giveni={S\bibinitperiod}}}%
+        {{hash=1670f5a9fc7def5467b534e56838e773}{%
+           family={Cryan},
+           familyi={C\bibinitperiod},
+           given={Jenna},
+           giveni={J\bibinitperiod}}}%
+        {{hash=fa732832a17c3ec680b92137c21418f7}{%
+           family={Wenger},
+           familyi={W\bibinitperiod},
+           given={Emily},
+           giveni={E\bibinitperiod}}}%
+        {{hash=93ca7f5d25f954dad2cfc45826793ef3}{%
+           family={Zheng},
+           familyi={Z\bibinitperiod},
+           given={Haitao},
+           giveni={H\bibinitperiod}}}%
+        {{hash=4439117726450125429ae722d1d44763}{%
+           family={Hanocka},
+           familyi={H\bibinitperiod},
+           given={Rana},
+           giveni={R\bibinitperiod}}}%
+        {{hash=38d476a4bcff35c24f5cd582414e021e}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Ben\bibnamedelima Y},
+           giveni={B\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{4d66e6d06a4e26dbbbb5ed86aba583cf}
+      \strng{fullhash}{4d66e6d06a4e26dbbbb5ed86aba583cf}
+      \strng{bibnamehash}{4d66e6d06a4e26dbbbb5ed86aba583cf}
+      \strng{authorbibnamehash}{4d66e6d06a4e26dbbbb5ed86aba583cf}
+      \strng{authornamehash}{4d66e6d06a4e26dbbbb5ed86aba583cf}
+      \strng{authorfullhash}{4d66e6d06a4e26dbbbb5ed86aba583cf}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{32nd USENIX Security Symposium (USENIX Security 23)}
+      \field{title}{Glaze: Protecting Artists from Style Mimicry by $\{$Text-to-Image$\}$ Models}
+      \field{year}{2023}
+      \field{pages}{2187\bibrangedash 2204}
+      \range{pages}{18}
+    \endentry
+    \entry{nicolas2019improving}{inproceedings}{}
+      \name{author}{4}{}{%
+        {{hash=8794dd366fd9ff27cce77af8cefd3a5d}{%
+           family={Nicolas},
+           familyi={N\bibinitperiod},
+           given={Chung},
+           giveni={C\bibinitperiod}}}%
+        {{hash=55e0de91f494af448295155970444fb8}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Rong},
+           giveni={R\bibinitperiod}}}%
+        {{hash=3fb3973981b1eda9b9f9232438a94d97}{%
+           family={Song},
+           familyi={S\bibinitperiod},
+           given={Li},
+           giveni={L\bibinitperiod}}}%
+        {{hash=0d9c450eb8905fc9a195a67a39e601af}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Wenjun},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{a1b469db1a07a5c590fa7fc790982560}
+      \strng{fullhash}{a1b469db1a07a5c590fa7fc790982560}
+      \strng{bibnamehash}{a1b469db1a07a5c590fa7fc790982560}
+      \strng{authorbibnamehash}{a1b469db1a07a5c590fa7fc790982560}
+      \strng{authornamehash}{a1b469db1a07a5c590fa7fc790982560}
+      \strng{authorfullhash}{a1b469db1a07a5c590fa7fc790982560}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Digital TV and Multimedia Communication: 15th International Forum, IFTC 2018, Shanghai, China, September 20--21, 2018, Revised Selected Papers 15}
+      \field{title}{Improving Semantic Style Transfer Using Guided Gram Matrices}
+      \field{year}{2019}
+      \field{pages}{169\bibrangedash 183}
+      \range{pages}{15}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
