@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, Index, OneToMany } from 'typeorm';
 import { LabeledEntity } from './labeled.entity';
 import { Nft } from './nft.entity';
 import { Wallet } from './wallet.entity';
@@ -6,7 +6,8 @@ import { Wallet } from './wallet.entity';
 @Entity()
 export class User extends LabeledEntity {
 
-  @Column('text')
+  @Index()
+  @Column('text', { unique: true })
   email: string;
 
   @Column('text')

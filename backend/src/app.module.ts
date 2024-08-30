@@ -1,6 +1,7 @@
 import { Module, NestModule, NestMiddleware, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AppConfig } from '@common/config';
 import { LogRequestMiddleware } from '@common/middleware';
 import { MainModule } from '@modules/.';
@@ -24,7 +25,10 @@ import { MintModule } from '@modules/nft-module/mint_trial/mint.module';
       }),
       inject: [ConfigService],
     }),
-    MainModule, MintModule
+    // todo use Redis as cache provider
+    CacheModule.register({ isGlobal: true }),
+    MainModule, 
+    MintModule,
   ],
 })
 export class AppModule implements NestModule {
