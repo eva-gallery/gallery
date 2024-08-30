@@ -318,14 +318,23 @@ The artist has the option to mint the uploaded artwork as an NFT. The image is a
 \chapter{Milestone 2: Current state of progress}
 This chapter addresses the project's current state and plans for the initial launch of EVA Gallery in the alpha/beta state. It will outline the features that are currently planned to be included and which are to be excluded initially, and the reasons for those decisions.
 \section{Frontend}
-% TODO: Add the current state of the frontend
+\noindent
+The frontend implementation was split into multiple smaller tasks involving separate functionality and separate implementation paths.
+
+\begin{description}
+    \item[WASM based universal environment viewer:] A universal WASM based enviornment builder capable of accepting textures, environment and art as JSON configuration capable of creating arbitrary 3D environments was created with multiple different referential implementations of exhibitions featuring indoor and outdoor gallery environments. The WASM component is built in the Unity engine and pre-built as a generic artifact configurable in all possible dimensions and forms. Textures representing the environment, as well as art pieces are injected through an explicit configurations for each exposition and evnironment.
+    \item[WASM based environment organizer:] A component serving for artists to compose the exhibition and prepare an appropriate environment configuration to render the art and exhibition for their visitors.
+    \item[Prototyped frontend implementation:] Implementation of a referential frontend application capable of rendering the WASM based environment viewer and organizer. The application is capable of rendering the environment and art pieces in the browser and allows for the visitor to navigate through the exhibition. The referential implementation is cooperating with a Next.js backend implementation that also serves as an application backend for requesting REST based services.
+    \item[Data collection form:] A form for collecting the data about the art piece and the artists was implemented and deployed to simplify and unify the collection of data for the AI engine and backend implementations. Roughly 30\% of necessary data has been collected for the initial alpha/beta deployments.
+\end{description}
 \section{Backend}
-% TODO: Add the current state of the frontend
-% admin.controller.ts
+\begin{description}
+    \item[Business logic orchestrator:] The first implementation of the business logic orchestration platform in the form of Next.js backend was created in order to glue all components together. The backend implementation is capable of gluing the functionality thorugh all the components in the basic setup.
+    \item[Database models and ORM:] Creation of fully automated DB models responsible for storing the application relevant data in a PostgreSQL database. The models are created using a standard JavaScript ORM allowing for simple and straighforward generation of the service code, as well as migration, allowing for future upgradability and extendability.
+    \item[Component integrations:] Integrations with the NFT and AI components allowing to use and orchestrate their functionality.
+\end{description}
 
 \section{NFT}
-
-\section{Eva Gallery - NFT Module}
 \subsection{Choosing network for NFT infrastructure}
 The NFT (Non-Fungible Token) market has experienced significant growth in recent years, attracting artists, collectors, and investors worldwide. However, this booming industry is not without its challenges, particularly in the realm of infrastructure. The current landscape of NFT technology is primarily dominated by the Ethereum network, which, despite its popularity, presents certain limitations that are becoming increasingly problematic as the market expands.
 
