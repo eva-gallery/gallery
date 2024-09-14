@@ -67,6 +67,41 @@ async function main() {
         const entities = items.map(item => repo.create(item));
         return repo.save(entities);
       };
+
+      const nfts = await createEntities(entities.Nft, [
+        {
+          artwork: null,
+          wallet: null,
+          nftData: {
+            id: "425-8",
+            name: "Random NFT",
+            metadata: "Wow such great NFT",
+            image: "ipfs blabla",
+          },
+        },
+        {
+          artwork: null,
+          wallet: null,
+          nftData: {
+            id: "425-9",
+            name: "Random NFT",
+            metadata: "Wow such nice",
+            image: "ipfs blabla",
+          }
+        }
+      ]);
+
+      const wallets = await createEntities(entities.Wallet, [
+        {
+          walletAddress: "0x1234567890",
+          nfts: nfts.slice(0, 1),
+        },
+        {
+          walletAddress: "0x0987654321",
+          nfts: nfts.slice(1, 2),
+        },
+      ]);
+
       const users = await createEntities(User, [
         {
           "email": "lubo@ivancak.sk",
@@ -74,9 +109,9 @@ async function main() {
           "name": "Ľubo Ivančák",
           "description": "<p>grafik, programátor, tvorca počítačových hier</p>",
           "avatar": getImage("users/avatar-01.jpg"),
-          "trialMint": "todo",
+          "trialMint": "null",
           "trialMintClaimed": false,
-          "collectionID": "todo",
+          "collectionID": "null",
         },
         {
           "email": "john.snow@winterfell.castle",
@@ -84,9 +119,9 @@ async function main() {
           "name": "John Snow",
           "description": "Lord Commander of the Night's Watch",
           "avatar": getImage("users/avatar-01.jpg"),
-          "trialMint": "todo",
+          "trialMint": "null",
           "trialMintClaimed": false,
-          "collectionID": "todo",
+          "collectionID": "null",
         }
       ]);
       const countries = await createEntities(Country, [

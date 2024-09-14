@@ -11,7 +11,7 @@ export interface ArtworkDetailDto {
     biography: string;
   };
   year: string;
-  nft: boolean;
+  //nft: boolean;
   ai: boolean;
   tags: string;
   artworkGenre: OptionDto;

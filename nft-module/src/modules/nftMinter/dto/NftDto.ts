@@ -11,16 +11,15 @@ export class Metadata {
   @Matches(/^[a-zA-Z0-9 ]*$/, {
     message: "Description can only contain numbers, characters, and spaces",
   })
-  description: string;
+  metadata: string;
   @IsNotEmpty()
-  @Matches(/^ipfs:\/\/.*/, { message: "ipfs must start with ipfs://" })
-  ipfs: string;
+  @Matches(/^[a-zA-Z0-9 ]*$/, {
+    message: "Image path can only contain numbers, characters, and spaces",
+  })  
+  image: string;
   @IsNotEmpty()
   @Matches(/^[a-zA-Z0-9]*$/, {
     message: "Address can only contain numbers and characters",
-  })
-  @Length(48, 48, {
-    message: "Polkadot wallet address must be exactly 48 characters long",
   })
   author: string;
 }
@@ -29,5 +28,5 @@ export class NftDto {
   @IsNotEmpty()
   @ValidateNested() // Ensure that nested objects are validated
   @Type(() => Metadata) // Required for class-transformer to handle nested objects
-  metadata: Metadata;
+  meta: Metadata;
 }

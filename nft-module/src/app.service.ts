@@ -33,10 +33,10 @@ export class AppService {
 
   async testCreateNft(): Promise<Extrinsic> {
     const nft: NftDto = {
-      metadata: {
+      meta: {
         name: "mockedName",
-        description: "mockedDescription",
-        ipfs: "mockedIpfs",
+        metadata: "mockedDescription",
+        image: "mockedIpfs",
         author: "13TrdLhMVLcwcEhMYLcqrkxAgq9M5gnK1LZKAF4VupVfQDUg",
       },
     };
@@ -47,12 +47,12 @@ export class AppService {
   async testCreateCol(): Promise<Extrinsic> {
     const collectionMeta = {
       name: "mockedName",
-      description: "mockedDescription",
-      ipfs: "mockedIpfs",
+      metadata: "mockedDescription",
+      image: "mockedIpfs",
     };
     const collectionDto: CollectionDto = {
       owner: "13TrdLhMVLcwcEhMYLcqrkxAgq9M5gnK1LZKAF4VupVfQDUg",
-      metadata: collectionMeta,
+      meta: collectionMeta,
     };
     return await this.collectionCreator.createCollectionCall(collectionDto);
   }

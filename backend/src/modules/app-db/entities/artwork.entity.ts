@@ -64,6 +64,4 @@ export class Artwork extends LabeledEntity {
   @JoinColumn()
   nft: Nft;
 
-  @Column('boolean', { default: true })
-  isNft: boolean;
 }
