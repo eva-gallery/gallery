@@ -7,11 +7,11 @@ export class SwapController {
   constructor(private readonly appService: swapCreator) {}
 
   @Post("transfer/collection/:collection/asset/:asset")
-  GetData(
-    @Body() nft: SwapDto,
+  getSwap(
+    @Body() swapDto: SwapDto,
     @Param("collection") collection: number,
     @Param("asset") asset: number,
   ) {
-    return this.appService.createSwapCall(collection, asset, nft);
+    return this.appService.createSwapCall(collection, asset, swapDto);
   }
 }
