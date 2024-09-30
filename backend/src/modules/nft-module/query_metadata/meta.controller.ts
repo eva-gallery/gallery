@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Logger, UseGuards, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards, Logger, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { AuthGuard, UserId } from '@modules/auth/helpers';
 import { MetaFetcher } from './meta.service';
 
@@ -10,11 +10,30 @@ export class MetaController {
   constructor(private readonly appService: MetaFetcher) { }
 
   @Get('/nftmeta/address/:address')
-  async getCollection(
+  async getNFTMeta(
     @Param("address") address: string,
     @UserId() userId: string) {
     try {
-      const data = await this.appService.fetchMetadata(userId, address);
+      const data = await this.appService.fetchNFTMetadata(userId, address);
+      if (!data) {
+        throw new BadRequestException('An error occurred while fetching metadata, please check your parameters');
+      }
+      else {
+        return data;
+      }
+    } catch (error) {
+      this.logger.error(error)
+      throw new InternalServerErrorException('An internal server error occurred while fetching metadata.');
+    }
+  }
+
+
+  @Get('/colmeta/address/:address')
+  async getColMeta(
+    @Param("address") address: string,
+    @UserId() userId: string) {
+    try {
+      const data = await this.appService.fetchColMetadata(userId, address);
       if (!data) {
         throw new BadRequestException('An error occurred while fetching metadata, please check your parameters');
       }
