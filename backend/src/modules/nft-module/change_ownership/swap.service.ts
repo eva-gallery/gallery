@@ -17,7 +17,7 @@ export class SwapCreator {
     const user = await this.nftRepo.getUserByWalletTrial(swapData.address);
 
     //These checks might need to be changed in the future when we allow users to transfer ownership within APP.
-    if (!user || user.trialMintClaimed == true || user.trialMintPaid == false || user.trialMint.id == null || user.id != userId) {
+    if (user == null || user.trialMintClaimed == true || user.trialMintPaid == false || user.trialMint.id == null || user.id != userId) {
       return null;
     }
 
@@ -43,7 +43,7 @@ export class SwapCreator {
 
     const user = await this.nftRepo.getUserByWallet(address);
 
-    if (!user || user.trialMintClaimed == true || user.trialMintPaid == true || user.trialMint.id == null || user.id != userId) {
+    if (user == null || user.trialMintClaimed == true || user.trialMintPaid == true || user.trialMint.id == null || user.id != userId) {
       return null;
     }
 
@@ -61,7 +61,7 @@ export class SwapCreator {
     return response.json();
   }
 
-  async trialMintPaidinDB(address): Promise<void> {
+  async trialMintPaidinDB(address: string): Promise<void> {
     //We change ownership of NFT in database
     //We check if user has the right to change ownership of the NFT, if they haven't already claimed their NFT and if they 
     //havent then create call to change ownership of NFT to their desired address
@@ -69,7 +69,7 @@ export class SwapCreator {
     const user = await this.nftRepo.getUserByWallet(address);
 
     //These checks might need to be changed in the future when we allow users to transfer ownership within APP.
-    if (!user || user.trialMintClaimed == true || user.trialMintPaid == true) {
+    if (user == null || user.trialMintClaimed == true || user.trialMintPaid == true) {
       return null;
     }
 
@@ -84,7 +84,7 @@ export class SwapCreator {
     const user = await this.nftRepo.getUserByWallet(address);
 
     //These checks might need to be changed in the future when we allow users to transfer ownership within APP.
-    if (!user || user.trialMintClaimed == true || user.trialMint == null || user.id != userId) {
+    if (user == null || user.trialMintClaimed == true || user.trialMint == null || user.id != userId) {
       return null;
     }
 

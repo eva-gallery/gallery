@@ -1,10 +1,17 @@
-import { Entity, Column, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne, Index } from 'typeorm';
 import { LabeledEntity } from './labeled.entity';
-import { Country } from './country.entity';
-import { User } from './user.entity';
+import { Country, CountryId } from './country.entity';
+import { User, UserId } from './user.entity';
+import { ID } from '@common/helpers';
+
+export type GalleryId = ID<"Gallery">;
 
 @Entity()
+@Index(['name', 'userId'], { unique: true })
+@Index(['label', 'userId'], { unique: true })
 export class Gallery extends LabeledEntity {
+
+  id: GalleryId;
 
   @Column('text')
   description: string;
@@ -15,13 +22,19 @@ export class Gallery extends LabeledEntity {
   @ManyToOne(() => Country)
   country: Country;
 
+  @Column({ nullable: true })
+  countryId: CountryId;
+
   @Column('text')
   gps: string;
 
   @Column({ type: 'boolean', default: true })
-  active: boolean;
+  public: boolean;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
   user: User;
+
+  @Column({ nullable: true })
+  userId: UserId;
 
 }
