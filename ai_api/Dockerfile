@@ -1,3 +1,4 @@
+
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
@@ -23,13 +24,13 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock* /app/
 
 # Install dependencies
-RUN poetry install --no-root --no-dev
+RUN poetry install --no-root --only main
 
 # Copy the rest of the application code
 COPY . /app
 
 # Install the application
-RUN poetry install --no-dev
+RUN poetry install --only main
 
 EXPOSE 3000
 
