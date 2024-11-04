@@ -1,0 +1,168 @@
+{
+  "room": [
+    {
+      "id": 1,
+      "name": "Malá sála",
+      "x": 0,
+      "y": 0,
+      "width": 10,
+      "length": 10,
+      "height": 3.6,
+      "type": "hdri",
+      "wall": [
+        {
+          "id": 1,
+          "x": 0,
+          "y": 0,
+          "z": 5,
+          "rotation": 0,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#3983bb",
+          "opacity": 0,
+          "image": [
+            {
+              "id": 1,
+              "artworkId": 21,
+              "x": 2,
+              "y": 1.8,
+              "scale": 1
+            },
+            {
+              "id": 2,
+              "artworkId": 24,
+              "x": 4,
+              "y": 1.4,
+              "scale": 2
+            },
+            {
+              "id": 3,
+              "artworkId": 23,
+              "x": 7,
+              "y": 1.6,
+              "scale": 1
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 0,
+          "z": 0,
+          "rotation": 90,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#bb6739",
+          "opacity": 0,
+          "image": [
+            {
+              "id": 4,
+              "artworkId": 22,
+              "x": 5,
+              "y": 1.6,
+              "scale": 3
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "x": -5,
+          "y": 0,
+          "z": 0,
+          "rotation": 270,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#f2d4c4",
+          "opacity": 0,
+          "image": [
+            {
+              "id": 4,
+              "artworkId": 25,
+              "x": 2,
+              "y": 1.6,
+              "scale": 1
+            },
+            {
+              "id": 4,
+              "artworkId": 29,
+              "x": 4,
+              "y": 1.6,
+              "scale": 1
+            },
+            {
+              "id": 4,
+              "artworkId": 20,
+              "x": 6,
+              "y": 1.6,
+              "scale": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "x": 1.5,
+          "y": 0,
+          "z": -5,
+          "rotation": 180,
+          "width": 7,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#f2d4c4",
+          "opacity": 0,
+          "image": [
+            {
+              "id": 1,
+              "artworkId": 26,
+              "x": 2,
+              "y": 1.4,
+              "scale": 1
+            },
+            {
+              "id": 4,
+              "artworkId": 27,
+              "x": 4,
+              "y": 1.6,
+              "scale": 1
+            },
+            {
+              "id": 4,
+              "artworkId": 28,
+              "x": 6,
+              "y": 1.6,
+              "scale": 1
+            }
+          ]
+        }
+      ],
+      "lamp": [
+        {
+          "id": 1,
+          "x": 0,
+          "y": 3.5,
+          "z": 0,
+          "range": 10,
+          "shadow": true
+        },
+        {
+          "id": 2,
+          "x": -3,
+          "y": 3.5,
+          "z": -2,
+          "range": 10,
+          "shadow": false
+        },
+        {
+          "id": 3,
+          "x": 1.5,
+          "y": 3.5,
+          "z": -1.8,
+          "range": 10,
+          "shadow": false
+        }
+      ]
+    }
+  ]
+}

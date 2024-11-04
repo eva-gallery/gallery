@@ -1,0 +1,56 @@
+{
+  "library": [
+    {
+      "id": 1,
+      "name": "Plant-01"
+    },
+    {
+      "id": 2,
+      "name": "Plant-02"
+    },
+    {
+      "id": 3,
+      "name": "Plant-03"
+    },
+    {
+      "id": 4,
+      "name": "Plant-04"
+    },
+    {
+      "id": 5,
+      "name": "Plant-05"
+    },
+    {
+      "id": 6,
+      "name": "Bench-01"
+    },
+    {
+      "id": 7,
+      "name": "Bench-02"
+    },
+    {
+      "id": 8,
+      "name": "Bench-03"
+    },
+    {
+      "id": 9,
+      "name": "Bench-04"
+    },
+    {
+      "id": 10,
+      "name": "Bench-05"
+    },
+    {
+      "id": 11,
+      "name": "Figure-01"
+    },
+    {
+      "id": 12,
+      "name": "Figure-02"
+    },
+    {
+      "id": 13,
+      "name": "Figure-03"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+{
+  "room": [
+    {
+      "id": 1,
+      "name": "Malá sála",
+      "x": 0,
+      "y": 0,
+      "width": 10,
+      "length": 10,
+      "height": 3.6,
+      "wall": [
+        {
+          "id": 1,
+          "x": 0,
+          "y": 0,
+          "z": 5,
+          "rotation": 0,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#3983bb",
+          "image": [
+            {
+              "id": 1,
+              "artworkId": 1,
+              "x": 2,
+              "y": 1.8,
+              "scale": 2
+            },
+            {
+              "id": 2,
+              "artworkId": 2,
+              "x": 4,
+              "y": 1.4,
+              "scale": 2
+            },
+            {
+              "id": 3,
+              "artworkId": 3,
+              "x": 7,
+              "y": 1.6,
+              "scale": 1.8
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "x": 5,
+          "y": 0,
+          "z": 0,
+          "rotation": 90,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#bb6739",
+          "image": [
+            {
+              "id": 4,
+              "artworkId": 4,
+              "x": 5,
+              "y": 1.6,
+              "scale": 1
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "x": -5,
+          "y": 0,
+          "z": 0,
+          "rotation": 270,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#f2d4c4",
+          "image": [
+            {
+              "id": 4,
+              "artworkId": 5,
+              "x": 2,
+              "y": 1.6,
+              "scale": 2
+            },
+            {
+              "id": 4,
+              "artworkId": 9,
+              "x": 4,
+              "y": 1.6,
+              "scale": 2
+            },
+            {
+              "id": 4,
+              "artworkId": 0,
+              "x": 6,
+              "y": 1.6,
+              "scale": 2
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "x": 1.5,
+          "y": 0,
+          "z": -5,
+          "rotation": 180,
+          "width": 7,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#f2d4c4",
+          "image": [
+            {
+              "id": 1,
+              "artworkId": 6,
+              "x": 2,
+              "y": 1.4,
+              "scale": 2
+            },
+            {
+              "id": 4,
+              "artworkId": 7,
+              "x": 4,
+              "y": 1.6,
+              "scale": 3
+            },
+            {
+              "id": 4,
+              "artworkId": 8,
+              "x": 6,
+              "y": 1.6,
+              "scale": 2
+            }
+          ]
+        }
+      ],
+      "lamp": [
+        {
+          "id": 1,
+          "x": 0,
+          "y": 3.5,
+          "z": 0,
+          "range": 10,
+          "shadow": true
+        },
+        {
+          "id": 2,
+          "x": -3,
+          "y": 3.5,
+          "z": -2,
+          "range": 10,
+          "shadow": false
+        },
+        {
+          "id": 3,
+          "x": 1.5,
+          "y": 3.5,
+          "z": -1.8,
+          "range": 10,
+          "shadow": false
+        }
+      ],
+      "item": [
+        {
+          "id": 1,
+          "libraryId": 1,
+          "x": 3.8,
+          "y": 0.0,
+          "z": 4.2,
+          "rotation": 0
+        },
+        {
+          "id": 1,
+          "libraryId": 2,
+          "x": -4,
+          "y": 0.0,
+          "z": 4,
+          "rotation": -180
+        },
+        {
+          "id": 2,
+          "libraryId": 4,
+          "x": 2.8,
+          "y": 0.0,
+          "z": -1.5,
+          "rotation": 0
+        },
+        {
+          "id": 3,
+          "libraryId": 6,
+          "x": 2.7,
+          "y": 0.0,
+          "z": 0,
+          "rotation": 90
+        },
+        {
+          "id": 4,
+          "libraryId": 7,
+          "x": -1.6,
+          "y": 0.0,
+          "z": 2.6,
+          "rotation": 0
+        },
+        {
+          "id": 5,
+          "libraryId": 11,
+          "x": -2.6,
+          "y": 0.0,
+          "z": 0.32,
+          "rotation": -74
+        },
+        {
+          "id": 6,
+          "libraryId": 12,
+          "x": 1.6,
+          "y": 0.0,
+          "z": 2.6,
+          "rotation": 0
+        },
+        {
+          "id": 7,
+          "libraryId": 13,
+          "x": -1.6,
+          "y": 0.0,
+          "z": -3.0,
+          "rotation": -180
+        }
+      ]
+    }
+  ]
+}
