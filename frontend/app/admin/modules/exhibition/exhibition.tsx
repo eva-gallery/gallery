@@ -6,17 +6,17 @@ import { Detail } from './exhibition.detail';
 import { List } from './exhibition.list';
 import Table from './exhibition.table';
 import Formular from './exhibition.formular';
+import AdminAction from '../../components/action';
 
-import { A } from '@/app/admin';
+
 import { AdminType } from '@/app/admin/types';
+import { Transform } from './exhibition.functions';
 
 
 async function Exhibition(admin: AdminType) {
 
-   const actions = ["list", "detail"];
-
    return (
-      <A.Action admin={admin} actions={Data.actions} />
+      <AdminAction admin={admin} actions={Data.actions} />
    );
 };
 
@@ -31,6 +31,7 @@ Exhibition.List = List;
 Exhibition.Table = Table;
 Exhibition.Data = Data;
 Exhibition.Formular = Formular;
+Exhibition.Transform = Transform;
 
 export default Exhibition;
 

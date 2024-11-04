@@ -4,21 +4,25 @@ import React, { useState } from 'react';
 import { Row, Col, Form, Alert } from 'react-bootstrap';
 
 
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
 
-import { M } from '@/app/admin/modules';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamation, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { AdminSetData } from '../functions/set.data';
+import { AdminIcon } from './components';
+import { AdminFormControl } from './formcontrol';
+import { AdminType } from '../types';
 
 
 
 type Props = {
   admin: AdminType;
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  endpoint: string;
   children: React.ReactNode;
+  onSuccess?: () => void;
 };
 
-const AdminForm: React.FC<Props> = ({ admin, children }) => {
+export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, onSuccess }) => {
 
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -34,11 +38,15 @@ const AdminForm: React.FC<Props> = ({ admin, children }) => {
     } else {
       event.preventDefault();
       const formData = new FormData(form);
-      const data = await A.setData(formData, admin);
+
+      const data = await AdminSetData(admin, formData, method, endpoint) as { alert?: string } | void;
 
       if (data && data.alert) {
         setAlertMessage(data.alert);
         setShowAlert(true);
+      } else {
+        // Ak nie je žiadna chyba, zavri modal
+        if (method == "PATCH" && onSuccess) { onSuccess(); } // Zavri modal po úspešnom odoslaní
       }
 
     }
@@ -47,7 +55,7 @@ const AdminForm: React.FC<Props> = ({ admin, children }) => {
 
   return (
     <>
-      <Form id="form-detail" noValidate validated={validated} onSubmit={handleSubmit}>
+      <Form id="form" noValidate validated={validated} onSubmit={handleSubmit}>
         {children}
       </Form>
       {showAlert && (
@@ -70,31 +78,20 @@ type AdminFormInputProps = {
   label: string;
   name: string;
   value: string;
-  options?: { value: string; label: string }[];
+  option?: { id: string; name: string }[];
+  required?: boolean;
 };
 
-const AdminFormInput: React.FC<AdminFormInputProps> = ({ type, icon, label, name, value, options }) => {
+export const AdminFormInput: React.FC<AdminFormInputProps> = ({ type, icon, label, name, value, option, required }) => {
   return (
     <Form.Group as={Row} className="mb-3">
       <Form.Label column sm={4} >
-        <A.Icon name={icon} size={24} className='me-2' />
+        <AdminIcon name={icon} size={24} className='me-2' />
         {label}
       </Form.Label>
       <Col sm={8}>
-        {/* <AdminFormInputType type={type} name={name} value={value} options={options} /> */}
+        <AdminFormControl type={type} name={name} value={value} option={option || []} {...(required ? { required: true } : {})} />
       </Col>
     </Form.Group>
   );
 };
-
-
-type AdminFormInputTypeProps = {
-  type: string;
-  name: string;
-  value: string;
-  options?: { value: string; label: string }[];
-};
-
-
-
-export default AdminForm;

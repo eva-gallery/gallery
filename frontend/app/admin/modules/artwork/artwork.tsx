@@ -7,17 +7,17 @@ import { List } from './artwork.list'
 import Table from './artwork.table';
 import Formular from './artwork.formular';
 
-import { A } from '@/app/admin';
+import AdminAction from '../../components/action';
 import { AdminType } from '@/app/admin/types';
+import { Transform } from './artwork.functions';
 
 
 
 async function Artwork(admin: AdminType) {
 
-   const actions = ["list", "detail"];
 
    return (
-      <A.Action admin={admin} actions={Data.actions} />
+      <AdminAction admin={admin} actions={Data.actions} />
    );
 };
 
@@ -34,6 +34,7 @@ Artwork.List = List;
 Artwork.Table = Table;
 Artwork.Data = Data;
 Artwork.Formular = Formular;
+Artwork.Transform = Transform;
 
 export default Artwork;
 

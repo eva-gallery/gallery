@@ -1,17 +1,12 @@
 import React from 'react';
-
-import Image from 'next/image';
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-
-type Props = {
-   admin: AdminType;
-   data: any;
-};
+import { ModuleTable } from '../../types';
+import { AdminTable, AdminTableColumn, AdminTableRow } from '../../components/table';
+import { AdminBoolean, AdminLinkIcon } from '../../components/components';
+import AdminImage from '../../components/image';
 
 
-const Table: React.FC<Props> = ({ admin, data }) => {
+
+const Table: React.FC<ModuleTable> = ({ admin, data }) => {
 
    const columns = [
       { name: "Name" },
@@ -20,58 +15,58 @@ const Table: React.FC<Props> = ({ admin, data }) => {
       { name: "Image" },
       { name: "NFT" },
       { name: "AI" },
-      { name: "Active" }
+      { name: "Public" }
    ];
 
    return (
-      <A.Table columns={columns}>
+      <AdminTable columns={columns}>
 
          {data.map((object: any) => (
 
-            <A.TableRow data={object} admin={admin} key={object['id']}>
+            <AdminTableRow data={object} admin={admin} key={object['id']}>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   <strong>
-                     <A.LinkIcon admin={{ module: "artwork", action: "detail", unique: object['id'] }}>
+                     <AdminLinkIcon admin={{ modul: "artwork", action: "detail", unique: object['id'] }}>
                         {object['name']}
-                     </A.LinkIcon>
+                     </AdminLinkIcon>
                   </strong>
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   {object['year']}
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.LinkIcon admin={{ module: "artist", action: "detail", unique: object['artist']['id'] }}>
+               <AdminTableColumn>
+                  <AdminLinkIcon admin={{ modul: "artist", action: "detail", unique: object['artist']['id'] }}>
                      {object['artist']['name']}
-                  </A.LinkIcon>
-               </A.TableColumn>
+                  </AdminLinkIcon>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Image src={`artwork/${object['id']}/thumbnail`} alt={object['name']} width={100} height="auto" type="thumbnail" />
-               </A.TableColumn>
+               <AdminTableColumn>
+                  <AdminImage src={`artwork/${object['id']}/thumbnail`} alt={object['name']} width={100} height="auto" type="thumbnail" />
+               </AdminTableColumn>
 
 
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   {object['nft'] ? <span className='badge bg-dark'>NFT</span> : null}
 
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   {object['ai'] ? <span className='badge bg-dark'>AI</span> : null}
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Boolean value={object['active']} />
-               </A.TableColumn>
+               <AdminTableColumn>
+                  <AdminBoolean value={object['public']} />
+               </AdminTableColumn>
 
-            </A.TableRow>
+            </AdminTableRow>
 
          ))}
 
-      </A.Table>
+      </AdminTable>
    );
 };
 

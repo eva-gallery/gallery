@@ -1,9 +1,6 @@
 'use server'
 
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Container } from 'react-bootstrap';
-
 
 export default async function Viktor() {
 
@@ -13,7 +10,7 @@ export default async function Viktor() {
       <Container className='py-5 '>
         <h1>European Visual Arts Gallery</h1>
 
-        <p className="lead">Europe's first AI-Powered Web3 Gallery for professional Artists and Gallerists.</p>
+        <p className="lead">Europes first AI-Powered Web3 Gallery for professional Artists and Gallerists.</p>
         <p>The primary goal of this research project is to create a new platform for exploring, presenting, and supporting European visual art in virtual space. Our vision emphasizes sustainability and leverages cutting-edge technologies like AI, virtual reality, and blockchain for long-term development.</p>
 
         <p><strong>3D Virtual Gallery</strong></p>
@@ -31,9 +28,6 @@ export default async function Viktor() {
 
         <p>The platform integrates wallet connection mechanisms and NFT functionality, allowing artists to incorporate blockchain technology into their collections. An AI-based recommendation engine provides personalized experiences for visitors, enhancing engagement with the artworks.
         </p>
-
-
-
 
       </Container>
 

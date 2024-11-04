@@ -1,9 +1,8 @@
-'use client'
 
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import { A } from '@/app/admin';
 import { AdminType } from '@/app/admin/types';
+import { AdminButtonDetail } from '@/app/admin/components/button';
 
 
 
@@ -25,7 +24,7 @@ type AdminTableColumnProps = {
 export const AdminTable: React.FC<AdminTableProps> = ({ columns, children }) => {
    return (
       <>
-         <Table className='table' hover>
+         <Table className='table mb-5' hover>
             <thead>
                <tr>
                   {columns.map((column, index) => (
@@ -51,7 +50,7 @@ export const AdminTableRow: React.FC<AdminTableRowProps> = ({ data: object, admi
          <tr>
             {children}
             <td className='text-end'>
-               <A.Button.Detail admin={admin} />
+               <AdminButtonDetail admin={admin} />
             </td>
          </tr>
       </>

@@ -1,11 +1,13 @@
 'use client';
 
 import React from 'react';
-import { A } from '@/app/admin';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { AdminType } from '@/app/admin/types';
+import { AdminType } from '../types';
+import { AdminIcon } from './components';
+import { AdminForm } from './form';
+
 
 type Props = {
   admin: AdminType;
@@ -18,16 +20,16 @@ const AdminLogin: React.FC<Props> = ({ admin }) => {
   return (
     <>
       <h1 className='text-center mb-5'>
-        <A.Icon name="user" size={48} className='me-3' />
+        <AdminIcon name="user" size={48} className='me-3' />
         Login
       </h1>
 
-      <A.Form admin={admin}>
+      <AdminForm method="POST" endpoint="/admin/login" admin={admin}>
         <Form.Group className="mb-3" >
           <Row className='justify-content-center'>
             <Col xs={2}>
               <Form.Label>
-                <A.Icon name="email" size={24} className='me-2' />
+                <AdminIcon name="email" size={24} className='me-2' />
                 Email
               </Form.Label>
             </Col>
@@ -41,7 +43,7 @@ const AdminLogin: React.FC<Props> = ({ admin }) => {
           <Row className='justify-content-center'>
             <Col xs={2}>
               <Form.Label>
-                <A.Icon name="password" size={24} className='me-2' />
+                <AdminIcon name="password" size={24} className='me-2' />
                 Password
               </Form.Label>
             </Col>
@@ -62,7 +64,7 @@ const AdminLogin: React.FC<Props> = ({ admin }) => {
             </Button>
           </Col>
         </Row>
-      </A.Form>
+      </AdminForm>
 
     </>
   );

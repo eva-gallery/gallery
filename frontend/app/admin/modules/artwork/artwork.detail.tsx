@@ -1,88 +1,103 @@
 import React from 'react';
-import Image from 'next/image';
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-import { M } from '@/app/admin/modules';
+import { AdminGetData } from '../../functions/get.data';
+import AdminDetail from '../../components/detail';
+import { AdminType } from '../../types';
+import { AdminBoolean, AdminHtml, AdminLink } from '../../components/components';
+import AdminImage from '../../components/image';
+import { M } from '..';
 
 export async function Detail(admin: AdminType) {
 
 
-    const object = await A.getData(admin);
+    const data = await AdminGetData("admin/artwork/" + admin.unique);
+    const option = {
+        "artist": await AdminGetData("admin/options/artist"),
+        "artwork_genre": await AdminGetData("admin/options/artwork_genre"),
+        "artwork_worktype": await AdminGetData("admin/options/artwork_worktype"),
+        "artwork_material": await AdminGetData("admin/options/artwork_material"),
+        "artwork_technique": await AdminGetData("admin/options/artwork_technique"),
+    };
 
-    admin.mode = "exhibition";
-    const exhibition = await A.getData(admin);
+    const object = {
+        data,
+        option,
+    }
 
+    const exhibition = await AdminGetData("admin/artwork/" + admin.unique + "/exhibition");
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
 
     return (
         <>
-            <A.Detail admin={admin} object={object}>
-                <A.Detail.Row icon="artwork" name="Name">
+            <AdminDetail admin={admin} object={object}>
+                <AdminDetail.Row icon="artwork" name="Name">
                     <strong className='fs-3'>
-                        {object['name']}
+                        {data['name']}
                     </strong>
-                </A.Detail.Row>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="textarea" name="Description">
-                    <A.Html html={object['description']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="textarea" name="Description">
+                    <AdminHtml html={data['description']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="artist" name="Artist">
-                    <A.Link admin={{ module: "artist", action: "detail", unique: object['artist'].id }}>
-                        {object['artist']['name']}
-                    </A.Link>
-                </A.Detail.Row>
+                <AdminDetail.Row icon="artist" name="Artist">
+                    <AdminLink admin={{ modul: "artist", action: "detail", unique: data['artist'].id }}>
+                        {data['artist']['name']}
+                    </AdminLink>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="artwork" name="Image">
-                    <A.Image src={`artwork/${object['id']}/thumbnail`} alt={object['name']} width={480} height="auto" type="thumbnail" hocico="fdsdlfjal" balba="fsdafa" />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="artwork" name="Image">
+                    <a href={`${backendUrl}/artwork/${data['id']}/thumbnail`} target='_blank'>
+                        <AdminImage src={`artwork/${data['id']}/thumbnail`} alt={data['name']} width={480} />
+                    </a>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="date" name="Year">
-                    {object['year']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="date" name="Year">
+                    {data['year']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="nft" name="NFT">
-                    <A.Boolean value={object['nft']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="nft" name="NFT">
+                    <AdminBoolean value={data['nft']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="ai" name="AI">
-                    <A.Boolean value={object['nft']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="ai" name="AI">
+                    <AdminBoolean value={data['nft']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="date" name="tags">
-                    {object['tags']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="date" name="tags">
+                    {data['tags']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="art" name="Genre">
-                    {object['artworkGenre']['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="art" name="Genre">
+                    {data['artworkGenre']['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="worktype" name="Worktype">
-                    {object["artworkWorktype"]['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="worktype" name="Worktype">
+                    {data["artworkWorktype"]['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="paper" name="Material">
-                    {object["artworkMaterial"]['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="paper" name="Material">
+                    {data["artworkMaterial"]['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="palette" name="Technique">
-                    {object["artworkTechnique"]['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="palette" name="Technique">
+                    {data["artworkTechnique"]['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="measurements" name="Measurements">
-                    {object['measurements']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="measurements" name="Measurements">
+                    {data['measurements']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="boolean" name="Active">
-                    <A.Boolean value={object['active']} />
-                </A.Detail.Row>
-            </A.Detail>
+                <AdminDetail.Row icon="question" name="Public">
+                    <AdminBoolean value={data['public']} />
+                </AdminDetail.Row>
+            </AdminDetail>
 
             <hr className='my-5' />
 
             <h2 className='text-center'><small>Artwork in</small> Exhibitions</h2>
 
-            <M.Exhibition.Table admin={{ "module": "exhibition" }} data={exhibition} />
+            <M.Exhibition.Table admin={{ modul: "exhibition" }} data={exhibition} />
         </>
     );
 }

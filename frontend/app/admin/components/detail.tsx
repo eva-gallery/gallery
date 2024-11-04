@@ -3,10 +3,12 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 
-import { A } from '@/app/admin';
 import { AdminType } from '../types';
 
 import { M } from '@/app/admin/modules';
+import AdminEdit from '@/app/admin/components/edit';
+import { AdminIcon } from '@/app/admin/components/components';
+import { capitalize } from '@/app/admin/functions/tools';
 
 
 type Props = {
@@ -21,13 +23,14 @@ interface DetailComponent extends React.FC<Props> {
 
 const AdminDetail: DetailComponent = ({ admin, object, children }) => {
 
-  const Module = M[A.capitalize(admin.module) as keyof typeof M] || (() => <div>Unknown module</div>);
+  const Module = M[capitalize(admin.modul) as keyof typeof M] || (() => <div>Unknown module</div>);
 
+  console.log('AdminDetail', object);
 
   return (
     <>
       <h1 className='mb-3'>
-        <A.Icon name={Module.Data.icon} size={48} className='me-3' />
+        <AdminIcon name={Module.Data.icon} size={48} className='me-3' />
         {Module.Data.name}
       </h1>
 
@@ -35,12 +38,12 @@ const AdminDetail: DetailComponent = ({ admin, object, children }) => {
 
       {children}
 
-      <Row>
+      <Row className='mb-5'>
         <Col className='col-md-3 py-2' />
         <Col className='py-2'>
-          <A.Edit admin={admin}>
-            {/* <Module.Formular data={object.data} options={object.options} /> */}
-          </A.Edit>
+          <AdminEdit admin={admin}>
+            <Module.Formular data={object.data} option={object.option} />
+          </AdminEdit>
         </Col>
       </Row>
     </>
@@ -59,7 +62,7 @@ const AdminDetailRow: React.FC<DetailRowProps> = ({ icon, name, children }) => {
   return (
     <Row>
       <Col className='col-md-3 py-2'>
-        <A.Icon name={icon} size={24} className='me-2' />
+        <AdminIcon name={icon} size={24} className='me-2' />
         {name}
       </Col>
       <Col className='py-2'>

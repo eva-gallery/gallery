@@ -1,7 +1,7 @@
 
 const modules = ["Gallery", "Exhibition", "Artist", "Artwork", "Designer", "Ai", "Nft", "User"] as const;
 
-type ModuleType = {
+export type ModuleType = {
   [key in (typeof modules)[number]]: any;
 };
 
@@ -13,5 +13,6 @@ modules.forEach((Module) => {
 });
 
 M.modules = modules as unknown as string[];
+
 
 

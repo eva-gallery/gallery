@@ -1,10 +1,10 @@
 import React from 'react';
 
 
-const Ai: React.FC = ({ children }) => {
+const Ai: React.FC = ({ }) => {
     return (
         <>
-        <h1>AI</h1>
+            <h1>AI</h1>
         </>
     );
 };
@@ -14,3 +14,6 @@ const Ai: React.FC = ({ children }) => {
 export default Ai;
 
 
+// a) Not AI Generated
+// b) Not AI generated, protecte by Glaze / Nightshade
+// c) AI Generated

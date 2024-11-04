@@ -1,55 +1,83 @@
+'use server'
+
 import React from 'react';
 
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
+import { AdminType } from '../../types';
+import { AdminGetData } from '../../functions/get.data';
+import AdminDetail from '../../components/detail';
+import { AdminBoolean, AdminDate, AdminFlag, AdminHtml, AdminLink } from '../../components/components';
+import { M } from '..';
 
-import { M } from '@/app/admin/modules';
 
 export async function Detail(admin: AdminType) {
 
-    const object = await A.getData(admin);
+    const data = await AdminGetData("admin/exhibition/" + admin.unique);
 
-    admin.mode = "artwork";
-    const artwork = await A.getData(admin);
+    const option = {
+        "gallery": await AdminGetData("admin/options/gallery"),
+        "country": await AdminGetData("admin/options/country"),
+        "artist_category": await AdminGetData("admin/options/artist_category"),
+    };
+
+    const object = {
+        data,
+        option,
+    }
+
+    const designer = await AdminGetData("admin/exhibition/" + admin.unique + "/room");
+
+    const updatedDesigner = designer.map((des: any) => ({
+        ...des,
+        exhibition: {
+            ...data
+        }
+    }));
+
+    const artwork = await AdminGetData("admin/exhibition/" + admin.unique + "/artwork");
 
 
     return (
         <>
-            <A.Detail admin={admin} object={object}>
-                <A.Detail.Row icon="exhibition" name="Name">
+            <AdminDetail admin={admin} object={object}>
+                <AdminDetail.Row icon="exhibition" name="Name">
                     <strong className='fs-3'>
-                        {object['name']}
+                        {data['name']}
                     </strong>
-                </A.Detail.Row>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="date" name="Date since">
-                    <A.Date date={object['fromDate']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="date" name="Date since">
+                    <AdminDate date={data['fromDate']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="date" name="Date to">
-                    <A.Date date={object['toDate']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="date" name="Date to">
+                    <AdminDate date={data['toDate']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="client" name="Curator">
-                    {object['curator']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="client" name="Curator">
+                    {data['curator']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="gallery" name="Gallery">
-                    <A.Link admin={{ module: "gallery", action: "detail", unique: object['gallery']['id'] }}>
-                        {object["gallery"]["name"]}
-                    </A.Link>
-                </A.Detail.Row>
+                <AdminDetail.Row icon="gallery" name="Gallery">
+                    <AdminLink admin={{ modul: "gallery", action: "detail", unique: data['gallery']['id'] }}>
+                        {data["gallery"]["name"]}
+                    </AdminLink>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="boolean" name="Active">
-                    <A.Boolean value={object['active']} />
-                </A.Detail.Row>
-            </A.Detail>
+                <AdminDetail.Row icon="question" name="Public">
+                    <AdminBoolean value={data['public']} />
+                </AdminDetail.Row>
+            </AdminDetail>
 
             <hr className='my-5' />
 
             <h2 className='text-center'>Artworks <small>in Exhibition</small></h2>
+            <M.Artwork.Table admin={{ modul: "artwork" }} data={artwork} />
 
-            <M.Artwork.Table admin={{ "module": "artwork" }} data={artwork} />
+            <h2 className='text-center'>3D Designs <small>in Exhibition</small></h2>
+            <M.Designer.Table admin={{ modul: "designer" }} data={updatedDesigner} />
+
+
+
         </>
     );
 }

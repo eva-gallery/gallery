@@ -1,55 +1,66 @@
 import React from 'react';
+import { AdminGetData } from '../../functions/get.data';
+import AdminDetail from '../../components/detail';
+import { AdminBoolean, AdminDate, AdminFlag, AdminHtml } from '../../components/components';
+import { M } from '..';
+import { AdminType } from '../../types';
 
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-import { M } from '@/app/admin/modules';
 
 export async function Detail(admin: AdminType) {
 
 
-    const object = await A.getData(admin);
+    const data = await AdminGetData("admin/artist/" + admin.unique);
 
-    admin.mode = "artwork";
-    const artwork = await A.getData(admin);
+    const option = {
+        "country": await AdminGetData("admin/options/country"),
+        "artist_category": await AdminGetData("admin/options/artist_category"),
+    };
+
+    const object = {
+        data,
+        option,
+    }
+
+    const artwork = await AdminGetData("admin/artist/" + admin.unique + "/artwork");
 
     return (
         <>
-            <A.Detail admin={admin} object={object}>
+            <AdminDetail admin={admin} object={object}>
 
-                <A.Detail.Row icon="artist" name="Name">
+                <AdminDetail.Row icon="artist" name="Name">
                     <strong className='fs-3'>
-                        {object['name']}
+                        {data['name']}
                     </strong>
-                </A.Detail.Row>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="date" name="Born">
-                    <A.Date date={object['born']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="date" name="Born">
+                    <AdminDate date={data['born']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="textarea" name="Bio">
-                    <A.Html html={object['biography']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="textarea" name="Bio">
+                    <AdminHtml html={data['biography']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="globe" name="Country">
-                    <A.Flag code={object['country']['code']} />
-                    {object['country']['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="globe" name="Country">
+                    <AdminFlag code={data['country']['code']} />
+                    {data['country']['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="category" name="Category">
-                    {object['artistCategory']['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="category" name="Category">
+                    {data['artistCategory']['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="question" name="Active">
-                    <A.Boolean value={object['active']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="question" name="Public">
+                    <AdminBoolean value={data['public']} />
+                </AdminDetail.Row>
 
-            </A.Detail>
+            </AdminDetail>
 
             <hr className='my-5' />
 
             <h2 className='text-center'>Artworks <small>by Artist</small></h2>
 
-            <M.Artwork.Table admin={{ "module": "artwork" }} data={artwork} />
+            <M.Artwork.Table admin={{ modul: "artwork" }} data={artwork} />
         </>
     );
 }

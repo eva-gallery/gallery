@@ -1,57 +1,52 @@
 import React from 'react';
 
-import Image from 'next/image';
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-
-type Props = {
-   admin: AdminType;
-   data: any;
-};
+import { AdminTable, AdminTableColumn, AdminTableRow } from '../../components/table';
+import { AdminBoolean, AdminFlag, AdminLinkIcon } from '../../components/components';
+import { ModuleTable } from '../../types';
 
 
-const Table: React.FC<Props> = ({ admin, data }) => {
+
+const Table: React.FC<ModuleTable> = ({ admin, data }) => {
 
    const columns = [
       { name: "Name" },
       { name: "Category" },
       { name: "Country" },
-      { name: "Active" }
+      { name: "Public" }
    ];
 
    return (
-      <A.Table columns={columns}>
+      <AdminTable columns={columns}>
 
          {data.map((object: any) => (
-            <A.TableRow data={object} admin={admin} key={object["id"]}>
+            <AdminTableRow data={object} admin={admin} key={object["id"]}>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   <strong>
-                     <A.LinkIcon admin={{ module: "artist", action: "detail", unique: object['id'] }}>
+                     <AdminLinkIcon admin={{ modul: "artist", action: "detail", unique: object['id'] }}>
                         {object["name"]}
-                     </A.LinkIcon>
+                     </AdminLinkIcon>
 
                   </strong>
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   {object["artistCategory"]["name"]}
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Flag code={object['country']['code']} />
+               <AdminTableColumn>
+                  <AdminFlag code={object['country']['code']} />
                   {object["country"]["name"]}
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Boolean value={object["active"]} />
-               </A.TableColumn>
+               <AdminTableColumn>
+                  <AdminBoolean value={object["public"]} />
+               </AdminTableColumn>
 
-            </A.TableRow>
+            </AdminTableRow>
          ))}
 
-      </A.Table>
+      </AdminTable>
    );
 };
 

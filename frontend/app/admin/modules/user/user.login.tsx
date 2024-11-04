@@ -1,26 +1,19 @@
 
 
 import React from 'react';
-import Image from 'next/image';
-
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-import { getData } from '../../functions/get.data';
+import AdminLogin from '../../components/login';
+import { AdminType } from '../../types';
 
 
 
 export async function Login(admin: AdminType) {
 
-	/*const data = getData(admin);
 
-	console.log("********** Login **********", data);
-	*/
 
 	return (
 		<>
 
-			<A.Login admin={admin} />
+			<AdminLogin admin={admin} />
 
 		</>
 

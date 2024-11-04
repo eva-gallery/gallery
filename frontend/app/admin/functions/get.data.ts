@@ -9,6 +9,31 @@ import { PassThrough } from 'stream';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
 
+export async function AdminGetData(endpoint: string) {
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    const cookieStore = cookies().get('SESSION_ID');
+    const sessionId = cookieStore?.value;
+
+    const data = await fetch(`${backendUrl}/${endpoint}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionId}`
+        }
+    }).then(res => res.json());
+
+    if (data.message === "Unauthorized" && data.statusCode === 401) {
+        redirect(`/admin/user/login`);
+    }
+
+    //console.log("********** Backend Get Data form " + endpoint + " **********", data);
+
+    return data;
+}
+
+
 
 export async function getData(admin: AdminType) {
 
@@ -21,7 +46,7 @@ export async function getData(admin: AdminType) {
 
     switch (admin.action) {
         case 'list':
-            data = await fetch(`${backendUrl}/${admin.module}`, {
+            data = await fetch(`${backendUrl}/${admin.modul}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,7 +56,7 @@ export async function getData(admin: AdminType) {
             break;
 
         case 'detail':
-            let endpoint = `${backendUrl}/${admin.module}/${admin.unique}`;
+            let endpoint = `${backendUrl}/${admin.modul}/${admin.unique}`;
 
             if (admin.mode) { endpoint += `/${admin.mode}`; }
 
@@ -45,7 +70,7 @@ export async function getData(admin: AdminType) {
             break;
 
         case 'dashboard':
-            data = await fetch(`${backendUrl}/${admin.module}`, {
+            data = await fetch(`${backendUrl}/${admin.modul}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,16 +89,26 @@ export async function getData(admin: AdminType) {
             }).then(res => res.json());
             break;
 
+        case 'room':
+            data = await fetch(`${backendUrl}/room`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionId}`
+                }
+            }).then(res => res.json());
+            break;
+
         // case 'insert':
-        //    response = await fetch(`${backendUrl}/${admin.module}/insert`, { method: "post", body: JSON.stringify(data) }).then(res => res.json());
+        //    response = await fetch(`${backendUrl}/${admin.modul}/insert`, { method: "post", body: JSON.stringify(data) }).then(res => res.json());
         //    break;
 
         // case 'update':
-        //    response = await fetch(`${backendUrl}/${admin.module}/update/${admin.unique}`, { method: "put", body: JSON.stringify(data) }).then(res => res.json());
+        //    response = await fetch(`${backendUrl}/${admin.modul}/update/${admin.unique}`, { method: "put", body: JSON.stringify(data) }).then(res => res.json());
         //    break;
 
         // case 'delete':
-        //    response = await fetch(`${backendUrl}/${admin.module}/delete/${admin.unique}`, { method: "delete" }).then(res => res.json());
+        //    response = await fetch(`${backendUrl}/${admin.modul}/delete/${admin.unique}`, { method: "delete" }).then(res => res.json());
         //    break;
 
         // case 'upload':
@@ -90,10 +125,27 @@ export async function getData(admin: AdminType) {
     return data;
 }
 
+export async function getOption(name: string) {
+
+    let option;
+    const cookieStore = cookies().get('SESSION_ID');
+    const sessionId = cookieStore?.value;
+
+    option = await fetch(`${backendUrl}/options/${name}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionId}`
+        }
+    }).then(res => res.json());
+    console.log("********** Backend Get Option **********", option);
+    return option;
+}
 
 
 
-export async function setData(formData: FormData, admin: AdminType) {
+
+export async function AdminSetData(formData: FormData, admin: AdminType) {
 
     console.log("**** adminSetData ****");
     console.log(formData);
@@ -130,7 +182,7 @@ export async function setData(formData: FormData, admin: AdminType) {
                 });
 
 
-                redirect(`/admin/${admin.module}`);
+                redirect(`/admin/${admin.modul}`);
             } else {
                 data.alert = "Wrong Email or Password!";
             }
@@ -143,7 +195,7 @@ export async function setData(formData: FormData, admin: AdminType) {
 
     return data;
 
-    //revalidatePath(`/admin/${admin.module}/detail/${admin.unique}`);
+    //revalidatePath(`/admin/${admin.modul}/detail/${admin.unique}`);
 
 
 }

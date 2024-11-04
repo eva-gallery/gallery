@@ -1,32 +1,34 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
 
-import { A } from '@/app/admin';
-import { M } from '@/app/admin/modules';
 
-import { AdminType } from '@/app/admin/types';
+import AdminInsert from './insert';
+import { AdminType } from '../types';
+import { capitalize } from '../functions/tools';
+import { M } from '../modules';
+import { AdminIcon } from './components';
 
 type Props = {
   admin: AdminType;
+  object: any;
   children: React.ReactNode;
 };
 
-const AdminList: React.FC<Props> = ({ admin, children }) => {
+const AdminList: React.FC<Props> = ({ admin, object, children }) => {
 
-  const Module = M[A.capitalize(admin.module) as keyof typeof M] || (() => <div>Unknown module</div>);
+  const Module = M[capitalize(admin.modul) as keyof typeof M] || (() => <div>Unknown module</div>);
 
   return (
     <>
       <h1 className='text-center mb-5'>
-        <A.Icon name={Module.Data.icon} size={48} className='me-3' />
+        <AdminIcon name={Module.Data.icon} size={48} className='me-3' />
         {Module.Data.name}
       </h1>
 
       {children}
 
-      {/* <V.Insert admin={admin}>
-        <Module.Formular fields={Module.Data.fields} options={object.options} />
-      </V.Insert> */}
+      <AdminInsert admin={admin}>
+        <Module.Formular data={object.data} option={object.option} />
+      </AdminInsert>
     </>
   );
 };

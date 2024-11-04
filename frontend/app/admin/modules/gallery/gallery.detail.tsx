@@ -1,59 +1,72 @@
+'use server'
+
 import React from 'react';
 
-import { A } from '@/app/admin';
+import { AdminType } from '../../types';
+import { AdminGetData } from '../../functions/get.data';
+import AdminDetail from '../../components/detail';
+import { AdminBoolean, AdminFlag, AdminHtml } from '../../components/components';
+import AdminMap from '../../components/map';
+import { M } from '..';
 
-import { AdminType } from '@/app/admin/types';
 
-import { M } from '@/app/admin/modules';
 
 
 export async function Detail(admin: AdminType) {
 
 
-    const object = await A.getData(admin);
+    const data = await AdminGetData("admin/gallery/" + admin.unique);
 
-    admin.mode = "exhibition";
-    const exhibition = await A.getData(admin);
+    const option = {
+        "country": await AdminGetData("admin/options/country"),
+    };
+
+    const object = {
+        data,
+        option,
+    }
+
+    const exhibition = await AdminGetData("admin/gallery/" + admin.unique + "/exhibition");
 
     return (
         <>
-            <A.Detail admin={admin} object={object}>
-                <A.Detail.Row icon="gallery" name="Name">
+            <AdminDetail admin={admin} object={object}>
+                <AdminDetail.Row icon="gallery" name="Name">
                     <strong className='fs-3'>
-                        {object['name']}
+                        {data['name']}
                     </strong>
-                </A.Detail.Row>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="textarea" name="Description">
-                    <A.Html html={object['description']} />
-                </A.Detail.Row>
+                <AdminDetail.Row icon="textarea" name="Description">
+                    <AdminHtml html={data['description']} />
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="address" name="Address">
+                <AdminDetail.Row icon="address" name="Address">
                     <span className='text-pre'>
-                        {object['address']}
+                        {data['address']}
                     </span>
-                </A.Detail.Row>
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="globe" name="Country">
-                    <A.Flag code={object['country']['code']} />
-                    {object['country']['name']}
-                </A.Detail.Row>
+                <AdminDetail.Row icon="globe" name="Country">
+                    <AdminFlag code={data['country']['code']} />
+                    {data['country']['name']}
+                </AdminDetail.Row>
 
-                <A.Detail.Row icon="map" name="GPS">
-                    {object.gps}
-                    {object.gps && <A.Map gps={object.gps} />}
-                </A.Detail.Row>
+                {/* <AdminDetail.Row icon="map" name="GPS">
+                    {data.gps}
+                    {data.gps && <AdminMap gps={data.gps} />}
+                </AdminDetail.Row> */}
 
-                <A.Detail.Row icon="boolean" name="Active">
-                    <A.Boolean value={object['active']} />
-                </A.Detail.Row>
-            </A.Detail>
+                <AdminDetail.Row icon="question" name="Public">
+                    <AdminBoolean value={data['public']} />
+                </AdminDetail.Row>
+            </AdminDetail>
 
             <hr className='my-5' />
 
             <h2 className='text-center'>Exhibitions <small>in Gallery</small></h2>
 
-            <M.Exhibition.Table admin={{ "module": "exhibition" }} data={exhibition} />
+            <M.Exhibition.Table admin={{ modul: "exhibition" }} data={exhibition} />
         </>
     );
 }

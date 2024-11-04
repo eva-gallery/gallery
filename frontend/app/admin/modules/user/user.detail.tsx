@@ -1,46 +1,51 @@
 'use server'
 
 import React from 'react';
-import Image from 'next/image';
-
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { AdminType } from '../../types';
+import { AdminGetData } from '../../functions/get.data';
+import AdminDetail from '../../components/detail';
+import { AdminEmail, AdminHtml } from '../../components/components';
+import AdminImage from '../../components/image';
+
 
 
 export async function Detail(admin: AdminType) {
 
-	admin.action = 'list';
-	const object = await A.getData(admin);
+
+	const data = await AdminGetData("admin/user");
+
+	const object = {
+		data
+	}
 
 	return (
 		<>
-			<A.Detail admin={admin} data={object}>
+			<AdminDetail admin={admin} object={object}>
 
 
-				<A.Detail.Row icon="user" name="Name">
+				<AdminDetail.Row icon="user" name="Name">
 					<strong className='fs-3'>
-						{object['name']}
+						{data['name']}
 					</strong>
-				</A.Detail.Row>
+				</AdminDetail.Row>
 
-				<A.Detail.Row icon="textarea" name="Description">
-					<A.Html html={object['description']} />
-				</A.Detail.Row>
+				<AdminDetail.Row icon="textarea" name="Description">
+					<AdminHtml html={data['description']} />
+				</AdminDetail.Row>
 
-				<A.Detail.Row icon="user" name="Avatar">
-					<A.Image src="user/avatar" width={300} height={300} alt="avatar" className='img-thumbnail rounded-circle border' />
-				</A.Detail.Row>
+				<AdminDetail.Row icon="user" name="Avatar">
+					<AdminImage src="user/avatar" width={300} height={300} alt="avatar" className='img-thumbnail rounded-circle border' />
+				</AdminDetail.Row>
 
-				<A.Detail.Row icon="email" name="Email">
-					<A.Email email={object['email']} />
-				</A.Detail.Row>
+				<AdminDetail.Row icon="email" name="Email">
+					<AdminEmail email={data['email']} />
+				</AdminDetail.Row>
 
 
-			</A.Detail>
+			</AdminDetail>
 
 			<hr />
 			<p className='text-center'>

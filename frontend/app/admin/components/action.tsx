@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { A } from '@/app/admin';
 import { AdminType } from '@/app/admin/types';
 
 import { M } from '@/app/admin/modules';
+import { capitalize } from '../functions/tools';
+import { ModuleType } from '@/app/admin/modules/index'; // Adjust the import path as necessary
 
 type Props = {
    admin: AdminType;
@@ -18,10 +19,10 @@ const AdminActions: React.FC<Props> = ({ admin, actions }) => {
 
       if (admin.action && actions.includes(admin.action)) {
 
-         const module = A.capitalize(admin.module);
-         const action = A.capitalize(admin.action);
+         const modul = capitalize(admin.modul) as keyof ModuleType;
+         const action = capitalize(admin.action);
 
-         const component = M[module][action];
+         const component = M[modul][action];
          return component(admin);
       } else {
          return <div>Unknown action</div>;

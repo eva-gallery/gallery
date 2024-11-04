@@ -1,18 +1,31 @@
+'use server'
+
 import React from 'react';
 
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-import { M } from '@/app/admin/modules';
+import { AdminType } from '../../types';
+import { AdminGetData } from '../../functions/get.data';
+import AdminList from '../../components/list';
+import { M } from '..';
+
 
 export async function List(admin: AdminType) {
 
-   const data = await A.getData(admin);
+   const data = await AdminGetData("admin/gallery");
+
+   const option = {
+      "country": await AdminGetData("admin/options/country"),
+   };
+
+   const object = {
+      data,
+      option,
+   }
 
    return (
       <>
-         <A.List admin={admin}>
+         <AdminList admin={admin} object={object}>
             <M.Gallery.Table admin={admin} data={data} />
-         </A.List >
+         </AdminList >
       </>
    );
 }

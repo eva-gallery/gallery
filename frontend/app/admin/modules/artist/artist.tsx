@@ -6,16 +6,15 @@ import { Detail } from './artist.detail';
 import { List } from './artist.list';
 import Table from './artist.table';
 import Formular from './artist.formular';
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-import { icon } from '@fortawesome/fontawesome-svg-core';
+import AdminAction from '../../components/action';
+import { AdminType } from '../../types';
+import { Transform } from './artist.functions';
 
 
 async function Artist(admin: AdminType) {
 
 	return (
-		<A.Action admin={admin} actions={Data.actions} />
+		<AdminAction admin={admin} actions={Data.actions} />
 	);
 };
 
@@ -35,6 +34,7 @@ Artist.List = List;
 Artist.Table = Table;
 Artist.Formular = Formular;
 Artist.Data = Data;
+Artist.Transform = Transform;
 
 export default Artist;
 

@@ -3,18 +3,16 @@
 import React from 'react';
 
 import { Container } from 'react-bootstrap';
-
-import { AdminType } from '@/app/admin/types';
-
-import { M } from '@/app/admin/modules';
-import { A } from '@/app/admin';
+import { AdminType } from '../types';
+import { capitalize } from '../functions/tools';
+import { M } from '../modules';
 
 
 
 export default async function Page({ params }: any) {
 
    const admin: AdminType = {
-      module: params.url[0],
+      modul: params.url[0],
       action: params.url[1],
       unique: params.url[2],
       mode: params.url[3]
@@ -22,12 +20,12 @@ export default async function Page({ params }: any) {
 
 
 
-   const Module = M[A.capitalize(admin.module) as keyof typeof M] || (() => <div>Unknown module</div>);
+   const Modul = M[capitalize(admin.modul) as keyof typeof M] || (() => <div>Unknown module</div>);
 
    return (
 
       <Container className='py-5'>
-         {Module(admin)}
+         {Modul(admin)}
       </Container>
 
    );

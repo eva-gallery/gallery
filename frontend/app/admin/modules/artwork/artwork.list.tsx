@@ -1,19 +1,34 @@
 import React from 'react';
 
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/@api/types';
-import { M } from '@/app/admin/modules';
+
+import { AdminType } from '@/app/admin/types';
+import { AdminGetData } from '../../functions/get.data';
+import AdminList from '../../components/list';
+import { M } from '..';
 
 
 export async function List(admin: AdminType) {
 
-   const data = await A.getData(admin);
+   const data = await AdminGetData("admin/artwork");
+
+   const option = {
+      "artist": await AdminGetData("admin/options/artist"),
+      "artwork_genre": await AdminGetData("admin/options/artwork_genre"),
+      "artwork_worktype": await AdminGetData("admin/options/artwork_worktype"),
+      "artwork_material": await AdminGetData("admin/options/artwork_material"),
+      "artwork_technique": await AdminGetData("admin/options/artwork_technique"),
+   };
+
+   const object = {
+      data,
+      option,
+   }
 
    return (
       <>
-         <A.List admin={admin}>
+         <AdminList admin={admin} object={object}>
             <M.Artwork.Table admin={admin} data={data} />
-         </A.List >
+         </AdminList >
       </>
    );
 }

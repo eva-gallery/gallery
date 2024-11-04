@@ -1,28 +1,21 @@
 'use client'
 
 import React from 'react';
-import { A } from '@/app/admin';
-import { M } from '@/app/admin/modules';
+import { AdminFormInput } from '../../components/form';
+import { ModuleFormular } from '../../types';
 
-type Props = {
-   fields: any;
-   data: { [key: string]: any };
-   options?: { [key: string]: { value: number, label: string } };
-};
 
-const Formular: React.FC<Props> = ({ fields, data, options }) => {
-
+export const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
 
    return (
       <>
-         <A.Form.Input type="tinytext" icon="artist" label="Name" name="name" value={data['name']} />
-         <A.Form.Input type="text" icon="textarea" label="Description" name="description" value={data['description']} />
-         <A.Form.Input type="longtext" icon="address" label="Address" name="address" value={data['address']} />
-         <A.Form.Input type="parent" icon="globe" label="Country" name="country-name" value={data['country-name']} options={options?.["country"]} />
-         <A.Form.Input type="varchar" icon="map" label="GPS" name="gps" value={data['gps']} />
-         <A.Form.Input type="boolean" icon="question" label="Active" name="active" value={data['active']} />
+         <AdminFormInput type="tinytext" icon="artist" label="Name" name="name" value={data['name']} required />
+         <AdminFormInput type="longtext" icon="textarea" label="Description" name="description" value={data['description']} />
+         <AdminFormInput type="longtext" icon="address" label="Address" name="address" value={data['address']} />
+         <AdminFormInput type="parent" icon="globe" label="Country" name="countryId" value={data['country']?.["id"] ?? ''} option={option?.['country']} required />
+         {/* <AdminFormInput type="varchar" icon="map" label="GPS" name="gps" value={data['gps']} /> */}
+         <AdminFormInput type="boolean" icon="question" label="Public" name="public" value={data['public']} />
       </>
    );
 }
 
-export default Formular;

@@ -63,8 +63,8 @@ export const AdminIcon: React.FC<{ name: string; size: number; className?: strin
 
 export const AdminLinkIcon: React.FC<{ admin: AdminType; children: React.ReactNode; }> = ({ admin, children }) => {
   return (
-    <a href={`/admin/${admin.module}/detail/${admin.unique}`}>
-      <AdminIcon name={admin.module} size={24} className='me-2' />
+    <a href={`/admin/${admin.modul}/detail/${admin.unique}`}>
+      <AdminIcon name={admin.modul} size={24} className='me-2' />
       {children}
     </a>
   );
@@ -73,7 +73,7 @@ export const AdminLinkIcon: React.FC<{ admin: AdminType; children: React.ReactNo
 
 export const AdminLink: React.FC<{ admin: AdminType; children: React.ReactNode; }> = ({ admin, children }) => {
   return (
-    <a href={`/admin/${admin.module}/detail/${admin.unique}`}>
+    <a href={`/admin/${admin.modul}/detail/${admin.unique}`}>
       {children}
     </a>
   );

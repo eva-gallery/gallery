@@ -1,12 +1,8 @@
 
 
 import React from 'react';
-import Image from 'next/image';
 
-
-import { A } from '@/app/admin';
 import { AdminType } from '@/app/admin/types';
-import { getData } from '../../functions/get.data';
 
 
 

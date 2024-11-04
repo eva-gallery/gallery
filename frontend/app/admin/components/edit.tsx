@@ -9,9 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashCan, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 
-import { A } from '@/app/admin';
-
 import { AdminType } from '@/app/admin/types';
+import { AdminIcon } from './components';
+import { AdminForm } from './form';
+import { AdminDeleteData } from '../functions/delete.data';
 
 type Props = {
   admin: AdminType;
@@ -26,11 +27,21 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
   const handleShow = () => setShow(true);
 
 
+  const handleDelete = async () => {
+    try {
+      // Pošleme DELETE request
+
+      await AdminDeleteData(admin, `/admin/${admin.modul}/delete/${admin.unique}`);
+
+    } catch (error) {
+      console.error("Error while deleting record:", error);
+    }
+  };
+
   admin.action = "edit";
 
   return (
     <>
-
 
       <Button variant="success" onClick={handleShow}>
         <FontAwesomeIcon icon={faPen} fixedWidth className='me-1' />
@@ -41,28 +52,28 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
       <Modal size="lg" scrollable show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-            <A.Icon name={admin.module} className='me-2' size={36} />
+            <AdminIcon name={admin.modul} className='me-2' size={36} />
             Edit
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
 
-          <A.Form admin={admin}>
+          <AdminForm admin={admin} method="PATCH" endpoint={`/admin/${admin.modul}/update/${admin.unique}`} onSuccess={handleClose}>
             {children}
-          </A.Form>
+          </AdminForm>
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose} className='me-auto'>
+          <Button variant="danger" onClick={handleDelete} className='me-auto'>
             <FontAwesomeIcon icon={faTrashCan} fixedWidth className='me-1' />
             Delete
           </Button>
-          <Button variant="success" form="form-detail" type="submit" onClick={handleClose} >
+          <Button variant="success" form="form" type="submit" >
             <FontAwesomeIcon icon={faCheck} fixedWidth className='me-1' />
             Save
           </Button>
         </Modal.Footer>
-      </Modal>
+      </Modal >
 
 
     </>

@@ -1,5 +1,6 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
 
 
 const backendUrl = process.env.
@@ -14,10 +15,11 @@ type Props = {
 
 const AdminImage: React.FC<Props> = ({ src, ...options }) => {
 
+  const rand = Math.random();
 
   return (
     <>
-      <img src={`${backendUrl}/${src}`} {...options} />
+      <img src={`${backendUrl}/${src}`} {...options} className='img-fluid' />
     </>
   );
 };

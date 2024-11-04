@@ -5,16 +5,15 @@ import React from 'react';
 import { Detail } from './gallery.detail';
 import { List } from './gallery.list';
 import Table from './gallery.table';
-import Formular from './gallery.formular';
+import { Formular } from './gallery.formular';
+import { AdminType } from '../../types';
+import AdminAction from '../../components/action';
+import { Transform } from './gallery.functions';
 
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
 
-
-const actions = ["list", "detail"];
 
 const Data = {
-   actions: actions,
+   actions: ["list", "detail"],
    icon: "gallery",
    name: "Gallery",
 };
@@ -22,7 +21,7 @@ const Data = {
 
 async function Gallery(admin: AdminType) {
    return (
-      <A.Action admin={admin} actions={actions} />
+      <AdminAction admin={admin} actions={Data.actions} />
    );
 };
 
@@ -32,6 +31,7 @@ Gallery.List = List;
 Gallery.Table = Table;
 Gallery.Data = Data;
 Gallery.Formular = Formular;
+Gallery.Transform = Transform;
 
 
 export default Gallery;

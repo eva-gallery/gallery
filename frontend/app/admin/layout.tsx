@@ -1,13 +1,13 @@
 'use client'
+
 import { Container, Row, Col } from 'react-bootstrap';
-import { A } from '@/app/admin';
-import Image from 'next/image';
+import AdminNavbar from './components/navbar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <header className='bg-light border-bottom'>
-        <A.Navbar />
+        <AdminNavbar />
       </header>
       <main>
         {children}

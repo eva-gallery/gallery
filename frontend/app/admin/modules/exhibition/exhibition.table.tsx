@@ -1,60 +1,57 @@
+'use server'
+
 import React from 'react';
 
-import Image from 'next/image';
-
-import { A } from '@/app/admin';
-import { AdminType } from '@/app/admin/types';
-
-type Props = {
-   admin: AdminType;
-   data: any;
-};
+import { ModuleTable } from '../../types';
+import { AdminTable, AdminTableColumn, AdminTableRow } from '../../components/table';
+import { AdminBoolean, AdminDate, AdminIcon, AdminLink, AdminLinkIcon } from '../../components/components';
 
 
-const Table: React.FC<Props> = ({ admin, data }) => {
+
+const Table: React.FC<ModuleTable> = ({ admin, data }) => {
 
    const columns = [
       { name: "Name" },
       { name: "Gallery" },
       { name: "Date" },
       { name: "Curator" },
-      { name: "Active" }
+      { name: "Public" }
    ];
 
    return (
-      <A.Table columns={columns}>
+      <AdminTable columns={columns}>
          {data.map((object: any, index: any) => (
-            <A.TableRow data={object} admin={admin} key={index}>
+            <AdminTableRow data={object} admin={admin} key={index}>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   <strong>
-                     <A.LinkIcon admin={{ module: "exhibition", action: "detail", unique: object['id'] }}>
+                     <AdminLinkIcon admin={{ modul: "exhibition", action: "detail", unique: object['id'] }}>
                         {object['name']}
-                     </A.LinkIcon>
+                     </AdminLinkIcon>
                   </strong>
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Link admin={{ module: "gallery", action: "detail", unique: object['gallery']['id'] }}>
+               <AdminTableColumn>
+                  <AdminLink admin={{ modul: "gallery", action: "detail", unique: object['gallery']['id'] }}>
                      {object['gallery']['name']}
-                  </A.Link>
-               </A.TableColumn>
+                  </AdminLink>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Icon name="date" size={24} className='me-2' />
-                  <A.Date date={object['fromDate']} />  ~ <A.Date date={object['toDate']} />
-               </A.TableColumn>
+               <AdminTableColumn>
+                  <AdminIcon name="date" size={24} className='me-2' />
+                  <AdminDate date={object['fromDate']} />  ~ <AdminDate date={object['toDate']} />
+               </AdminTableColumn>
 
-               <A.TableColumn>
+               <AdminTableColumn>
                   {object['curator']}
-               </A.TableColumn>
+               </AdminTableColumn>
 
-               <A.TableColumn>
-                  <A.Boolean value={object['active']} />
-               </A.TableColumn>
-            </A.TableRow>
+               <AdminTableColumn>
+                  <AdminBoolean value={object['public']} />
+               </AdminTableColumn>
+            </AdminTableRow>
          ))}
-      </A.Table>
+      </AdminTable>
    );
 };
 

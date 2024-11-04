@@ -22,22 +22,16 @@ interface AdminButtonType extends React.FC<AdminButtonProps> {
   Insert: React.FC<PropsInsert>;
 };
 
-const AdminButton: AdminButtonType = ({ }) => {
-  return (
-    <>
-    </>
-  );
-};
 
-const AdminButtonDetail: React.FC<Props> = ({ admin }) => {
+export const AdminButtonDetail: React.FC<Props> = ({ admin }) => {
   return (
-    <a href={`/admin/${admin.module}/detail/${admin.unique}`} className='btn btn-primary btn-sm'>
+    <a href={`/admin/${admin.modul}/detail/${admin.unique}`} className='btn btn-primary btn-sm'>
       <FontAwesomeIcon icon={faArrowRight} fixedWidth />
     </a>
   );
 };
 
-const AdminButtonInsert: React.FC<PropsInsert> = ({ handleShow }) => {
+export const AdminButtonInsert: React.FC<PropsInsert> = ({ handleShow }) => {
   return (
     <Button variant="success" className='d-block mx-auto' onClick={handleShow}>
       <FontAwesomeIcon icon={faPlus} fixedWidth className='me-2' />
@@ -45,8 +39,3 @@ const AdminButtonInsert: React.FC<PropsInsert> = ({ handleShow }) => {
     </Button>
   );
 };
-
-AdminButton.Detail = AdminButtonDetail;
-AdminButton.Insert = AdminButtonInsert;
-
-export default AdminButton;

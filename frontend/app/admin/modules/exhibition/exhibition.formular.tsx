@@ -1,26 +1,21 @@
 'use client'
 
 import React from 'react';
-import { A } from '@/app/admin';
-import { M } from '@/app/admin/modules';
+import { AdminFormInput } from '../../components/form';
+import { ModuleFormular } from '../../types';
 
-type Props = {
-   fields: any;
-   data: { [key: string]: any };
-   options?: { [key: string]: { value: number, label: string } };
-};
 
-const Formular: React.FC<Props> = ({ fields, data, options }) => {
+const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
 
 
    return (
       <>
-         <A.Form.Input type="tinytext" icon="exhibition" label="Name" name="name" value={data['name']} />
-         <A.Form.Input type="date" icon="date" label="Date since" name="date_since" value={data['date_since']} />
-         <A.Form.Input type="date" icon="date" label="Date to" name="date_to" value={data['date_since']} />
-         <A.Form.Input type="tinytext" icon="client" label="Curator" name="curator" value={data['curator']} />
-         <A.Form.Input type="parent" icon="gallery" label="Gallery" name="gallery-name" value={data['gallery-name']} options={options?.["gallery"]} />
-         <A.Form.Input type="boolean" icon="question" label="Active" name="active" value={data['active']} />
+         <AdminFormInput type="tinytext" icon="exhibition" label="Name" name="name" value={data['name']} required />
+         <AdminFormInput type="date" icon="date" label="Date since" name="fromDate" value={data['fromDate']} required />
+         <AdminFormInput type="date" icon="date" label="Date to" name="toDate" value={data['toDate']} required />
+         <AdminFormInput type="tinytext" icon="client" label="Curator" name="curator" value={data['curator']} />
+         <AdminFormInput type="parent" icon="gallery" label="Gallery" name="galleryId" value={data['gallery']?.["id"] ?? ''} option={option?.['gallery']} required />
+         <AdminFormInput type="boolean" icon="question" label="Public" name="public" value={data['public']} />
       </>
    );
 }
