@@ -24,9 +24,12 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
     const Module = M[capitalize(admin.modul) as keyof typeof M];
 
 
-    let type = 'json';
+    let type;
     formData.forEach((value) => {
-        if (value instanceof File && value.size > 0) {
+        if (typeof value === 'string' && value !== '') {
+            type = 'json';
+        }
+        else {
             type = 'form';
         }
     });
