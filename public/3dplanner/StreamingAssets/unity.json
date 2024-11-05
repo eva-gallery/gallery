@@ -1,0 +1,134 @@
+{
+  "room": [
+    {
+      "id": 1,
+      "name": "Malá sála",
+      "x": 0,
+      "y": 0,
+      "width": 10,
+      "length": 20,
+      "height": 3.6,
+      "type": "texture",
+      "wall": [
+        {
+          "id": 1,
+          "x": 0,
+          "y": 0,
+          "z": 10,
+          "rotation": 180,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#aaa",
+          "opacity": 1,
+          "texture": 14,
+          "image": []
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "rotation": 0,
+          "width": 5,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#000",
+          "opacity": 0.5,
+          "texture": 0,
+          "image": [
+            {
+              "id": 4,
+              "artworkId": 12,
+              "x": 2.5,
+              "y": 1.6,
+              "scale": 2
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "x": -5,
+          "y": 0,
+          "z": 0,
+          "rotation": 90,
+          "width": 10,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#999",
+          "opacity": 1,
+          "texture": 15,
+          "image": []
+        },
+        {
+          "id": 4,
+          "x": 1.5,
+          "y": 0,
+          "z": -10,
+          "rotation": 0,
+          "width": 7,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#888",
+          "opacity": 1,
+          "texture": 16,
+          "image": []
+        },
+        {
+          "id": 5,
+          "x": 5,
+          "y": 0,
+          "z": 0,
+          "rotation": 90,
+          "width": 18,
+          "height": 3.6,
+          "thick": 0.15,
+          "color": "#444",
+          "opacity": 1,
+          "texture": 0,
+          "image": [
+            {
+              "id": 1,
+              "artworkId": 10,
+              "x": 3,
+              "y": 1.6,
+              "scale": 2
+            },
+            {
+              "id": 2,
+              "artworkId": 11,
+              "x": 9,
+              "y": 1.6,
+              "scale": 2
+            },
+            {
+              "id": 3,
+              "artworkId": 19,
+              "x": 14,
+              "y": 1.6,
+              "scale": 2
+            }
+          ]
+        }
+      ],
+      "lamp": [
+        {
+          "id": 1,
+          "x": 0,
+          "y": 3.5,
+          "z": 5,
+          "range": 0,
+          "shadow": true
+        },
+        {
+          "id": 2,
+          "x": 0,
+          "y": 3.5,
+          "z": -5,
+          "range": 0,
+          "shadow": true
+        }
+      ]
+    }
+  ]
+}
