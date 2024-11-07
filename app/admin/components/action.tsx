@@ -4,7 +4,7 @@ import { AdminType } from '@/app/admin/types';
 
 import { M } from '@/app/admin/modules';
 import { capitalize } from '../functions/tools';
-import { ModuleType } from '@/app/admin/modules/index'; // Adjust the import path as necessary
+import { ModuleType } from '@/app/admin/modules/index';
 
 type Props = {
    admin: AdminType;

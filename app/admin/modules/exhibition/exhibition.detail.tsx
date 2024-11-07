@@ -7,6 +7,7 @@ import { AdminGetData } from '../../functions/get.data';
 import AdminDetail from '../../components/detail';
 import { AdminBoolean, AdminDate, AdminFlag, AdminHtml, AdminLink } from '../../components/components';
 import { M } from '..';
+import AdminInsert from '../../components/insert';
 
 
 export async function Detail(admin: AdminType) {
@@ -17,6 +18,7 @@ export async function Detail(admin: AdminType) {
         "gallery": await AdminGetData("admin/options/gallery"),
         "country": await AdminGetData("admin/options/country"),
         "artist_category": await AdminGetData("admin/options/artist_category"),
+        "artwork": await AdminGetData("admin/options/artwork"),
     };
 
     const object = {
@@ -72,6 +74,11 @@ export async function Detail(admin: AdminType) {
 
             <h2 className='text-center'>Artworks <small>in Exhibition</small></h2>
             <M.Artwork.Table admin={{ modul: "artwork" }} data={artwork} />
+            <AdminInsert admin={admin}>
+                <M.Exhibition.FormularArtwork data={object.data} option={object.option} />
+            </AdminInsert>
+
+            <hr className='my-5' />
 
             <h2 className='text-center'>3D Designs <small>in Exhibition</small></h2>
             <M.Designer.Table admin={{ modul: "designer" }} data={updatedDesigner} />
@@ -81,6 +88,9 @@ export async function Detail(admin: AdminType) {
         </>
     );
 }
+
+
+
 
 
 

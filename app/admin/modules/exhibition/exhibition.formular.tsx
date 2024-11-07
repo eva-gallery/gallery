@@ -5,7 +5,7 @@ import { AdminFormInput } from '../../components/form';
 import { ModuleFormular } from '../../types';
 
 
-const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
+export const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
 
 
    return (
@@ -20,4 +20,21 @@ const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
    );
 }
 
-export default Formular;
+export const FormularArtwork: React.FC<ModuleFormular> = ({ data, option }) => {
+
+   return (
+      <>
+         <AdminFormInput type="parent" icon="artwork" label="Artwork" name="name" value={data['name']} option={option?.['artwork']} required />
+      </>
+   );
+}
+
+// doplnim neskor.
+// export const FormularDesigner: React.FC<ModuleFormular> = ({ data, option }) => {
+
+//    return (
+//       <>
+//          <AdminFormInput type="tinytext" icon="designer" label="Name" name="name" value={data['name']} required />
+//       </>
+//    );
+// }

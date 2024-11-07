@@ -13,6 +13,7 @@ export const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
          <AdminFormInput type="longtext" icon="textarea" label="Description" name="description" value={data['description']} />
          <AdminFormInput type="image" icon="user" label="Avatar" name="avatar" value={data['id']} />
          <AdminFormInput type="tinytext" icon="email" label="Email" name="email" value={data['email']} />
+         <AdminFormInput type="password" icon="password" label="Password" name="password" value={data['password']} />
       </>
    );
 }

@@ -5,6 +5,7 @@ import { AdminType } from '../../types';
 import { AdminBoolean, AdminHtml, AdminLink } from '../../components/components';
 import AdminImage from '../../components/image';
 import { M } from '..';
+import AdminInsert from '../../components/insert';
 
 export async function Detail(admin: AdminType) {
 
@@ -16,6 +17,7 @@ export async function Detail(admin: AdminType) {
         "artwork_worktype": await AdminGetData("admin/options/artwork_worktype"),
         "artwork_material": await AdminGetData("admin/options/artwork_material"),
         "artwork_technique": await AdminGetData("admin/options/artwork_technique"),
+        "exhibition": await AdminGetData("admin/options/exhibition"),
     };
 
     const object = {
@@ -47,7 +49,7 @@ export async function Detail(admin: AdminType) {
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="artwork" name="Image">
-                    <a href={`${backendUrl}/artwork/${data['id']}/thumbnail`} target='_blank'>
+                    <a href={`${backendUrl}/artwork/${data['id']}/image`} target='_blank'>
                         <AdminImage src={`artwork/${data['id']}/thumbnail`} alt={data['name']} width={480} />
                     </a>
                 </AdminDetail.Row>
@@ -57,11 +59,24 @@ export async function Detail(admin: AdminType) {
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="nft" name="NFT">
-                    <AdminBoolean value={data['nft']} />
+                    {data['nft'] ? (
+                        <>
+                            <AdminBoolean value={true} />
+                            <p>
+                                NFT wallet: {data['nft'].walletId} <br />
+                                NFT image:&#160;
+                                <a href={data['nft'].nftData.image} target='_blank'>
+                                    {data['nft'].nftData.image}
+                                </a>
+                            </p>
+                        </>
+                    ) : (
+                        <AdminBoolean value={false} />
+                    )}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="ai" name="AI">
-                    <AdminBoolean value={data['nft']} />
+                    <AdminBoolean value={data['ai']} />
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="date" name="tags">
@@ -98,6 +113,11 @@ export async function Detail(admin: AdminType) {
             <h2 className='text-center'><small>Artwork in</small> Exhibitions</h2>
 
             <M.Exhibition.Table admin={{ modul: "exhibition" }} data={exhibition} />
+
+            <AdminInsert admin={admin}>
+                <M.Artwork.FormularExhibition data={object.data} option={object.option} />
+            </AdminInsert>
+
         </>
     );
 }

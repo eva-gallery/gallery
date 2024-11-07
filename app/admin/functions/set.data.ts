@@ -123,7 +123,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
                         path: '/',
                         sameSite: 'strict'
                     });
-                    redirect("/admin/" + admin.modul);
+                    redirect("/admin");
 
                 } else {
                     return { error: "Wrong Email or Password!" };

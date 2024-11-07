@@ -38,13 +38,13 @@ export const AdminCard: React.FC<AdminTableRowProps> = ({ data: object, admin })
 
    return (
       <>
-         <Card className='mb-3 h-100 shadow'>
+         <Card className='mb-3 h-100'>
             <Card.Header className=''>
                {object['name']}
             </Card.Header>
 
             <Card.Body>
-               <AdminImage src={`artwork/${object['id']}/thumbnail`} alt={object['name']} type="thumbnail" className="img-fluid" />
+               <AdminImage src={`artwork/${object.artwork?.id}/thumbnail`} alt={object['name']} type="thumbnail" className="img-fluid" />
             </Card.Body>
 
             <Card.Footer>
@@ -63,8 +63,3 @@ export const AdminCard: React.FC<AdminTableRowProps> = ({ data: object, admin })
    );
 };
 
-
-// AdminTable.Column = AdminTableColumn;
-// AdminTable.Row = AdminTableRow;
-
-//export default AdminTable;

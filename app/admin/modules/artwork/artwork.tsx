@@ -5,7 +5,7 @@ import React from 'react';
 import { Detail } from './artwork.detail';
 import { List } from './artwork.list'
 import Table from './artwork.table';
-import Formular from './artwork.formular';
+import { Formular, FormularExhibition } from './artwork.formular';
 
 import AdminAction from '../../components/action';
 import { AdminType } from '@/app/admin/types';
@@ -34,6 +34,7 @@ Artwork.List = List;
 Artwork.Table = Table;
 Artwork.Data = Data;
 Artwork.Formular = Formular;
+Artwork.FormularExhibition = FormularExhibition;
 Artwork.Transform = Transform;
 
 export default Artwork;

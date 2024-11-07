@@ -15,11 +15,18 @@ type Props = {
 
 const AdminImage: React.FC<Props> = ({ src, ...options }) => {
 
-  const rand = Math.random();
-
   return (
     <>
       <img src={`${backendUrl}/${src}`} {...options} className='img-fluid' />
+    </>
+  );
+};
+
+export const AdminNftImage: React.FC<Props> = ({ src, ...options }) => {
+
+  return (
+    <>
+      <img src={src} {...options} className='img-fluid' />
     </>
   );
 };

@@ -39,6 +39,8 @@ export const AdminFormControl: React.FC<PropsControl> = ({ type, name, value, op
          return <FormEnum name={name} value={value} option={option} {...(required ? { required: true } : {})} />;
       case "image":
          return <FormImage name={name} value={value} {...(required ? { required: true } : {})} />;
+      case "password":
+         return <FormPassword name={name} value={value} {...(required ? { required: true } : {})} />;
 
 
       default:
@@ -125,5 +127,21 @@ const FormImage: React.FC<PropsInput> = ({ name, value, required }) => {
          {value && <AdminImage src={`artwork/${value}/thumbnail`} alt={value} width={300} className='mt-3' />}
       </>
    );
+};
+
+const FormPassword: React.FC<PropsInput> = ({ name, value, required }) => {
+   return (
+      <>
+         <div className='input-group mb-3'>
+            <span className='input-group-text'>Current</span>
+            <Form.Control name={name} defaultValue={value} type="password" {...(required ? { required: true } : {})} />
+         </div>
+         <div className='input-group'>
+            <span className='input-group-text'>New</span>
+            <Form.Control name={name} defaultValue={value} type="password" {...(required ? { required: true } : {})} />
+         </div>
+      </>
+   );
+
 };
 

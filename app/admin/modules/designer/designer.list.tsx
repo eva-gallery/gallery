@@ -13,12 +13,20 @@ export async function List(admin: AdminType) {
 
    const data = await AdminGetData("admin/room");
 
-   const cookieStore = cookies().get('SESSION_ID');
-   const sessionId = cookieStore?.value || '';
+
+
+   const option = {
+      "exhibition": await AdminGetData("admin/options/exhibition"),
+   };
 
    const object = {
       data,
+      option,
    }
+
+
+   const cookieStore = cookies().get('SESSION_ID');
+   const sessionId = cookieStore?.value || '';
 
    return (
       <>

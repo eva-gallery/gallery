@@ -5,7 +5,7 @@ import React from 'react';
 import { Detail } from './exhibition.detail';
 import { List } from './exhibition.list';
 import Table from './exhibition.table';
-import Formular from './exhibition.formular';
+import { Formular, FormularArtwork } from './exhibition.formular';
 import AdminAction from '../../components/action';
 
 
@@ -31,6 +31,7 @@ Exhibition.List = List;
 Exhibition.Table = Table;
 Exhibition.Data = Data;
 Exhibition.Formular = Formular;
+Exhibition.FormularArtwork = FormularArtwork;
 Exhibition.Transform = Transform;
 
 export default Exhibition;
