@@ -27,7 +27,6 @@ export async function List(admin: AdminType) {
 
    }
 
-   console.log(artwork);
 
    return (
       <>
@@ -46,18 +45,18 @@ export async function List(admin: AdminType) {
                   <span className='me-3'>
                      Connected wallet:
                   </span>
-                  {wallet.map((data: any) => (
-                     <>
-                        <AdminIcon name='wallet' size={24} className='me-1' />
+                  {wallet.map((data: any, key: number) => (
+                     <React.Fragment key={key}>
+                        <AdminIcon key={key} name='wallet' size={24} className='me-1' />
                         <strong className='me-3'>
                            {data['walletAddress']}
                         </strong>
-                     </>
+                     </React.Fragment>
                   ))}
                </p>
                <Button as="a" variant="primary" href="/admin/nft/import">
                   <FontAwesomeIcon icon={faFileImport} className="me-2" />
-                  Import NFT's
+                  Show NFTs
                </Button>
             </>
 
@@ -68,9 +67,9 @@ export async function List(admin: AdminType) {
 
          {user['trialMintId'] ? (
             <>
-               {nft.map((data: any) => (
+               {nft.map((data: any, key: number) => (
                   data['id'] === user['trialMintId'] ? (
-                     <M.Nft.Trialminted data={data} />
+                     <M.Nft.Trialminted data={data} key={key} />
                   ) : null
                ))}
             </>
@@ -81,9 +80,9 @@ export async function List(admin: AdminType) {
             <>
                <h2>NFT Artworks</h2>
                <Row className='mb-5 g-4 row-cols-xl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2'>
-                  {nft.map((data: any) => (
+                  {nft.map((data: any, key: number) => (
                      data['artwork'] ? (
-                        <Col>
+                        <Col key={key}>
                            {/* <AdminNftImage src={data['nftData'].id} alt={data['nftData'].name} width={100} height="auto" /> */}
                            <AdminImage src={`artwork/${data['artwork'].id}/thumbnail`} alt={data['name']} />
                            <p className='mt-3'>
@@ -114,9 +113,9 @@ export async function List(admin: AdminType) {
             <>
                <h2>Artworks to Mint NFT</h2>
                <Row className='mb-5 g-4 row-cols-xl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2'>
-                  {artwork.map((data: any) => (
+                  {artwork.map((data: any, key: number) => (
                      data['nft'] ? null : (
-                        <Col>
+                        <Col key={key}>
                            <AdminImage src={`artwork/${data['id']}/thumbnail`} alt={data['name']} />
                            <p className='mt-3'>
                               <a href={`/admin/artwork/detail/${data['id']}`}>
@@ -127,7 +126,7 @@ export async function List(admin: AdminType) {
                               </a><br />
                               <AdminIcon name='artist' size={24} className='me-1' />
                               {data['artist'].name} <br />
-                              <M.Nft.Mint id={data['id']} />
+                              <M.Nft.Mint admin={admin} data={data} collection={collection} />
                            </p>
                         </Col>
                      )))}
