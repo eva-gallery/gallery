@@ -72,7 +72,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
             headers: headers,
             data: body
         });
-        console.log("**** Response ****", response);
+
     }
     catch (err: any) {
         error = err.message || 'Error fetching data. Server down?';
@@ -91,7 +91,6 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 
     const data = response?.data;
 
-    console.log("**** Response Data ****", data);
     if (error) {
         return { data: data, error };
     } else {
@@ -114,15 +113,31 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
                 break;
 
             case "login":
-                if (data.sessionId) {
-                    cookies().set({
-                        name: 'SESSION_ID',
-                        value: data.sessionId,
-                        secure: true,
-                        httpOnly: true,
-                        path: '/',
-                        sameSite: 'strict'
-                    });
+                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('SESSION_ID='));
+                if (cookie) {
+
+                    const getCookieValue = (cookieString: string, cookieName: string) => {
+                        const cookies = cookieString.split('; ');
+                        const targetCookie = cookies.find(cookie => cookie.startsWith(`${cookieName}=`));
+                        return targetCookie ? targetCookie.split('=')[1] : null;
+                    };
+
+                    // Extrahujte iba hodnotu SESSION_ID
+                    const sessionId = getCookieValue(cookie, 'SESSION_ID');
+
+                    console.log("**** Session ID ****", sessionId);
+                    if (sessionId) {
+                        cookies().set({
+                            name: 'SESSION_ID',
+                            value: decodeURIComponent(sessionId),
+                            secure: true,
+                            httpOnly: true,
+                            path: '/',
+                            sameSite: 'strict'
+                        });
+                    } else {
+                        return { error: "Session ID is null!" };
+                    }
                     redirect("/admin");
 
                 } else {

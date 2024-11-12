@@ -45,11 +45,13 @@ export const AdminFlag: React.FC<{ code: string }> = ({ code }) => {
 };
 
 
-export const AdminHtml: React.FC<{ html: string; className?: string; }> = ({ html, className }) => {
+export const AdminHtml: React.FC<{ html: string | null | undefined; className?: string }> = ({ html, className }) => {
   return (
-    <span className={className} dangerouslySetInnerHTML={{ __html: html }} />
+    <span className={className} dangerouslySetInnerHTML={{ __html: html || '' }} />
   );
 };
+
+
 
 
 

@@ -61,7 +61,7 @@ const AdminDetailRow: React.FC<DetailRowProps> = ({ icon, name, children }) => {
 
   return (
     <Row>
-      <Col className='col-md-3 py-2'>
+      <Col className='col-md-4 py-2'>
         <AdminIcon name={icon} size={24} className='me-2' />
         {name}
       </Col>

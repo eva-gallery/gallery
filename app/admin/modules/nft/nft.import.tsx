@@ -1,122 +1,89 @@
-import React from 'react';
+'use client'
 
-import { AdminType } from '@/app/admin/types';
-import { Button, Col, Row } from 'react-bootstrap';
-import AdminList from '../../components/list';
-import { AdminGetData } from '../../functions/get.data';
+import { faCheck, faFileImport, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { AdminForm, AdminFormInput } from '../../components/form';
+import { AdminIcon } from '../../components/components';
+import { AdminType } from '../../types';
 import { M } from '..';
 import { AdminNftImage } from '../../components/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faFileImport, faLink } from '@fortawesome/free-solid-svg-icons';
-import AdminImage from '../../components/image';
-import { AdminIcon } from '../../components/components';
+import AdminDetail from '../../components/detail';
+
+// Dudo - tu je komponent na import NFT
+
+interface MintProps {
+   admin: AdminType
+   data: { [key: string]: any };
+   option?: {
+      [key: string]: Array<{ id: string, name: any }>;
+   };
+}
+
+export const Import: React.FC<MintProps> = ({ admin, data, option }) => {
 
 
-export async function Import(admin: AdminType) {
+   const [show, setShow] = useState(false);
 
-
-   const wallet = await AdminGetData("admin/wallet");
-
-
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
 
    return (
       <>
-         <h1 className='mb-3'>
-            <AdminIcon name="nft" size={48} className='me-3' />
-            NFT Import
-         </h1>
+         <Button variant="primary" className='mt-2' onClick={handleShow}>
+            <FontAwesomeIcon icon={faFileImport} className="me-2" />
+            Import NFT
+         </Button>
 
-         <hr className='my-5' />
-         {wallet && wallet.map((wallet_item: any, walletKey: number) => (
-            <React.Fragment key={walletKey}>
-               <h2 className='mb-3'>
-                  <AdminIcon name='wallet' size={32} className='me-2' />
-                  <small>Wallet:</small> <code><em className='font-monospace'>{wallet_item['walletAddress']}</em></code>
-               </h2>
+         <Modal size="lg" show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+               <Modal.Title>
+                  <AdminIcon name="nft" className='me-2' size={36} />
+                  Import NFT
+               </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
 
-               {wallet_item.collections && wallet_item.collections.map((collection_item: any, collectionKey: number) => (
-                  collection_item['nfts'] && collection_item['nfts'].length > 0 ? (
-                     <React.Fragment key={collectionKey}>
-                        <h3 className='mb-3'>
-                           <AdminIcon name='collection' size={32} className='me-2' />
-                           <small>Collection:</small> {collection_item['colData'].name}
-                        </h3>
-                        <Row className='mb-5 border p-3'>
-                           <Col xs="auto">
-                              <AdminNftImage src={collection_item['colData'].image} alt={collection_item['colData'].name} width={200} />
-                           </Col>
-                           <Col>
-                              {collection_item['colData'].metadata}
-                           </Col>
-                        </Row>
+               <AdminForm admin={admin} method="POST" endpoint={`/admin/artwork/create`} onSuccess={handleClose}>
 
-                        <Row className='mb-5 g-4 row-cols-xl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2'>
-                           {collection_item.nfts.map((data: any, nftKey: number) => (
-                              data['artwork'] ? null : (
-                                 <Col key={nftKey}>
-                                    <AdminNftImage src={data['nftData'].image} alt={data['nftData'].name} width={100} height="auto" />
+                  <AdminFormInput type="tinytext" icon="field" label="Name" name="name" value={data['name']} required />
+                  <AdminFormInput type="longtext" icon="textarea" label="Description" name="description" value={data['description']} />
+                  <AdminFormInput type="tinytext" icon="tags" label="Tags" name="tags" value={data['tags']} />
+                  <AdminFormInput type="parent" icon="artist" label="Artist" name="artistId" value={data['artist']?.id ?? ''} option={option?.["artist"]} required />
 
-                                    <p>
-                                       <strong>
-                                          {data['nftData'].name}
-                                       </strong>
-                                       <br />
-                                       {data['nftData'].metadata}
-                                    </p>
+                  {/* 
+                  
+                     <AdminFormInput type="image" icon="artwork" label="Image" name="image" value={data['id']} /> 
+                     
+                     tu je <input type="file"> pre obrazok, ale to neviem ako spravit aby sa tam vlozilo z URL obrazku binary data
+                     to musim robit niekde pri append formData pred posielanim requestu
+                  
+                  */}
 
-                                    <p className='mt-3'>
-                                       <Button variant="primary" className='mt-2'>
-                                          <FontAwesomeIcon icon={faFileImport} className="me-2" />
-                                          Import NFT
-                                       </Button>
-                                    </p>
-                                 </Col>
-                              )))}
-                        </Row>
-                        <hr className='my-5' />
-                     </React.Fragment>
-                  ) : null
-               ))}
+                  <AdminDetail.Row icon="artwork" name="Image">
+                     <a href={data['image']} target='_blank'>
+                        <img src={data['image']} alt={data['name']} width={300} loading="lazy" />
+                     </a>
+                  </AdminDetail.Row>
 
-               {wallet_item.orphanNfts && wallet_item.orphanNfts.length > 0 ? (
-                  <>
-                     <h3 className='mb-3'>
-                        Orphan NFTs
-                     </h3>
+                  <AdminFormInput type="tinytext" icon="date" label="Year" name="year" value={data['year']} required />
+                  <AdminFormInput type="parent" icon="art" label="Genre" name="artworkGenreId" value={data['artworkGenre']?.["id"] ?? ''} option={option?.['artwork_genre']} required />
+                  <AdminFormInput type="parent" icon="worktype" label="Worktype" name="artworkWorktypeId" value={data['artworkWorktype']?.id ?? ''} option={option?.["artwork_worktype"]} required />
+                  <AdminFormInput type="parent" icon="paper" label="Material" name="artworkMaterialId" value={data['artworkMaterial']?.id ?? ''} option={option?.["artwork_material"]} required />
+                  <AdminFormInput type="parent" icon="palette" label="Technique" name="artworkTechniqueId" value={data['artworkTechnique']?.id ?? ''} option={option?.["artwork_technique"]} required />
+                  <AdminFormInput type="tinytext" icon="measurements" label="Measurements" name="measurements" value={data['measurements']} />
+                  <AdminFormInput type="boolean" icon="question" label="Public" name="public" value={data['public']} />
+               </AdminForm>
 
-                     <Row className='mb-5 g-4 row-cols-xl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2'>
-                        {wallet_item.orphanNfts.map((data: any, orphanKey: number) => (
-                           data['artwork'] ? null : (
-                              <Col key={orphanKey}>
-                                 <AdminNftImage src={data['nftData'].image} alt={data['nftData'].name} width={100} height="auto" />
-
-                                 <p>
-                                    <strong>
-                                       {data['nftData'].name}
-                                    </strong>
-                                    <br />
-                                    {data['nftData'].metadata}
-                                 </p>
-
-                                 <p className='mt-3'>
-                                    <Button as="a" variant="primary" href={`/admin/nft/detail/${data['id']}`} className='mt-2'>
-                                       <FontAwesomeIcon icon={faFileImport} className="me-2" />
-                                       Import NFT
-                                    </Button>
-                                 </p>
-                              </Col>
-                           )))}
-                     </Row>
-                     <hr className='my-5' />
-                  </>
-               ) : null}
-            </React.Fragment>
-         ))}
+            </Modal.Body>
+            <Modal.Footer>
+               <Button variant="success" form="form" type="submit">
+                  <FontAwesomeIcon icon={faCheck} fixedWidth className='me-1' />
+                  Save
+               </Button>
+            </Modal.Footer>
+         </Modal>
       </>
    );
-
-}
-
-
-
-
+};
