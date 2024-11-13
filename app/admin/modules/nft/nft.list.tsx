@@ -43,7 +43,7 @@ export async function List(admin: AdminType) {
             <>
                <p>
                   <span className='me-3'>
-                     Connected wallet:
+                     Connected wallets:
                   </span>
                   {wallet.map((data: any, key: number) => (
                      <React.Fragment key={key}>
