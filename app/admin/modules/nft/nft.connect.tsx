@@ -101,6 +101,38 @@ export const Connect: React.FC = () => {
          setOverlay(overlay);
 
       } else if (accounts.length === 1) {
+         const keyring = new Keyring();
+         const GenericToKusama = keyring.encodeAddress(accounts[0].address, 2);
+         setOverlay(
+            <Popover id="fetching-data-popover">
+               <Popover.Header>Fetching Data</Popover.Header>
+               <Popover.Body>
+                  <div className="d-flex align-items-center">
+                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                     Fetching wallet NFTs and Collection, please wait...
+                  </div>
+               </Popover.Body>
+            </Popover>
+         );
+         setShowAccountSelect(true);
+         await AdminGetData(`metadata/colmeta/address/${GenericToKusama}`);
+         await new Promise(resolve => setTimeout(resolve, 2000));
+         await AdminGetData(`metadata/nftmeta/address/${GenericToKusama}`);
+         setOverlay(
+            <Popover id="success-popover">
+               <Popover.Header>Success</Popover.Header>
+               <Popover.Body>
+                  <div className="d-flex align-items-center text-success">
+                     <span className="me-2">✓</span>
+                     Wallet data successfully loaded!
+                  </div>
+               </Popover.Body>
+            </Popover>
+         );
+         setTimeout(() => {
+            setShowAccountSelect(false);
+            setOverlay(null);
+         }, 2000);
          setAccount(accounts[0].address);
       }
    };
