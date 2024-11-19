@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
    try {
-      // Overenie pripravenosti
       const isReady = true; // Nahraď reálnou logikou
 
       if (isReady) {

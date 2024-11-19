@@ -20,21 +20,18 @@ export async function GET() {
 
             if (!response.ok) {
                const errorData = await response.json();
-               console.error(`Backend vrátil chybu: ${response.status} ${response.statusText}`, errorData);
                return { status: 'ERROR', message: 'Backend health check failed', details: errorData };
             }
 
             const data = await response.json();
-            console.log("Backend je zdravý:", data);
             return { status: 'OK', message: 'Backend is healthy', data };
 
          } catch (error) {
-            console.error("Chyba pri komunikácii s backendom:", error);
             return { status: 'ERROR', message: 'Error connecting to backend', details: error };
          }
       };
 
-      // Volanie funkcie na kontrolu backendu
+      // Call backend to verify that it's working.
       const backendStatus = await checkBackend();
 
       if (backendStatus.status === 'OK') {
@@ -49,7 +46,6 @@ export async function GET() {
          );
       }
    } catch (error) {
-      console.error("Chyba pri kontrole služby:", error);
       const errorMessage = (error as Error).message;
       return NextResponse.json(
          { status: 'ERROR', message: 'Service is not healthy', error: errorMessage },
