@@ -6,7 +6,6 @@ export async function GET() {
          const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
          if (!backendUrl) {
-            console.error("Backend URL nie je nastavený v environmentálnych premenných!");
             return { status: 'ERROR', message: 'Backend NEXT_PUBLIC_BACKEND_URL is missing' };
          }
 
