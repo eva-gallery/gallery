@@ -1,10 +1,28 @@
 'use client'
 import { Container, Form, Row, Col } from "react-bootstrap";
 import { Search } from 'lucide-react';
+// import type { Artist } from '@/app/web/types/artist';
 
-const ArtistsGrid = ({ artists = [] }) => {  // Provide default empty array
-  // Ensure artists is always an array
-  const artistsList = Array.isArray(artists) ? artists : [];
+interface Artwork {
+  slug: string;
+  // Add other artwork properties as needed
+}
+
+interface Artist {
+  name: string;
+  slug: string;
+  countryCode?: string;
+  artwork: Artwork;
+  // Add other artist properties as needed
+}
+
+interface ArtistsGridProps {
+  artists: Artist[];
+}
+
+const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
+  // Ensure artists is always an array with the correct type
+  const artistsList: Artist[] = Array.isArray(artists) ? artists : [];
 
   return (
     <Container className="py-5">
@@ -41,7 +59,7 @@ const ArtistsGrid = ({ artists = [] }) => {  // Provide default empty array
                 <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                   <div className="position-absolute top-0 start-0 w-100 h-100">
                     <img
-                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/artist/thumbnail?slug=${encodeURIComponent(artist.slug)}`}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`}
                       alt={artist.name}
                       className="w-100 h-100 object-cover"
                     />

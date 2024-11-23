@@ -31,7 +31,7 @@ const Table: React.FC<ModuleTable> = ({ admin, data }) => {
                </AdminTableColumn>
 
                <AdminTableColumn>
-                  {object["artistCategory"]["name"]}
+                  {object["artistCategory"]?.["name"]}
                </AdminTableColumn>
 
                <AdminTableColumn>

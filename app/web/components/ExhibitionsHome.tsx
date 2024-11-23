@@ -5,7 +5,18 @@ import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkGallery = ({ artworks }) => {
+interface Exhibition {
+  slug: string;
+  name: string;
+  artistName: string;
+  // Add other exhibition properties as needed
+}
+
+interface ArtworkGalleryProps {
+  artworks: Exhibition[];
+}
+
+const ArtworkGallery: React.FC<ArtworkGalleryProps> = ({ artworks }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 4;
@@ -32,17 +43,11 @@ const ArtworkGallery = ({ artworks }) => {
           <h1 className="mb-0">Exhibitions</h1>
         </Col>
         <Col xs="auto">
-          
-            
-            <div 
-              size={18} 
-              className=" top-50 start-0 translate-bottom-y ms-2 text-muted">
-                <a href="/galleries">All exhibitions &raquo;</a> 
-              
-              
-              </div>
-            
-          
+          <div 
+            className="top-50 start-0 translate-bottom-y ms-2 text-muted"
+          >
+            <a href="/galleries">All exhibitions &raquo;</a>
+          </div>
         </Col>
       </Row>
 
@@ -92,7 +97,7 @@ const ArtworkGallery = ({ artworks }) => {
         </Row>
       </div>
 
-      {/* Add this style block at the end of your component */}
+      {/* Styles */}
       <style jsx global>{`
         .gallery-container {
           padding: 0 0px;
@@ -124,7 +129,6 @@ const ArtworkGallery = ({ artworks }) => {
           box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
         }
 
-        
         .start-20 {
           left:30px !important; 
         } 

@@ -1,13 +1,13 @@
 // app/artists/[...slug]/page.tsx
 import ArtistDetail from "../../web/artists/[...slug]/page";
 
-type Props = {
+interface PageProps {
   params: {
-    slug: string[]
+    slug: string[];
   }
 }
 
-export default function ArtistPage({ params }: Props) {
+export default function ArtistPage({ params }: PageProps) {
   return (
     <>
       <ArtistDetail slug={params.slug} />

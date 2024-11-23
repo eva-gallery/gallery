@@ -5,7 +5,35 @@ import { User, Calendar, Brush, Ruler } from 'lucide-react'
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkDetail = ({ artwork, imageSlug }) => {
+interface Artist {
+  name: string;
+  slug: string;
+}
+
+interface Artwork {
+  name: string;
+  artist: Artist;
+  year?: number;
+  medium?: string;
+  dimensions?: string;
+  description?: string;
+  measurements?: string;
+  tags?: string[];
+}
+
+interface ArtworkDetailProps {
+  artwork: Artwork;
+  imageSlug: string;
+}
+
+const cleanFileName = (name: string) => {
+  return name
+    .replace(/\.(jpg|jpeg|png|gif|tif|tiff|kopie|bmp|webp)$/i, '') // Remove common image extensions
+    .replace(/[-_]/g, ' ') // Optional: Replace dashes and underscores with spaces
+    .trim(); // Remove any leading/trailing spaces
+};
+
+const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
   return (
     <Container className="py-5">
       <Row className="gx-5">

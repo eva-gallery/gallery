@@ -5,7 +5,18 @@ import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkGallery = ({ artworks }) => {
+interface Artwork {
+  slug: string;
+  name: string;
+  artistName: string;
+  // Add other artwork properties as needed
+}
+
+interface ArtworkGalleryProps {
+  artworks: Artwork[];
+}
+
+const ArtworkGallery = ({ artworks }: ArtworkGalleryProps) => {
   const [startIndex, setStartIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [isTransitioning, setIsTransitioning] = useState(false);

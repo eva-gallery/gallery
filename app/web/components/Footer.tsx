@@ -11,17 +11,16 @@ const Footer = () => {
           <Col md={3} className="mb-4">
             <h5 className="mb-3 font-bold">About Us</h5>
             <p className="text-light-emphasis">
-              <b>European Visual Arts Gallery</b><br></br>
+            <b>European Visual Arts Gallery</b><br></br>
 
-              Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Gallerists.
-
+Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Gallerists.
 
             </p>
             <div className="d-flex gap-3 mt-3">
-              <a target='_blank' href="https://www.facebook.com/evagallery.eu"><Facebook size={20} className="cursor-pointer hover:text-primary" /></a>
-              <a target='_blank' href="https://www.instagram.com/evagalleryeu"><Instagram size={20} className="cursor-pointer hover:text-primary" /></a>
-              <a target='_blank' href="https://www.youtube.com/@E.V.A.Gallery"><Youtube size={20} className="cursor-pointer hover:text-primary" /></a>
-              <a target='_blank' href="https://github.com/eva-gallery"><Twitter size={20} className="cursor-pointer hover:text-primary" /></a>
+              <a target="_blank" href="https://www.facebook.com/evagallery.eu" rel="noopener noreferrer"><Facebook size={20} className="cursor-pointer hover:text-primary" /></a>
+              <a target="_blank" href="https://www.instagram.com/evagalleryeu" rel="noopener noreferrer"><Instagram size={20} className="cursor-pointer hover:text-primary" /></a>
+              <a target="_blank" href="https://www.youtube.com/@E.V.A.Gallery" rel="noopener noreferrer"><Youtube size={20} className="cursor-pointer hover:text-primary" /></a>
+              <a target="_blank" href="https://github.com/eva-gallery" rel="noopener noreferrer"><Twitter size={20} className="cursor-pointer hover:text-primary" /></a>
             </div>
           </Col>
 
@@ -53,7 +52,7 @@ const Footer = () => {
             <ul className="list-unstyled">
               <li className="mb-3 d-flex align-items-center gap-2">
                 <MapPin size={18} />
-                <span className="text-light-emphasis"><a target='_blank' href="https://www.euforion.sk">euforion.sk</a></span>
+                <span className="text-light-emphasis"><a target="_blank" href="https://www.euforion.sk" rel="noopener noreferrer">euforion.sk</a></span>
               </li>
               <li className="mb-3 d-flex align-items-center gap-2">
                 <Phone size={18} />
@@ -73,9 +72,9 @@ const Footer = () => {
               Subscribe to our newsletter for updates on new artworks and exhibitions.
             </p>
             <div className="d-flex flex-column gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
+              <input 
+                type="email" 
+                placeholder="Enter your email" 
                 className="form-control bg-dark text-light border-secondary"
               />
               <button className="btn btn-primary">

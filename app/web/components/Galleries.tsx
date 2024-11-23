@@ -5,7 +5,14 @@ import { Search } from 'lucide-react';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkGrid = ({ artworks }) => {
+interface Artwork {
+  slug: string;
+  name: string;
+  countryCode: string;
+  address: string;
+}
+
+const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
@@ -48,7 +55,7 @@ const ArtworkGrid = ({ artworks }) => {
               </div>
             </div>
             <Card.Body className="d-flex flex-column">
-              <Card.Title className="fs-6 text-truncate">{artwork.name}</Card.Title>
+              <Card.Title className="fs-6 text-truncate">{artwork.name} ({artwork.countryCode})</Card.Title>
               <Card.Text className="text-muted small mb-0 text-truncate">
                 {artwork.address}
               </Card.Text>
@@ -56,41 +63,35 @@ const ArtworkGrid = ({ artworks }) => {
           </Card>
         </Col>
       ))}
-
     </Row>
-  
 
-      {/* Styles */}
-      <style jsx global>{`
-        .artwork-card {
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
+    {/* Styles */}
+    <style jsx global>{`
+      .artwork-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
 
-        .artwork-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-        }
+      .artwork-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+      }
 
-        .image-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background-color: #f8f9fa;
-        }
+      .image-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background-color: #f8f9fa;
+      }
 
-        .image-container img {
-          object-fit: cover;
-          object-position: center;
-        }
-
-        /* .artwork-card:hover .image-container img {
-          transform: scale(1.1);
-        } */
-      `}</style>
-    </Container>
-  );
+      .image-container img {
+        object-fit: cover;
+        object-position: center;
+      }
+    `}</style>
+  </Container>
+);
 };
 
 export default ArtworkGrid;

@@ -2,7 +2,15 @@
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import Link from 'next/link'
 
-const RelatedArtworks = ({ artworks, backendUrl }) => {
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+interface Artwork {
+  slug: string;
+  name: string;
+  artistName: string;
+}
+
+const RelatedArtworks = ({ artworks }: { artworks: Artwork[], backendUrl: string }) => {
   return (
     <Container className="py-5">
       <h2 className="h3 mb-4">More from this artist</h2>

@@ -3,7 +3,18 @@ import { Carousel, Container } from 'react-bootstrap'
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const CarouselComponent = ({ artworks }) => {
+interface Artwork {
+  slug: string;
+  name: string;
+  artistName: string;
+  // Add other artwork properties as needed
+}
+
+interface CarouselComponentProps {
+  artworks: Artwork[];
+}
+
+const CarouselComponent = ({ artworks }: CarouselComponentProps) => {
   return (
     <Container className="py-5">
       <Carousel 

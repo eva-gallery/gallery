@@ -84,19 +84,19 @@ export async function Detail(admin: AdminType) {
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="art" name="Genre">
-                    {data['artworkGenre']['name']}
+                    {data['artworkGenre']?.['name']}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="worktype" name="Worktype">
-                    {data["artworkWorktype"]['name']}
+                    {data["artworkWorktype"]?.['name']}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="paper" name="Material">
-                    {data["artworkMaterial"]['name']}
+                    {data["artworkMaterial"]?.['name']}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="palette" name="Technique">
-                    {data["artworkTechnique"]['name']}
+                    {data["artworkTechnique"]?.['name']}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="measurements" name="Measurements">

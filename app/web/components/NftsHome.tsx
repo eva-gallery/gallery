@@ -5,7 +5,13 @@ import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkGallery = ({ artworks }) => {
+interface Artwork {
+  slug: string;
+  name: string;
+  artistName: string;
+}
+
+const ArtworkGallery = ({ artworks }: { artworks: Artwork[] }) => {
   const [startIndex, setStartIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 4;
@@ -32,17 +38,11 @@ const ArtworkGallery = ({ artworks }) => {
           <h1 className="mb-0">Nfts</h1>
         </Col>
         <Col xs="auto">
-          
-            
-            <div 
-              size={18} 
-              className=" top-50 start-0 translate-bottom-y ms-2 text-muted">
-                <a href="/nfts">All nfts &raquo;</a> 
-              
-              
-              </div>
-            
-          
+          <div className="position-relative">
+            <div className="text-end">
+              <a href="/nfts">All nfts &raquo;</a>
+            </div>
+          </div>
         </Col>
       </Row>
 
@@ -124,7 +124,6 @@ const ArtworkGallery = ({ artworks }) => {
           box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
         }
 
-        
         .start-20 {
           left:30px !important; 
         } 

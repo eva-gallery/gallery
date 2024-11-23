@@ -6,8 +6,25 @@ import { Search } from 'lucide-react';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkGrid = ({ artworks }) => {
+interface Artwork {
+  slug: string;
+  name: string;
+  fromDate: string | Date;
+  toDate: string | Date;
+  // Add other artwork properties as needed
+}
+
+interface ArtworkGridProps {
+  artworks: Artwork[];
+}
+
+const ArtworkGrid: React.FC<ArtworkGridProps> = ({ artworks }) => {
   const [searchTerm, setSearchTerm] = useState('');
+
+  const formatDate = (date: string | Date) => {
+    const parsedDate = new Date(date);
+    return isValid(parsedDate) ? format(parsedDate, 'dd.MM.yyyy') : '';
+  };
 
   return (
     <Container className="py-5">
@@ -35,31 +52,29 @@ const ArtworkGrid = ({ artworks }) => {
       </Row>
 
       <Row className="g-4">
-      {artworks.slice(0, 24).map((artwork, index) => (
-        <Col key={index} xs={12} sm={6} md={3}>
-          <Card className="artwork-card h-100 border-0 shadow-sm">
-            <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
-              <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                <Card.Img
-                  variant="top"
-                  src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
-                  alt={artwork.name}
-                  className="w-100 h-100 transition-transform duration-300"
-                />
+        {artworks.slice(0, 24).map((artwork, index) => (
+          <Col key={index} xs={12} sm={6} md={3}>
+            <Card className="artwork-card h-100 border-0 shadow-sm">
+              <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
+                <div className="image-container position-absolute top-0 start-0 w-100 h-100">
+                  <Card.Img
+                    variant="top"
+                    src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
+                    alt={artwork.name}
+                    className="w-100 h-100 transition-transform duration-300"
+                  />
+                </div>
               </div>
-            </div>
-            <Card.Body className="d-flex flex-column">
-              <Card.Title className="fs-6 text-truncate">{artwork.name}</Card.Title>
-              <Card.Text className="text-muted small mb-0 text-truncate">
-                {format(new Date(artwork.fromDate), 'dd.MM.yyyy')} - {format(new Date(artwork.toDate), 'dd.MM.yyyy')}  
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-
-    </Row>
-  
+              <Card.Body className="d-flex flex-column">
+                <Card.Title className="fs-6 text-truncate">{artwork.name}</Card.Title>
+                <Card.Text className="text-muted small mb-0 text-truncate">
+                  {formatDate(artwork.fromDate)} - {formatDate(artwork.toDate)}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
 
       {/* Styles */}
       <style jsx global>{`

@@ -29,7 +29,6 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
 
   const handleDelete = async () => {
     try {
-      // Pošleme DELETE request
 
       await AdminDeleteData(admin, `/admin/${admin.modul}/delete/${admin.unique}`);
 

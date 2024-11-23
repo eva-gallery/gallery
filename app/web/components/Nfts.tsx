@@ -6,7 +6,17 @@ import { Search } from 'lucide-react';
 
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-const ArtworkGrid = ({ artworks }) => {
+interface Artwork {
+  nftData: {
+    name: string;
+    image: string;
+  };
+  artwork: {
+    name: string;
+  };
+}
+
+const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
@@ -59,39 +69,34 @@ const ArtworkGrid = ({ artworks }) => {
       ))}
 
     </Row>
-  
 
-      {/* Styles */}
-      <style jsx global>{`
-        .artwork-card {
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
+    {/* Styles */}
+    <style jsx global>{`
+      .artwork-card {
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
 
-        .artwork-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-        }
+      .artwork-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+      }
 
-        .image-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background-color: #f8f9fa;
-        }
+      .image-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background-color: #f8f9fa;
+      }
 
-        .image-container img {
-          object-fit: cover;
-          object-position: center;
-        }
-
-        /* .artwork-card:hover .image-container img {
-          transform: scale(1.1);
-        } */
-      `}</style>
-    </Container>
-  );
+      .image-container img {
+        object-fit: cover;
+        object-position: center;
+      }
+    `}</style>
+  </Container>
+);
 };
 
 export default ArtworkGrid;

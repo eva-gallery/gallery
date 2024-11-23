@@ -13,10 +13,17 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const ArtworkGallery = ({ artworks, seed }: ArtworkGalleryProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
+  const cleanFileName = (name: string) => {
+    return name
+      .replace(/\.(jpg|jpeg|png|gif|tif|tiff|kopie|bmp|webp)$/i, '') // Remove common image extensions
+      .replace(/[-_]/g, ' ') // Optional: Replace dashes and underscores with spaces
+      .trim(); // Remove any leading/trailing spaces
+  };
+
   return (
-    <Container className="py-5">
+    <Container className="py-1 px-0">
       {/* Header Row */}
-      <Row className="mb-4 align-items-center">
+      <Row className="mb-4 align-items-center d-none">
         <Col>
           <h1 className="mb-0">Artworks Gallery</h1>
         </Col>
@@ -54,7 +61,7 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
               </div>
             </div>
             <Card.Body className="d-flex flex-column">
-              <Card.Title className="fs-6 text-truncate">{artwork.name} 
+              <Card.Title className="fs-6 text-truncate">{cleanFileName(artwork.name)} 
                 {artwork.year ? (
                 <small> ({artwork.year})</small>
                 ) : null}

@@ -7,7 +7,7 @@ import { Row, Col, Form, Alert } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { AdminSetData } from '../functions/set.data';
+import { AdminSetData, AdminSetDataJson } from '../functions/set.data';
 import { AdminIcon } from './components';
 import { AdminFormControl } from './formcontrol';
 import { AdminType } from '../types';
@@ -39,7 +39,12 @@ export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, 
       event.preventDefault();
       const formData = new FormData(form);
 
-      const data = await AdminSetData(admin, formData, method, endpoint);
+      let data;
+      if (admin.action == "login") {
+        data = await AdminSetDataJson(admin, formData, method, endpoint);
+      } else {
+        data = await AdminSetData(admin, formData, method, endpoint);
+      }
 
       if (data && data.error) {
         setAlertMessage(data.error);
