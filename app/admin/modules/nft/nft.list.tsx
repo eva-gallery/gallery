@@ -54,7 +54,7 @@ export async function List(admin: AdminType) {
                      </React.Fragment>
                   ))}
                </p>
-               <Button as="a" variant="primary" href="/admin/nft/import">
+               <Button as="a" variant="primary" href="/admin/nft/show">
                   <FontAwesomeIcon icon={faFileImport} className="me-2" />
                   Show NFTs
                </Button>

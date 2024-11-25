@@ -47,7 +47,7 @@ export async function Detail(admin: AdminType) {
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="category" name="Category">
-                    {data['artistCategory']['name']}
+                    {data['artistCategory']?.['name']}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="question" name="Public">

@@ -51,7 +51,7 @@ export const AdminFormControl: React.FC<PropsControl> = ({ type, name, value, op
 
 type PropsInput = {
    name: string;
-   value: string;
+   value: any;
    option?: { id: string; name: string }[];
    required?: boolean;
 };
@@ -96,7 +96,14 @@ const FormLongtext: React.FC<PropsInput> = ({ name, value, required }) => {
 
 
 const FormBoolean: React.FC<PropsInput> = ({ name, value, required }) => {
-   return <Form.Check type="checkbox" name={name} defaultChecked={value === 'true'} {...(required ? { required: true } : {})} />;
+   console.log("**** FormBoolean ****", value);
+   const isChecked = value === true || value === 'true';
+   return <Form.Check
+      type="checkbox"
+      name={name}
+      defaultChecked={isChecked}
+      {...(required && { required: true })}
+   />
 };
 
 export const FormParent: React.FC<PropsInput> = ({ name, value, option, required }) => {

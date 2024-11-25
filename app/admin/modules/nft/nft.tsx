@@ -14,6 +14,7 @@ import { Trialminted } from './nft.trialminted';
 import { Ownership } from './nft.ownership';
 import { Detail } from './nft.detail';
 import { Mint } from './nft.mint';
+import { Show } from './nft.show';
 import { Import } from './nft.import';
 
 
@@ -27,7 +28,7 @@ async function Nft(admin: AdminType) {
 
 
 const Data = {
-    actions: ["list", "detail", "import"],
+    actions: ["list", "detail", "show"],
     icon: "nft",
     name: "NFT",
 };
@@ -43,5 +44,6 @@ Nft.Ownership = Ownership;
 Nft.Mint = Mint;
 Nft.Trialminted = Trialminted;
 Nft.Import = Import;
+Nft.Show = Show;
 
 export default Nft;
