@@ -2,51 +2,108 @@
 
 import axios, { AxiosError } from 'axios';
 
-// You might want to create a type for the common response structure
-type ApiResponse<T> = {
-  success: boolean;
-  data?: T;
-  error?: string;
+interface NFTFallback {
+    slug: string;
+    name: string;
+    artistName: string;
+    tokenId: string;
+    blockchain: string;
+    nftData: {
+        name: string;
+        image: string;
+    };
+    artwork: {
+        name: string;
+    };
 }
 
+const generateFallbackNFTs = (count: number = 8): NFTFallback[] => 
+    Array.from({ length: count }, (_, index) => ({
+        slug: `placeholder-${index}`,
+        name: `NFT #${index + 1}`,
+        artistName: 'Artist Name',
+        tokenId: index.toString(),
+        blockchain: 'Ethereum',
+        nftData: {
+            name: `NFT #${index + 1}`,
+            image: '/placeholder-nft.jpg'
+        },
+        artwork: {
+            name: `NFT #${index + 1}`
+        }
+    }));
+
+const FALLBACK_DATA = {
+    nfts: generateFallbackNFTs(24),
+    artworks: [],
+    galleries: [],
+    exhibitions: []
+};
+
+const isBackendAvailable = async (url: string): Promise<boolean> => {
+    try {
+        await fetch(url, { 
+            method: 'HEAD',
+            // Use cache: no-store instead of revalidate
+            cache: 'no-store'
+        });
+        return true;
+    } catch {
+        return false;
+    }
+};
+
 export async function getData<T>(endpoint: string): Promise<T> {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-
-    if (!backendUrl) {
-        throw new Error('Backend URL is not configured');
-    }
-
-    const headers = {
-        "Content-Type": "application/json",
-    }
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
     
+    // Check if backend is available
+    const isAvailable = await isBackendAvailable(backendUrl);
+    if (!isAvailable) {
+        return getFallbackData<T>(endpoint);
+    }
+
     try {
         const response = await axios<T>({
             method: "GET",
             url: `${backendUrl}${endpoint}`,
-            headers: headers,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            timeout: 5000,
         });
 
-        return response.data;
-    }
-    catch (err) {
-        // Type guard for axios error
+        if (response.data) {
+            return response.data;
+        }
+        
+        return getFallbackData<T>(endpoint);
+    } catch (err) {
         if (axios.isAxiosError(err)) {
-            const axiosError = err as AxiosError;
             console.error('API Error:', {
-                message: axiosError.message,
-                status: axiosError.response?.status,
-                statusText: axiosError.response?.statusText,
+                message: err.message || 'Network Error',
+                status: err.response?.status || 'No Status',
+                statusText: err.response?.statusText || 'No Status Text',
                 url: `${backendUrl}${endpoint}`
             });
-            
-            // You might want to throw the error instead of returning it
-            // so it can be caught by error boundaries
-            throw new Error(axiosError.message || 'Error fetching data');
+        } else {
+            console.error('Unexpected error:', err);
         }
 
-        // For non-axios errors
-        console.error('Non-API Error:', err);
-        throw new Error('An unexpected error occurred');
+        return getFallbackData<T>(endpoint);
     }
+}
+
+function getFallbackData<T>(endpoint: string): T {
+    // Remove console.log to reduce build output noise
+    if (endpoint.includes('/random/nft')) {
+        return FALLBACK_DATA.nfts as T;
+    } else if (endpoint.includes('/random/artwork')) {
+        return FALLBACK_DATA.artworks as T;
+    } else if (endpoint.includes('/random/gallery')) {
+        return FALLBACK_DATA.galleries as T;
+    } else if (endpoint.includes('/random/exhibition')) {
+        return FALLBACK_DATA.exhibitions as T;
+    }
+    
+    return [] as T;
 }
