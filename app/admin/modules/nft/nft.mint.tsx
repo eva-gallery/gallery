@@ -138,11 +138,12 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                         setLoading(true);
                         const artworkId = data.id;                        
                         const response = await AdminPutData(`mint/trial/artwork/${artworkId}`, { })
+                        console.log(response);
                         setLoading(false);
-                        if (response.status === 'mintedAlready') {
+                        if (response.status === 'MintedAlready') {
                            alert('NFT has already been minted, only one allowed per account.');
                         }
-                        else if (response.status === 'minted') {
+                        else if (response.status === 'Success') {
                            alert('NFT was minted successfully. It should appear in the trial mint section soon.');
                            window.location.reload();
                         } else {
@@ -176,6 +177,7 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               const artworkId = data.id;
 
                               const tx = await AdminPutData(`nft/create/collection/${collectionElement.value}/artwork/${artworkId}`, { address: account });
+                              console.log(tx);
                               // Sign and submit transaction and listen for events
                               const wsProvider = new WsProvider("wss://kusama-asset-hub-rpc.polkadot.io");
                               const api = await ApiPromise.create({ provider: wsProvider });
