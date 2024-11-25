@@ -31,12 +31,7 @@ export async function Trialminted(nft: any) {
                   </a>
                </p>
                <h3>{data['nftData'].name}</h3>
-               <p className='border p-3'>{data['nftData'].metadata}</p>
-
-               <p>
-                  <AdminIcon name='wallet' size={24} className='me-1' />
-                  {data['walletId']}
-               </p>
+               <p className='border p-3'>{data['nftData'].description}</p>
 
                <p>
                   <Button as="a" href={`/admin/nft/detail/${data['id']}`} className="btn btn-primary me-2">

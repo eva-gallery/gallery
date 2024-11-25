@@ -19,6 +19,7 @@ export async function List(admin: AdminType) {
    const user = await AdminGetData("admin/user");
    const collection = await AdminGetData("admin/collection");
    const artwork = await AdminGetData("admin/artwork");
+   const trialNFT = await AdminGetData("admin/nft/trial/"+user['trialMintId']);
 
    const object = {
       wallet,
@@ -67,11 +68,9 @@ export async function List(admin: AdminType) {
 
          {user['trialMintId'] ? (
             <>
-               {nft.map((data: any, key: number) => (
-                  data['id'] === user['trialMintId'] ? (
-                     <M.Nft.Trialminted data={data} key={key} />
-                  ) : null
-               ))}
+               {trialNFT ? (
+                <M.Nft.Trialminted data={trialNFT} />
+               ) : null}
             </>
          ) : null}
 

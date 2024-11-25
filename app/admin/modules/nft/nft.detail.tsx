@@ -12,17 +12,29 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export async function Detail(admin: AdminType) {
 
+    let data = await AdminGetData("admin/nft/" + admin.unique);
+    let colData = await AdminGetData("admin/collection/" + data.collectionId);
+    let walData = await AdminGetData("admin/wallet/" + data.walletId);
 
-    const data = await AdminGetData("admin/nft/" + admin.unique);
+    //Trial minted NFT
+    if (!data.nftData) {
+        data = await AdminGetData("admin/nft/trial/" + admin.unique);
+        colData = await AdminGetData("admin/collection/trial/" + data.collectionId);
+        walData = await AdminGetData("admin/wallet/trial/" + data.walletId);
+
+        console.log(walData)
+
+        
+    }
+
     const user = await AdminGetData("admin/user");
-
     const object = {
         data,
     }
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
 
     return (
+
         <>
             <AdminDetail admin={admin} object={object}>
                 <AdminDetail.Row icon="field" name="Name">
@@ -32,7 +44,7 @@ export async function Detail(admin: AdminType) {
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="textarea" name="Metadata">
-                    <AdminHtml html={data.nftData['metadata']} />
+                    <AdminHtml html={data.nftData['description']} />
                 </AdminDetail.Row>
 
 
@@ -42,16 +54,15 @@ export async function Detail(admin: AdminType) {
                     </a>
                 </AdminDetail.Row>
 
-                <AdminDetail.Row icon="wallet" name="Wallet">
-                    <AdminHtml html={data['walletId']} />
+                <AdminDetail.Row icon="collection" name="Wallet">
+                    <a href={walData.onlineCheck} target='_blank' rel="noopener noreferrer">{walData.walletAddress}.</a>
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="collection" name="Collection">
-                    <AdminHtml html={data['collectionId']} />
+                    <a href={colData.onlineCheck} target='_blank' rel="noopener noreferrer">Collection {colData.colData.id}.</a>
                 </AdminDetail.Row>
-
                 <AdminDetail.Row icon="nft" name="NFT Check">
-                    <a href="#">Link to online NFT check service</a>
+                    <a href={data.onlineCheck} target='_blank' rel="noopener noreferrer">Proof of NFT existence.</a>
                 </AdminDetail.Row>
 
             </AdminDetail>
