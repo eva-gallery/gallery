@@ -10,6 +10,7 @@ import { AdminType } from '../../types';
 import { AdminGetData, AdminPutData } from '../../functions/get.data';
 import { useAccount } from './nft.connect';
 import { ApiPromise, WsProvider } from "@polkadot/api";
+import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp';
 
 interface MintProps {
    admin: AdminType;
@@ -19,7 +20,8 @@ interface MintProps {
 }
 
 export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
-   const { account, injector, accountAddr } = useAccount();
+   const { account, accountAddr } = useAccount();
+
    const [show, setShow] = useState(false);
    const [mintMode, setMintMode] = useState('trial'); // 'trial' or 'regular'
    const [wallets, setWallets] = useState([]);
@@ -170,6 +172,11 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                         variant="primary"
                         onClick={async () => {
                            try {
+                              if (!accountAddr) {
+                                 alert('Please sign in with your Kusama wallet first.');
+                                 return;
+                              }
+
                               setLoading(true);
                               const collectionElement = document.querySelector('[name="collection"]') as HTMLSelectElement;
                               if (!collectionElement) throw new Error('Collection element not found');
@@ -177,16 +184,26 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               const artworkId = data.id;
 
                               const tx = await AdminPutData(`nft/create/collection/${collectionElement.value}/artwork/${artworkId}`, { address: account });
-                              console.log(tx);
                               // Sign and submit transaction and listen for events
                               const wsProvider = new WsProvider("wss://kusama-asset-hub-rpc.polkadot.io");
                               const api = await ApiPromise.create({ provider: wsProvider });
                               const callData = tx.callData;
                               const nftTX = api.tx(callData);
                               const nftTXargs = nftTX.args[0].toHuman();
-                              const nftID = nftTXargs[1].args.item;
-                              const colID = nftTXargs[1].args.collection;
-                              const nftData = nftTXargs[1].args.data;
+
+                              let nftID = nftTXargs[1].args.item;
+                              let colID = nftTXargs[1].args.collection;
+                              let nftData = nftTXargs[1].args.data;
+
+                              await web3Enable('Eva gallery');
+                              //Find account that is same as accountAddr
+                              const injector = await web3FromAddress(accountAddr)
+                           
+                              //check if account is not found
+                              if (!account) {
+                                alert("Account not found");
+                                return;
+                              }
 
                               let call = api.tx(callData);
                               await call.signAndSend(accountAddr, { signer: injector.signer }, async ({ status, txHash, dispatchError }) => {

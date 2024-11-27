@@ -5,7 +5,6 @@ import React from 'react';
 
 import { List } from './nft.list'
 import Cards from './nft.cards';
-import { Formular } from './nft.formular';
 
 import AdminAction from '../../components/action';
 import { AdminType } from '../../types';
@@ -38,7 +37,6 @@ Nft.Data = Data;
 Nft.Detail = Detail;
 Nft.List = List;
 Nft.Cards = Cards;
-Nft.Formular = Formular;
 Nft.Connect = Connect;
 Nft.Ownership = Ownership;
 Nft.Mint = Mint;

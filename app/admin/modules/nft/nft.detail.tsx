@@ -18,13 +18,13 @@ export async function Detail(admin: AdminType) {
 
     //Trial minted NFT
     if (!data.nftData) {
-        data = await AdminGetData("admin/nft/trial/" + admin.unique);
-        colData = await AdminGetData("admin/collection/trial/" + data.collectionId);
-        walData = await AdminGetData("admin/wallet/trial/" + data.walletId);
-
-        console.log(walData)
-
-        
+        data = await AdminGetData("admin/trialinfo/nft/" + admin.unique);
+        colData = data.collection
+        walData = data.wallet
+    }
+    if (colData.statusCode == 404) {
+       let newCol = await AdminGetData("admin/trialinfo/nft/" + admin.unique);
+         colData = newCol.collection
     }
 
     const user = await AdminGetData("admin/user");
@@ -36,7 +36,6 @@ export async function Detail(admin: AdminType) {
     return (
 
         <>
-            <AdminDetail admin={admin} object={object}>
                 <AdminDetail.Row icon="field" name="Name">
                     <strong className='fs-3'>
                         {data.nftData['name']}
@@ -65,15 +64,19 @@ export async function Detail(admin: AdminType) {
                     <a href={data.onlineCheck} target='_blank' rel="noopener noreferrer">Proof of NFT existence.</a>
                 </AdminDetail.Row>
 
-            </AdminDetail>
 
-
-
-            {user['trialMintId'] == data['id'] ? (
+            {user['trialMintId'] == data['id'] && !user['trialMintPaid'] && !user['trialMintClaimed'] ? (
                 <>
                     <hr className='my-5' />
                     <AdminDetail.Row icon="trial" name="Trial minted">
                         <M.Nft.Ownership />
+                    </AdminDetail.Row>
+                </>
+            ) : user['trialMintId'] == data['id'] ? (
+                <>
+                    <hr className='my-5' />
+                    <AdminDetail.Row icon="trial" name="Trial minted">
+                        Your artwork is already claimed, see the wallet it is associated to.
                     </AdminDetail.Row>
                 </>
             ) : null}

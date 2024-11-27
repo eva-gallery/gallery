@@ -6,16 +6,13 @@ import { Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import { useState, createContext, useContext } from 'react';
 import { web3Enable, web3Accounts, web3FromAddress } from '@polkadot/extension-dapp';
 import { Keyring } from "@polkadot/keyring";
-import { AdminGetData } from '../../functions/get.data';
-import { InjectedExtension } from '@polkadot/extension-inject/types';
-
+import { AdminGetData, AdminPutData } from '../../functions/get.data';
+import ConnectedWallets from './nft.wallets';
 interface AccountContextProps {
    account: string | null;
    setAccount: React.Dispatch<React.SetStateAction<string | null>>;
    accountAddr: string | null;
    setAddr: React.Dispatch<React.SetStateAction<string | null>>;
-   injector: InjectedExtension;
-   setInjector: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const AccountContext = createContext<AccountContextProps | undefined>(undefined);
@@ -29,15 +26,28 @@ export const useAccount = () => {
    return context;
 };
 
+import { useEffect } from 'react';
+
 export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
    const [account, setAccount] = useState<string | null>(null);
-   const [injector, setInjector] = useState<any>(null);
    const [accountAddr, setAddr] = useState<string | null>(null);
 
+   useEffect(() => {
+      const storedAccount = localStorage.getItem('account');
+      const storedAccountAddr = localStorage.getItem('accountAddr');
 
+      if (storedAccount) setAccount(storedAccount);
+      if (storedAccountAddr) setAddr(storedAccountAddr);
+
+      }, []);
+
+      useEffect(() => {
+      if (account) localStorage.setItem('account', account);
+      if (accountAddr) localStorage.setItem('accountAddr', accountAddr);
+   }, [account, accountAddr]);
 
    return (
-      <AccountContext.Provider value={{ account, setAccount, injector, setInjector, accountAddr, setAddr }}>
+      <AccountContext.Provider value={{ account, setAccount, accountAddr, setAddr }}>
          {children}
       </AccountContext.Provider>
    );
@@ -45,7 +55,6 @@ export const AccountProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
 export const Connect: React.FC = () => {
    const { account, setAccount } = useAccount();
-   const { setInjector } = useAccount();
    const [showAccountSelect, setShowAccountSelect] = useState(false);
    const [overlay, setOverlay] = useState<JSX.Element | null>(null);
    const { setAddr } = useAccount();
@@ -89,11 +98,15 @@ export const Connect: React.FC = () => {
                         className="d-block mb-2 w-100 text-start"
                         onClick={async () => {
                            const selectedAccount = keyring.encodeAddress(acc.address, 2);
-                           setAccount(selectedAccount);
-                           const signer = await web3FromAddress(acc.address);
                            setAddr(acc.address);
-                           setInjector(signer);
+
                            setShowAccountSelect(false);
+                              try {
+                                await AdminPutData("nft/create/wallet/"+selectedAccount);
+                              } catch (error) {
+                                console.error('Error creating wallet:', error);
+                              }
+                           setAccount(selectedAccount);
 
                            setOverlay(
                               <Popover id="fetching-data-popover">
@@ -101,16 +114,12 @@ export const Connect: React.FC = () => {
                                  <Popover.Body>
                                     <div className="d-flex align-items-center">
                                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                       Fetching wallet NFTs and Collection, please wait...
+                                       Loading wallet, please wait...
                                     </div>
                                  </Popover.Body>
                               </Popover>
                            );
                            setShowAccountSelect(true);
-                           await AdminGetData(`metadata/colmeta/address/${keyring.encodeAddress(acc.address, 2)}`);
-                           await new Promise(resolve => setTimeout(resolve, 2000)); 
-                           await AdminGetData(`metadata/nftmeta/address/${keyring.encodeAddress(acc.address, 2)}`);
-                           
                            setOverlay(
                               <Popover id="success-popover">
                                  <Popover.Header>Success</Popover.Header>
@@ -141,9 +150,7 @@ export const Connect: React.FC = () => {
 
       } else if (accounts.length === 1) {
          const selectedAccount = keyring.encodeAddress(accounts[0].address, 2);
-         const signer = await web3FromAddress(accounts[0].address);
          setAddr(accounts[0].address);
-         setInjector(signer);
          setOverlay(
             <Popover id="fetching-data-popover">
                <Popover.Header>Fetching Data</Popover.Header>
@@ -157,10 +164,6 @@ export const Connect: React.FC = () => {
          );
          setShowAccountSelect(true);
 
-         await AdminGetData(`metadata/colmeta/address/${selectedAccount}`);
-         await new Promise(resolve => setTimeout(resolve, 2000));
-         await AdminGetData(`metadata/nftmeta/address/${selectedAccount}`);
-
          setOverlay(
             <Popover id="success-popover">
                <Popover.Header>Success</Popover.Header>
@@ -172,55 +175,92 @@ export const Connect: React.FC = () => {
                </Popover.Body>
             </Popover>
          );
+         setAccount(selectedAccount);
 
          setTimeout(() => {
             setShowAccountSelect(false);
             setOverlay(null);
          }, 2000);
-
-         setAccount(selectedAccount);
       }
    };
 
    return (
-      <div className="d-flex align-items-center position-relative">
+      <div className="d-flex flex-column align-items-start position-relative">
+         <div className="d-flex align-items-center">
          <OverlayTrigger
          show={showAccountSelect}
          overlay={overlay || <></>}
          placement="bottom"
          >
          <div>
-            <Button variant="dark" onClick={connectWallet} className="me-2">
-               <FontAwesomeIcon icon={faWallet} className='me-2' />
-               Connect Kusama Wallet
-            </Button>
+         {account && <Button variant="dark" onClick={async () => {
+            setOverlay(
+            <Popover id="fetching-data-popover">
+            <Popover.Header>Fetching Data</Popover.Header>
+            <Popover.Body>
+            <div className="d-flex align-items-center">
+               <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+               Fetching wallet NFTs and Collection, please wait... 
+            </div>
+            </Popover.Body>
+            </Popover>
+            );
+            setShowAccountSelect(true);
+            await AdminGetData(`metadata/colmeta/address/${account}`);
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            await AdminGetData(`metadata/nftmeta/address/${account}`);
+            setOverlay(
+            <Popover id="success-popover">
+            <Popover.Header>Success</Popover.Header>
+            <Popover.Body>
+            <div className="d-flex align-items-center text-success">
+               <span className="me-2">✓</span>
+               Wallet data successfully loaded!
+            </div>
+            </Popover.Body>
+            </Popover>
+            );
+            setTimeout(() => {
+            setShowAccountSelect(false);
+            setOverlay(null);
+            }, 2000);
+         }} className="me-2">
+            <FontAwesomeIcon icon={faWallet} className='me-2' />
+            Fetch Wallet NFTs
+         </Button>}
+         <Button variant="dark" onClick={connectWallet} className="me-2">
+            <FontAwesomeIcon icon={faWallet} className='me-2' />
+            {account ? `${account.slice(0,5)}...${account.slice(-5)}` : 'Connect Kusama Wallet'}
+         </Button>
          </div>
          </OverlayTrigger>
          <OverlayTrigger
          placement="right"
          overlay={
-            <Popover id="wallet-creation-guide-popover">
-               <Popover.Header>Connecting your Kusama wallet</Popover.Header>
-               <Popover.Body>
-                  Connect your Kusama wallet to interact with your NFT artwork. Click on this information button if you need guidance on how to create Kusama wallet.
-               </Popover.Body>
-            </Popover>
+         <Popover id="wallet-creation-guide-popover">
+            <Popover.Header>Connecting your Kusama wallet</Popover.Header>
+            <Popover.Body>
+            Connect your Kusama wallet to interact with your NFT artwork. Click on this information button if you need guidance on how to create Kusama wallet.
+            </Popover.Body>
+         </Popover>
          }
          >
          <Button 
-            variant="outline-secondary" 
-            size="sm" 
-            onClick={() => {
-               if (typeof window !== 'undefined') {
-                  window.open('https://github.com/eva-gallery/gallery/blob/main/docs/wallet_creation.md', '_blank', 'noopener noreferrer');
-               }
-            }}
+         variant="outline-secondary" 
+         size="sm" 
+         onClick={() => {
+            if (typeof window !== 'undefined') {
+            window.open('https://github.com/eva-gallery/gallery/blob/main/docs/wallet_creation.md', '_blank', 'noopener noreferrer');
+            }
+         }}
          >
-            <span>ⓘ</span>
+         <span>ⓘ</span>
          </Button>
          </OverlayTrigger>
-         
-         {account && <div className="mb-0 ms-3">Selected wallet: {account}</div>}
+         </div>
+         <div className="mt-3">
+         <ConnectedWallets selectedAccount={account} />
+         </div>
       </div>
    );
 };

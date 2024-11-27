@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFileImport, faLink } from '@fortawesome/free-solid-svg-icons';
 import AdminImage from '../../components/image';
 import { AdminIcon } from '../../components/components';
-
+import ConnectedWallets from './nft.wallets';
 
 export async function List(admin: AdminType) {
 
@@ -19,8 +19,7 @@ export async function List(admin: AdminType) {
    const user = await AdminGetData("admin/user");
    const collection = await AdminGetData("admin/collection");
    const artwork = await AdminGetData("admin/artwork");
-   const trialNFT = await AdminGetData("admin/nft/trial/"+user['trialMintId']);
-
+   const trialNFT = await AdminGetData("admin/trialinfo/nft/"+user['trialMintId']);
    const object = {
       wallet,
       user,
@@ -42,19 +41,6 @@ export async function List(admin: AdminType) {
 
          {wallet && wallet.length > 0 ? (
             <>
-               <p>
-                  <span className='me-3'>
-                     Connected wallets:
-                  </span>
-                  {wallet.map((data: any, key: number) => (
-                     <React.Fragment key={key}>
-                        <AdminIcon key={key} name='wallet' size={24} className='me-1' />
-                        <strong className='me-3'>
-                           {data['walletAddress']}
-                        </strong>
-                     </React.Fragment>
-                  ))}
-               </p>
                <Button as="a" variant="primary" href="/admin/nft/show">
                   <FontAwesomeIcon icon={faFileImport} className="me-2" />
                   Show NFTs
@@ -69,7 +55,7 @@ export async function List(admin: AdminType) {
          {user['trialMintId'] ? (
             <>
                {trialNFT ? (
-                <M.Nft.Trialminted data={trialNFT} />
+               <M.Nft.Trialminted data={{ nft: trialNFT, paid: user['trialMintPaid'], claimed: user['trialMintClaimed'] }} />
                ) : null}
             </>
          ) : null}
