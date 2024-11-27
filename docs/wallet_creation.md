@@ -82,7 +82,7 @@ First you will be greeted with add account page, here select Polkadot account.
 
 ![talisman_account1](./figs/add_account1.png)
 
-Afterwards you will be prompted to create name for your wallet.
+Afterwards, you will be prompted to create a name for your wallet.
 
 ![talisman_account2](./figs/add_account2.png)
 
@@ -90,7 +90,7 @@ Afterwards you will be prompted to create name for your wallet.
 
 ![recovery_phrase](./figs/recovery_phrase.png)
 
-4.  **Confirm Your Seed Phrase**: You may be asked to verify your seed phrase by selecting the words in the correct order. Once you re-enter your seed phrase you will be greeted with success message.
+4.  **Confirm Your Seed Phrase**: You may be asked to verify your seed phrase by selecting the words in the correct order. Once you re-enter your seed phrase, you will be greeted with a success message.
 
 ![wallet_greeting](./figs/wallet_greeting.png)
 
@@ -103,11 +103,20 @@ To interact with Blockchain you will need some funds. You can purchase Kusama (K
 
 1.  **Receive Kusama**: Click on "Receive" to find your Kusama address. You can share this address to receive Kusama tokens.
 
-  
-
 2.  **Transfer Funds**: Transfer some Kusama tokens to your wallet to cover transaction fees when creating or receiving NFTs.
 
-  
+3.  **Transfer your funds to Kusama Asset Hub** (If the exchange doesn't support it): You can use [following link](https://playground.paraspell.xyz/) to launch cross-chain playground.
+
+4. **Connect your wallet to the cross-chain playground and fill out the message** according to the screenshot below. Make sure to format your message correctly.  
+
+<img width="476" alt="image" src="https://github.com/user-attachments/assets/db0747e3-6614-42e7-9f96-f29229920a27">
+
+**❓Unsure where to find the address?** Open your wallet and click on receive. Copy Kusama address format. It is the same on both Kusama and Kusama Asset Hub. You can also copy the address of the wallet you used during withdrawal from the exchange.
+<img width="391" alt="img" src="https://github.com/user-attachments/assets/f2765b7a-a46c-4971-a21d-3e9ba94b690f">
+
+**⚠️NOTICE:** Make sure to include a little less than your actual balance! There are fees that are consumed during cross-chain transfer. The message will not execute if the account hasn't got enough balance. For example, you own 2.5 KSM on the Relay chain. Transfer 2.45 KSM to Asset Hub Kusama.
+
+**⚠️NOTICE2:** When entering the amount, make sure to add 12 zeros. KSM token has 12 decimals. This means that if you want to transfer 2.45 Kusama, enter 2450000000000 into the amount input.
 
 ### Step 4: Interact with EVA Gallery 🎨
 
