@@ -8,7 +8,8 @@ import { M } from '..';
 import AdminInsert from '../../components/insert';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faEdit } from '@fortawesome/free-solid-svg-icons';
+import NftEdit from './nft.edit';
 
 export async function Detail(admin: AdminType) {
 
@@ -63,7 +64,13 @@ export async function Detail(admin: AdminType) {
                 <AdminDetail.Row icon="nft" name="NFT Check">
                     <a href={data.onlineCheck} target='_blank' rel="noopener noreferrer">Proof of NFT existence.</a>
                 </AdminDetail.Row>
-
+                
+                    <NftEdit 
+                        description={data.nftData['description']} 
+                        name={data.nftData['name']} 
+                        id={data.id} 
+                        artworkId={data.artwork.id}
+                    />
 
             {user['trialMintId'] == data['id'] && !user['trialMintPaid'] && !user['trialMintClaimed'] ? (
                 <>

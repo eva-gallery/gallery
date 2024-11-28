@@ -1,13 +1,12 @@
 'use client';
 
-import { faHand, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faHand } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, OverlayTrigger, Popover } from 'react-bootstrap';
 import { AdminGetData, AdminPutData } from '../../functions/get.data';
 import { ApiPromise, WsProvider } from "@polkadot/api";
-import { useAccount } from './nft.connect';
-import { web3Accounts, web3Enable, web3FromAddress } from '@polkadot/extension-dapp';
+import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp';
 
 // Dudo - tu daj komponent na ownership trial minted
 
@@ -19,7 +18,6 @@ export const Ownership: React.FC = () => {
     const account = localStorage.getItem('account');
     const accountAddr = localStorage.getItem('accountAddr');
     setLoading(true);
-    console.log(account)
     try {
       // Get user
       let user = await AdminGetData("admin/user");
