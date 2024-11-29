@@ -15,7 +15,7 @@ const NftEdit: React.FC<{ description: string; name: string; id: string, artwork
     return (
         <div>
             <hr className='my-5' />
-            <AdminDetail.Row icon="field" name="Edit artwork details">
+            <AdminDetail.Row icon="field" name="Edit NFT details">
             <Button 
                 className="btn btn-success" 
                 onClick={() => {

@@ -10,6 +10,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEdit } from '@fortawesome/free-solid-svg-icons';
 import NftEdit from './nft.edit';
+import NftRemove from './nft.remove';
 
 export async function Detail(admin: AdminType) {
 
@@ -54,7 +55,7 @@ export async function Detail(admin: AdminType) {
                     </a>
                 </AdminDetail.Row>
 
-                <AdminDetail.Row icon="collection" name="Wallet">
+                <AdminDetail.Row icon="wallet" name="Wallet">
                     <a href={walData.onlineCheck} target='_blank' rel="noopener noreferrer">{walData.walletAddress}.</a>
                 </AdminDetail.Row>
 
@@ -65,12 +66,22 @@ export async function Detail(admin: AdminType) {
                     <a href={data.onlineCheck} target='_blank' rel="noopener noreferrer">Proof of NFT existence.</a>
                 </AdminDetail.Row>
                 
-                    <NftEdit 
-                        description={data.nftData['description']} 
-                        name={data.nftData['name']} 
-                        id={data.id} 
-                        artworkId={data.artwork.id}
-                    />
+                    {!(user.trialMintId == data.id) && (
+                        <>
+                            <NftEdit 
+                                description={data.nftData['description']} 
+                                name={data.nftData['name']} 
+                                id={data.id} 
+                                artworkId={data.artwork.id}
+                            />
+                        </>
+                    )}
+                        <NftRemove 
+                                description={data.nftData['description']} 
+                                name={data.nftData['name']} 
+                                id={data.id} 
+                                artworkId={data.artwork.id}
+                            />
 
             {user['trialMintId'] == data['id'] && !user['trialMintPaid'] && !user['trialMintClaimed'] ? (
                 <>
