@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 interface Wallet {
-    address: string;
-    created_at: string;
+    walletAddress: string;
+    onlineCheck: string;
 }
 
 interface ConnectedWalletsProps {

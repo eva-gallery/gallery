@@ -75,7 +75,8 @@ const NftRemove: React.FC<{ description: string; name: string; id: string, artwo
                             try{
                             setLoading(true);
 
-                            if (!document.getElementById('acknowledge').checked) {
+                            const checkbox = document.getElementById('acknowledge') as HTMLInputElement;
+                            if (!checkbox?.checked) {
                                 alert("You must acknowledge that your artwork will be permanently deleted.");
                                 setLoading(false);
                                 return;
@@ -139,10 +140,8 @@ const NftRemove: React.FC<{ description: string; name: string; id: string, artwo
                                     alert(dispatchError.toString());
                                 }
                                 } else {
-                                console.log(txHash);
                                 // Update database to reflect ownership change
                                 let resp = await AdminPutData("nft/remove/db/nft/" + id);
-                                console.log(resp.status);
                                 if (resp.status === "Success") {
                                         alert("The NFT has been successfuly removed from the blockchain");
 

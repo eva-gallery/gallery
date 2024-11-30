@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 import { AdminType } from '@/app/admin/types';
@@ -11,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faFileImport, faLink } from '@fortawesome/free-solid-svg-icons';
 import AdminImage from '../../components/image';
 import { AdminIcon } from '../../components/components';
-
 
 export async function Show(admin: AdminType) {
 
@@ -46,7 +44,7 @@ export async function Show(admin: AdminType) {
             <React.Fragment key={walletKey}>
                <h4 className='mb-3'>
                   <AdminIcon name='wallet' size={32} className='me-2' />
-                 Wallet: <code><em className='font-monospace'>{walletItem.walletAddress}</em></code>
+                  Wallet: <code><em className='font-monospace'>{walletItem.walletAddress}</em></code>
                </h4>
 
                {walletItem.collections && walletItem.collections.map((collectionItem: any, collectionKey: number) => (
@@ -69,10 +67,10 @@ export async function Show(admin: AdminType) {
                            {collectionItem.nfts.map((data: any, nftKey: number) => (
                               <Col key={nftKey} className="border p-2 rounded d-flex flex-column align-items-center" style={{ margin: '5px' }}>
                                  <AdminNftImage src={data.nftData?.image} alt={data.nftData?.name} width={100} height="auto" />
-                                 <p className="text-center mt-3">
+                                 <p className="text-center mt-3 text-truncate" style={{ maxWidth: '150px' }}>
                                     <strong>{data.nftData?.name}</strong>
                                  </p>
-                                 <p className="text-center">
+                                 <p className="text-center text-truncate" style={{ maxWidth: '150px' }}>
                                     {data.nftData?.description}
                                  </p>
                                  <p className='mt-2'>
@@ -103,10 +101,10 @@ export async function Show(admin: AdminType) {
                            !data.artwork && (
                               <Col key={orphanKey} className="border p-2 rounded d-flex flex-column align-items-center" style={{ margin: '5px' }}>
                                  <AdminNftImage src={data.nftData?.image} alt={data.nftData?.name} width={100} height="auto" />
-                                 <p className="text-center mt-3">
+                                 <p className="text-center mt-3 text-truncate" style={{ maxWidth: '150px' }}>
                                     <strong>{data.nftData?.name}</strong>
                                  </p>
-                                 <p className="text-center">
+                                 <p className="text-center text-truncate" style={{ maxWidth: '150px' }}>
                                     {data.nftData?.description}
                                  </p>
                                  <p className='mt-2'>
@@ -125,9 +123,4 @@ export async function Show(admin: AdminType) {
          ))}
       </>
    );
-
 }
-
-
-
-

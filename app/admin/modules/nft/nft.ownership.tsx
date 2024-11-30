@@ -66,10 +66,8 @@ export const Ownership: React.FC = () => {
               alert(dispatchError.toString());
             }
           } else {
-            console.log(txHash);
             // Update database to reflect ownership change
             let resp = await AdminPutData("ownership/updateDB/account/" + account);
-            console.log(resp.status);
             if (resp.status === "Success") {
               let swap = await AdminPutData(`ownership/transfer/asset/${user['trialMintId']}/account/${account}`); 
               if (swap.status === "Success") {

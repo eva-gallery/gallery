@@ -147,10 +147,8 @@ const NftEdit: React.FC<{ description: string; name: string; id: string, artwork
                                 alert(dispatchError.toString());
                               }
                             } else {
-                              console.log(txHash);
                               // Update database to reflect ownership change
                               let resp = await AdminPutData("nft/amend/nft/" + id, { name: newName, metadata: newDescription });
-                              console.log(resp.status);
                               if (resp.status === "Success") {
                                     alert("The description has been updated successfully");
 

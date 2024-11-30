@@ -64,6 +64,39 @@ export async function AdminPutData(endpoint: string, dataInput?: any) {
     return data;
 }
 
+
+export async function AdminPostData(endpoint: string, dataInput?: any) {
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    const cookieStore = cookies().get('SESSION_ID');
+    const sessionId = cookieStore?.value;
+
+    const fetchOptions: RequestInit = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionId}`
+        }
+    };
+
+    if (dataInput) {
+        fetchOptions.body = JSON.stringify(dataInput);
+    }
+
+    const data = await fetch(`${backendUrl}/${endpoint}`, fetchOptions).then(res => {
+        return res.json();
+    });
+
+    if (data.message === "Unauthorized" && data.statusCode === 401) {
+        redirect(`/admin/user/login`);
+    }
+
+    //console.log("********** Backend Get Data form " + endpoint + " **********", data);
+
+    return data;
+}
+
 export async function getData(admin: AdminType) {
 
     let data;

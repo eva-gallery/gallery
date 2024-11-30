@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faEdit } from '@fortawesome/free-solid-svg-icons';
 import NftEdit from './nft.edit';
 import NftRemove from './nft.remove';
+import NftConvert from './nft.convert';
 
 export async function Detail(admin: AdminType) {
 
@@ -116,7 +117,15 @@ export async function Detail(admin: AdminType) {
                         </Button>
                     </AdminDetail.Row>
                 </>
-            ) : null}
+            ) : (
+            <>
+                <NftConvert 
+                                description={data.nftData['description']} 
+                                name={data.nftData['name']} 
+                                id={data.id} 
+                />
+            </>
+            )}
 
 
         </>

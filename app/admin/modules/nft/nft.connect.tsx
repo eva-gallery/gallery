@@ -259,7 +259,7 @@ export const Connect: React.FC = () => {
          </OverlayTrigger>
          </div>
          <div className="mt-3">
-         <ConnectedWallets selectedAccount={account} />
+         <ConnectedWallets selectedAccount={account ?? undefined} />
          </div>
       </div>
    );

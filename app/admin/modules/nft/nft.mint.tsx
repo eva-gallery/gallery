@@ -140,7 +140,6 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                         setLoading(true);
                         const artworkId = data.id;                        
                         const response = await AdminPutData(`mint/trial/artwork/${artworkId}`, { })
-                        console.log(response);
                         setLoading(false);
                         if (response.status === 'MintedAlready') {
                            alert('NFT has already been minted, only one allowed per account.');
@@ -190,10 +189,15 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               const callData = tx.callData;
                               const nftTX = api.tx(callData);
                               const nftTXargs = nftTX.args[0].toHuman();
+                              
+                              if (!nftTXargs || !Array.isArray(nftTXargs)) {
+                                throw new Error('Invalid transaction arguments');
+                              }
 
-                              let nftID = nftTXargs[1].args.item;
-                              let colID = nftTXargs[1].args.collection;
-                              let nftData = nftTXargs[1].args.data;
+                              const txArg = nftTXargs[1] as { args: { item: string, collection: string, data: string } };
+                              let nftID = txArg.args.item;
+                              let colID = txArg.args.collection;
+                              let nftData = txArg.args.data;
 
                               await web3Enable('Eva gallery');
                               //Find account that is same as accountAddr
@@ -220,7 +224,6 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                                           alert(dispatchError.toString());
                                        }
                                     } else {
-                                       console.log(txHash);
                                        await AdminPutData(`nft/create/id/${colID+ "-" + nftID}/wallet/${account}/artwork/${artworkId}`, { ipfsLink: nftData });
                                        alert('NFT was minted successfully. It should appear in online checks in a few minutes.');
                                        //Refresh page to load new NFT
