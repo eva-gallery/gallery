@@ -29,6 +29,13 @@ export async function Detail(admin: AdminType) {
          colData = newCol.collection
     }
 
+    // Some NFTs have collection, but they don't have artwork
+    if (data.artwork == undefined){
+        data.artwork = {}
+    }
+    if (colData == undefined || colData.statusCode == 404 || colData.statusCode == 400){
+        colData = {}
+    }
     const user = await AdminGetData("admin/user");
     const object = {
         data,
@@ -59,22 +66,22 @@ export async function Detail(admin: AdminType) {
                     <a href={walData.onlineCheck} target='_blank' rel="noopener noreferrer">{walData.walletAddress}.</a>
                 </AdminDetail.Row>
 
-                <AdminDetail.Row icon="collection" name="Collection">
-                    <a href={colData.onlineCheck} target='_blank' rel="noopener noreferrer">Collection {colData.colData.id}.</a>
-                </AdminDetail.Row>
+                {colData && colData.colData && colData.colData.id ? (
+                    <AdminDetail.Row icon="collection" name="Collection">
+                        <a href={colData.onlineCheck} target='_blank' rel="noopener noreferrer">Collection {colData.colData.id}.</a>
+                    </AdminDetail.Row>
+                ) : null}
                 <AdminDetail.Row icon="nft" name="NFT Check">
                     <a href={data.onlineCheck} target='_blank' rel="noopener noreferrer">Proof of NFT existence.</a>
                 </AdminDetail.Row>
                 
-                    {!(user.trialMintId == data.id) && (
-                        <>
-                            <NftEdit 
-                                description={data.nftData['description']} 
-                                name={data.nftData['name']} 
-                                id={data.id} 
-                                artworkId={data.artwork.id}
-                            />
-                        </>
+                    {!(user.trialMintId == data.id) && colData && colData.colData && colData.colData.id && (
+                        <NftEdit 
+                            description={data.nftData['description']} 
+                            name={data.nftData['name']} 
+                            id={data.id} 
+                            artworkId={data.artwork.id}
+                        />
                     )}
                         <NftRemove 
                                 description={data.nftData['description']} 
@@ -99,7 +106,7 @@ export async function Detail(admin: AdminType) {
                 </>
             ) : null}
 
-            {data['artwork'] ? (
+            {data['artwork'] && data['artwork'].id ? (
                 <>
                     <hr className='my-5' />
                     <AdminDetail.Row icon="artwork" name="Artwork">

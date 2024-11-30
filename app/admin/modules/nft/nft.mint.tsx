@@ -53,7 +53,7 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
          .filter((data: any) => data.walletId === walletId.id)
          .map((data: any) => ({
             id: data.colData.id,
-            name: `collection: ${data.colData.name}`
+            name: `collection: ${data.colData.name}, id: ${data.colData.id}`,
          }));
          }
       }
