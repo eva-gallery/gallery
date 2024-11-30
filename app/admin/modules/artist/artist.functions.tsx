@@ -11,9 +11,14 @@ export async function Transform(formData: FormData) {
          case 'public':
             json[key] = value === 'on' ? "true" : "false";
             break;
-         // case 'born':
-         //    json[key] = new Date(value).toISOString();
-         //    break;
+         case 'born':
+            if (value == '') {
+               json[key] = null;
+            } else {
+               json[key] = value;
+            }
+            break;
+
          default:
             json[key] = value;
             break;
@@ -24,24 +29,7 @@ export async function Transform(formData: FormData) {
       json['public'] = "false";
    }
 
-   console.log("**** Transform ****", json);
 
    return json;
 }
 
-
-export async function Redirect(admin: AdminType, data: any) {
-
-   console.log("**** Redirect ****", data);
-
-   switch (admin.action) {
-      case "list":
-      case "detail":
-         redirect("/admin/" + admin.modul + "/detail/" + data.id);
-         break;
-      case "delete":
-         redirect("/admin/" + admin.modul);
-         break;
-   }
-
-}

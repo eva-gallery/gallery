@@ -22,6 +22,7 @@ export const AdminBoolean: React.FC<{ value: boolean }> = ({ value }) => {
 };
 
 export const AdminDate: React.FC<{ date: string }> = ({ date }) => {
+  if (!date) return null;
   const datestring = new Date(date);
   const formattedDate = format(datestring, "d. MMMM yyyy");
   return (

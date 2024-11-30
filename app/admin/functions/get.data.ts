@@ -104,7 +104,7 @@ export async function getData(admin: AdminType) {
     const cookieStore = cookies().get('SESSION_ID');
     const sessionId = cookieStore?.value;
 
-    console.log("**** Cookies ****", sessionId);
+    //console.log("**** Cookies ****", sessionId);
 
     switch (admin.action) {
         case 'list':
@@ -182,7 +182,7 @@ export async function getData(admin: AdminType) {
         redirect(`/admin/user/login`);
     }
 
-    console.log("********** Backend Get Data **********", data);
+    //console.log("********** Backend Get Data **********", data);
 
     return data;
 }
@@ -200,66 +200,10 @@ export async function getOption(name: string) {
             "Authorization": `Bearer ${sessionId}`
         }
     }).then(res => res.json());
-    console.log("********** Backend Get Option **********", option);
+    //console.log("********** Backend Get Option **********", option);
     return option;
 }
 
 
-
-
-export async function AdminSetData(formData: FormData, admin: AdminType) {
-
-    console.log("**** adminSetData ****");
-    console.log(formData);
-
-    console.log("*** VITKOR ***");
-    console.log(admin);
-
-
-    const json = Object.fromEntries(formData.entries());
-
-
-    let data;
-
-    switch (admin.action) {
-        case 'login':
-            data = await fetch(`${backendUrl}/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(json)
-            }).then(res => res.json());
-
-
-
-            if (data.sessionId) {
-                cookies().set({
-                    name: 'SESSION_ID',
-                    value: data.sessionId,
-                    secure: true,
-                    httpOnly: true,
-                    path: '/',
-                    sameSite: 'strict'
-                });
-
-
-                redirect(`/admin/${admin.modul}`);
-            } else {
-                data.alert = "Wrong Email or Password!";
-            }
-
-
-            break;
-    }
-
-    console.log("********** Backend Set Data **********", data);
-
-    return data;
-
-    //revalidatePath(`/admin/${admin.modul}/detail/${admin.unique}`);
-
-
-}
 
 

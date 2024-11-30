@@ -25,7 +25,7 @@ const AdminDetail: DetailComponent = ({ admin, object, children }) => {
 
   const Module = M[capitalize(admin.modul) as keyof typeof M] || (() => <div>Unknown module</div>);
 
-  console.log('AdminDetail', object);
+
 
   return (
     <>

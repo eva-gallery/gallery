@@ -12,6 +12,22 @@ export async function Transform(formData: FormData) {
             json[key] = value === 'on' ? "true" : "false";
             break;
 
+         case 'fromDate':
+            if (value == '') {
+               json[key] = null;
+            } else {
+               json[key] = value;
+            }
+            break;
+
+         case 'toDate':
+            if (value == '') {
+               json[key] = null;
+            } else {
+               json[key] = value;
+            }
+            break;
+
          // case 'fromDate':
          //    json[key] = new Date(value).toISOString();
          //    break;
