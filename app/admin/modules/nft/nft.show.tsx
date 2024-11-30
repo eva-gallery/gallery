@@ -65,29 +65,25 @@ export async function Show(admin: AdminType) {
                               {collectionItem.colData.description || 'null'}
                            </Col>
                         </Row>
-
                         <Row className='mb-5 g-4 row-cols-xl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2'>
                            {collectionItem.nfts.map((data: any, nftKey: number) => (
-                              !data.artwork && (
-                                 <Col key={nftKey}>
-                                    <AdminNftImage src={data.nftData?.image} alt={data.nftData?.name} width={100} height="auto" />
-
-                                    <p>
-                                       <strong>{data.nftData?.name}</strong>
-                                       <br />
-                                       {data.nftData?.description}
-                                    </p>
-
-                                    <p className='mt-3'>
-                              <Button as="a" variant="primary" href={`/admin/nft/detail/${data['id']}`} className='mt-2'>
-                                 NFT detail
-                                 <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
-                              </Button>
-                           </p>
-                                 </Col>
-                              )))}
-                        </Row>
-                        <hr className='my-5' />
+                              <Col key={nftKey} className="border p-2 rounded d-flex flex-column align-items-center" style={{ margin: '5px' }}>
+                                 <AdminNftImage src={data.nftData?.image} alt={data.nftData?.name} width={100} height="auto" />
+                                 <p className="text-center mt-3">
+                                    <strong>{data.nftData?.name}</strong>
+                                 </p>
+                                 <p className="text-center">
+                                    {data.nftData?.description}
+                                 </p>
+                                 <p className='mt-2'>
+                                    <Button as="a" variant="primary" href={`/admin/nft/detail/${data['id']}`} className='mt-2'>
+                                       NFT detail
+                                       <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
+                                    </Button>
+                                 </p>
+                              </Col>
+                           ))}
+                        </Row> <hr className='my-5' />
                      </React.Fragment>
                   )
                ))}
@@ -102,19 +98,18 @@ export async function Show(admin: AdminType) {
                         Orphan NFTs are artworks that were minted and transferred to you by other wallets. 
                         You do not own the collections these NFTs are housed in and you cannot edit the NFT description.
                      </p>
-
                      <Row className='mb-5 g-4 row-cols-xl-6 row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2'>
                         {walletItem.orphanNfts.map((data: any, orphanKey: number) => (
                            !data.artwork && (
-                              <Col key={orphanKey}>
+                              <Col key={orphanKey} className="border p-2 rounded d-flex flex-column align-items-center" style={{ margin: '5px' }}>
                                  <AdminNftImage src={data.nftData?.image} alt={data.nftData?.name} width={100} height="auto" />
-
-                                 <p>
+                                 <p className="text-center mt-3">
                                     <strong>{data.nftData?.name}</strong>
-                                    <br />
+                                 </p>
+                                 <p className="text-center">
                                     {data.nftData?.description}
                                  </p>
-                                 <p className='mt-3'>
+                                 <p className='mt-2'>
                                     <Button as="a" variant="primary" href={`/admin/nft/detail/${data['id']}`} className='mt-2'>
                                        NFT detail
                                        <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
