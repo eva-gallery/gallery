@@ -30,9 +30,6 @@ export async function Detail(admin: AdminType) {
         "exhibition": await AdminGetData("admin/options/exhibition"),
     };
 
-    console.log("Detail Artwork", evaWallet);
-
-
 
     const object = {
         data,
