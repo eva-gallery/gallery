@@ -10,7 +10,6 @@ import { AdminIcon } from '../../components/components';
 
 export async function Trialminted(nft: any) {
    const data = nft.data;
-
    return (
 
       <>

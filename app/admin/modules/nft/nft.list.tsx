@@ -19,7 +19,12 @@ export async function List(admin: AdminType) {
    const user = await AdminGetData("admin/user");
    const collection = await AdminGetData("admin/collection");
    const artwork = await AdminGetData("admin/artwork");
-   const trialNFT = await AdminGetData("admin/trialinfo/nft/" + user['trialMintId']);
+   let trialNFT = await AdminGetData("admin/trialinfo/nft/" + user['trialMintId']);
+
+   if (!trialNFT || trialNFT.statusCode == 404) {
+      trialNFT = await AdminGetData("admin/nft/" + user['trialMintId']);
+   }
+
    const object = {
       wallet,
       user,

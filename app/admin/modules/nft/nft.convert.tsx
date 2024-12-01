@@ -112,7 +112,7 @@ const NftConvert: React.FC<{ description: string; name: string; id: string}> = (
                             setLoading(true);
 
                             try{
-                              await AdminPostData("admin/artwork/create", { name: newName, description: newDescription, artistId: artist, nftId: id})
+                              await AdminPostData("admin/artwork/nft/create", { name: newName, description: newDescription, artistId: artist, nftId: id})
                               alert("Artwork created successfully");
                                 setLoading(false);
                                 window.location.reload();

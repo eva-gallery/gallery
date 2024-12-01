@@ -14,7 +14,6 @@ import { Ownership } from './nft.ownership';
 import { Detail } from './nft.detail';
 import { Mint } from './nft.mint';
 import { Show } from './nft.show';
-import { Import } from './nft.import';
 
 
 
@@ -41,7 +40,6 @@ Nft.Connect = Connect;
 Nft.Ownership = Ownership;
 Nft.Mint = Mint;
 Nft.Trialminted = Trialminted;
-Nft.Import = Import;
 Nft.Show = Show;
 
 export default Nft;
