@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Form, Row, Col } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL
 
 interface Artwork {
   slug: string;
