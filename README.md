@@ -9,5 +9,9 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:4000
 
 # DOCKER 
 ENV NEXT_PUBLIC_BACKEND_URL=http://host.docker.internal:4000
+#IPFS username
+IPFS_USERNAME=ipfs
+#IPFS password
+IPFS_PASSWORD=passwd
 
 
