@@ -50,7 +50,7 @@ export default async function ArtistDetail({ slug }: ArtistDetailProps) {
     <>
       <NavbarComponent />
       
-      <Container className="py-5">
+      <Container className="py-3">
         {/* Artist Info Section */}
         <Row className="mb-5">
           <Col md={4} className='d-none'>
@@ -64,7 +64,7 @@ export default async function ArtistDetail({ slug }: ArtistDetailProps) {
             </div> */}
           </Col>
           <Col md={12}> 
-            <h1 className="mb-4">{artist.name} <small>({artist.countryCode})</small></h1>
+            <h1 className="mb-4">{artist.name} <span className={`fi fi-${artist.countryCode?.toLowerCase()} fs-6`}></span></h1>
             
             {artist.biography && (
               <div className="mb-4" dangerouslySetInnerHTML={{ __html: artist.biography }}>

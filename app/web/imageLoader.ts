@@ -1,4 +1,4 @@
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
+const backendUrl = 'https://evagallery.b-cdn.net'; // https://evagallery.b-cdn.net / process.env.NEXT_PUBLIC_BACKEND_URL || 
 const placeholderImage = '/images/placeholder.png';
 
 export async function getImageData(endpoint: string): Promise<string> {

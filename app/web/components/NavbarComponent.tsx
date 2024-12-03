@@ -55,6 +55,14 @@ const NavbarComponent = () => {
               >
                 Artworks
               </Nav.Link>
+
+              <Nav.Link 
+                as={Link} 
+                href="/artists" 
+                className="mx-1 text-dark hover:text-primary"
+              >
+                Artists
+              </Nav.Link>
               
               <Nav.Link 
                 as={Link} 
