@@ -44,17 +44,17 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
       if (account) {
          let walletId = null;
          for (let i = 0; i < fetchedWallets.length; i++) {
-         if (fetchedWallets[i].walletAddress === account) {
-             walletId = fetchedWallets[i];
-         }
+            if (fetchedWallets[i].walletAddress === account) {
+               walletId = fetchedWallets[i];
+            }
          }
          if (walletId) {
-         option = fetchedCollections
-         .filter((data: any) => data.walletId === walletId.id)
-         .map((data: any) => ({
-            id: data.colData.id,
-            name: `collection: ${data.colData.name}, id: ${data.colData.id}`,
-         }));
+            option = fetchedCollections
+               .filter((data: any) => data.walletId === walletId.id)
+               .map((data: any) => ({
+                  id: data.colData.id,
+                  name: `collection: ${data.colData.name}, id: ${data.colData.id}`,
+               }));
          }
       }
       setOptions(option);
@@ -101,9 +101,9 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                   </ToggleButton>
                </ButtonGroup>
 
-                  {mintMode === 'regular' && (
-                    <>
-                      {account && collection && (
+               {mintMode === 'regular' && (
+                  <>
+                     {account && collection && (
                         <AdminFormInput
                            type="parent"
                            icon="collection"
@@ -113,24 +113,24 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                            option={options}
                            required
                         />
-                      )}
-                      <p>
+                     )}
+                     <p>
                         <strong>Connected Account:</strong> {account || "No account connected"}
-                      </p>
-                      {!account && (
+                     </p>
+                     {!account && (
                         <small className="text-muted d-block">
                            <i className="fas fa-info-circle me-1"></i>
                            Please connect your wallet in connect Kusama wallet button first to mint NFTs.
                         </small>
-                      )}
-                    </>
-                  )}
+                     )}
+                  </>
+               )}
 
                {mintMode === 'trial' && (
-                  <div className="alert alert-info">
-                     You are about to mint this NFT for free through Eva Gallery. 
+                  <p>
+                     You are about to mint this NFT for free through Eva Gallery.
                      You can mint 1 artwork like this for free.
-                  </div>
+                  </p>
                )}
             </Modal.Body>
             <Modal.Footer>
@@ -138,8 +138,8 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                   <Button variant="primary" onClick={async () => {
                      try {
                         setLoading(true);
-                        const artworkId = data.id;                        
-                        const response = await AdminPutData(`mint/trial/artwork/${artworkId}`, { })
+                        const artworkId = data.id;
+                        const response = await AdminPutData(`mint/trial/artwork/${artworkId}`, {})
                         setLoading(false);
                         if (response.status === 'MintedAlready') {
                            alert('NFT has already been minted, only one allowed per account.');
@@ -189,9 +189,9 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               const callData = tx.callData;
                               const nftTX = api.tx(callData);
                               const nftTXargs = nftTX.args[0].toHuman();
-                              
+
                               if (!nftTXargs || !Array.isArray(nftTXargs)) {
-                                throw new Error('Invalid transaction arguments');
+                                 throw new Error('Invalid transaction arguments');
                               }
 
                               const txArg = nftTXargs[1] as { args: { item: string, collection: string, data: string } };
@@ -202,11 +202,11 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               await web3Enable('Eva gallery');
                               //Find account that is same as accountAddr
                               const injector = await web3FromAddress(accountAddr)
-                           
+
                               //check if account is not found
                               if (!account) {
-                                alert("Account not found");
-                                return;
+                                 alert("Account not found");
+                                 return;
                               }
 
                               let call = api.tx(callData);
@@ -224,7 +224,7 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                                           alert(dispatchError.toString());
                                        }
                                     } else {
-                                       await AdminPutData(`nft/create/id/${colID+ "-" + nftID}/wallet/${account}/artwork/${artworkId}`, { ipfsLink: nftData });
+                                       await AdminPutData(`nft/create/id/${colID + "-" + nftID}/wallet/${account}/artwork/${artworkId}`, { ipfsLink: nftData });
                                        alert('NFT was minted successfully. It should appear in online checks in a few minutes.');
                                        //Refresh page to load new NFT
                                        window.location.reload();

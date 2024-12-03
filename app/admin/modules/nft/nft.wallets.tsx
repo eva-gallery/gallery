@@ -31,7 +31,7 @@ const ConnectedWallets = ({ selectedAccount }: ConnectedWalletsProps) => {
     useEffect(() => {
         fetchWallets();
     }, []);
-    
+
     useEffect(() => {
         if (selectedAccount) {
             fetchWallets();
@@ -41,7 +41,7 @@ const ConnectedWallets = ({ selectedAccount }: ConnectedWalletsProps) => {
         <div className="border border-gray-300 p-2 rounded mb-2"> {/* Changed from p-4 to pl-2 */}
             <div onClick={toggleDropdown}>
                 <div>
-                    <span><FontAwesomeIcon icon={faWallet} className="mr-2 text-gray-600" /> List your connected wallets </span>
+                    <span> List your connected wallets </span>
                     <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} className="mr-2 text-gray-600" />
 
                 </div>
