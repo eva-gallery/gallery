@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const backendUrl = 'https://evagallery.b-cdn.net'; // cdn.evagallery.eu / process.env.NEXT_PUBLIC_BACKEND_URL
 
   type ArtworkGalleryProps = {
     artworks: any[];

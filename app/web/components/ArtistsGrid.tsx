@@ -3,6 +3,8 @@ import { Container, Form, Row, Col } from "react-bootstrap";
 import { Search } from 'lucide-react';
 // import type { Artist } from '@/app/web/types/artist';
 
+const backendUrl = 'https://evagallery.b-cdn.net'; // https://cdn.evagallery.eu process.env.NEXT_PUBLIC_BACKEND_URL
+
 interface Artwork {
   slug: string;
   // Add other artwork properties as needed
@@ -25,7 +27,7 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
   const artistsList: Artist[] = Array.isArray(artists) ? artists : [];
 
   return (
-    <Container className="py-5">
+    <Container className="py-3">
       {/* Header with search */}
       <Row className="mb-4 align-items-center">
         <Col>
@@ -59,19 +61,19 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
                 <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                   <div className="position-absolute top-0 start-0 w-100 h-100">
                     <img
-                      src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`}
+                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`}
                       alt={artist.name}
                       className="w-100 h-100 object-cover"
                     />
                   </div>
                 </div>
-                <div className="card-body d-flex flex-column">
-                  <h5 className="card-title fs-6 text-truncate text-dark">
+                <div className="card-body d-flex flex-row justify-content-between align-items-center">
+                  <h5 className="card-title fs-6 mb-0 text-truncate text-dark">
                     {artist.name}
                   </h5>
-                  <p className="card-text text-muted small mb-0 text-truncate">
-                    {artist.countryCode}
-                  </p>
+                  
+                  <span className={`fi fi-${artist.countryCode?.toLowerCase()} fs-6`}></span>
+                  
                 </div>
               </div>
             </a>

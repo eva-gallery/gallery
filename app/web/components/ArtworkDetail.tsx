@@ -3,7 +3,7 @@ import { Container, Row, Col, Badge } from 'react-bootstrap'
 import Link from 'next/link'
 import { User, Calendar, Brush, Ruler } from 'lucide-react'
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const backendUrl = 'https://evagallery.b-cdn.net'; // https://cdn.evagallery.eu process.env.NEXT_PUBLIC_BACKEND_URL
 
 interface Artist {
   name: string;

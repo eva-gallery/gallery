@@ -16,6 +16,7 @@
     "bcrypt": "^5.1.1",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
+    "flag-icons": "^7.2.3",
     "jose": "^5.4.1",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.460.0",
@@ -31,7 +32,9 @@
     "react-quill": "^2.0.0",
     "react-unity-webgl": "^9.5.2",
     "slugify": "^1.6.6",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@polkadot/extension-dapp": "^0.56.1",
+    "@polkadot/extension-inject": "^0.56.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

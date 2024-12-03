@@ -1,10 +1,10 @@
 'use client'
 import { Container, Row, Col } from 'react-bootstrap'
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react'
+import { Facebook, Twitter, Instagram, Youtube, Github, Mail, Phone, MapPin } from 'lucide-react'
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-dark text-light py-5 mt-5">
+    <footer id="contact" className="bg-lightish py-5 mt-5">
       <Container>
         <Row>
           {/* About Column */}
@@ -20,7 +20,7 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
               <a target="_blank" href="https://www.facebook.com/evagallery.eu" rel="noopener noreferrer"><Facebook size={20} className="cursor-pointer hover:text-primary" /></a>
               <a target="_blank" href="https://www.instagram.com/evagalleryeu" rel="noopener noreferrer"><Instagram size={20} className="cursor-pointer hover:text-primary" /></a>
               <a target="_blank" href="https://www.youtube.com/@E.V.A.Gallery" rel="noopener noreferrer"><Youtube size={20} className="cursor-pointer hover:text-primary" /></a>
-              <a target="_blank" href="https://github.com/eva-gallery" rel="noopener noreferrer"><Twitter size={20} className="cursor-pointer hover:text-primary" /></a>
+              <a target="_blank" href="https://github.com/eva-gallery" rel="noopener noreferrer"><Github size={20} className="cursor-pointer hover:text-primary" /></a>
             </div>
           </Col>
 
@@ -28,21 +28,23 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
           <Col md={3} className="mb-4">
             <h5 className="mb-3 font-bold">Quick Links</h5>
             <ul className="list-unstyled">
+              
               <li className="mb-2">
-                <a href="#" className="text-decoration-none hover:text-primary">Home</a>
+                <a href="/artworks" className="text-decoration-none hover:text-primary">Artworks</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-decoration-none hover:text-primary">Artworks</a>
+                <a href="/galleries" className="text-decoration-none hover:text-primary">Galleries</a>
+              </li>
+              <li className="mb-2">
+                <a href="/exhibitions" className="text-decoration-none hover:text-primary">Exhibitions</a>
               </li>
               <li className="mb-2">
                 <a href="/artists" className="text-decoration-none hover:text-primary">Artists</a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-decoration-none hover:text-primary">Exhibitions</a>
+              <a href="/nfts" className="text-decoration-none hover:text-primary">NFTs</a> / <a href="/3d" className="text-decoration-none hover:text-primary">3D</a> / <a href="/ai" className="text-decoration-none hover:text-primary">AI</a>
               </li>
-              <li className="mb-2">
-                <a href="#" className="text-decoration-none hover:text-primary">Blog</a>
-              </li>
+              
             </ul>
           </Col>
 
@@ -51,15 +53,15 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
             <h5 className="mb-3 font-bold">Contact Info</h5>
             <ul className="list-unstyled">
               <li className="mb-3 d-flex align-items-center gap-2">
-                <MapPin size={18} />
+                <MapPin size={18} className='text-black' />
                 <span className="text-light-emphasis"><a target="_blank" href="https://www.euforion.sk" rel="noopener noreferrer">euforion.sk</a></span>
               </li>
               <li className="mb-3 d-flex align-items-center gap-2">
-                <Phone size={18} />
+                <Phone size={18} className='text-black' />
                 <span className="text-light-emphasis"><a href="tel:+421907796660">+421 907 796 660</a></span>
               </li>
               <li className="mb-3 d-flex align-items-center gap-2">
-                <Mail size={18} />
+                <Mail size={18} className='text-black' />
                 <span className="text-light-emphasis"><a href="mailto:info@evagallery.eu">info@evagallery.eu</a></span>
               </li>
             </ul>
@@ -75,7 +77,7 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="form-control bg-dark text-light border-secondary"
+                className="form-control bg-light text-light border-secondary"
               />
               <button className="btn btn-primary">
                 Subscribe

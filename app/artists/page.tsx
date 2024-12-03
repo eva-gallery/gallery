@@ -25,10 +25,10 @@ interface Artist {
 
 export const metadata: Metadata = {
   title: 'Featured Artists | E.V.A. Gallery',
-  description: 'Discover talented artists from around the world showcasing their unique artworks in our gallery.',
+  description: 'Discover talented artists from European Union showcasing their unique artworks in our gallery.',
   openGraph: {
     title: 'Featured Artists | E.V.A. Gallery',
-    description: 'Discover talented artists from around the world showcasing their unique artworks in our gallery.',
+    description: 'Discover talented artists from European Union showcasing their unique artworks in our gallery.',
     type: 'website',
     siteName: 'E.V.A. Gallery',
     url: '/artists',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Featured Artists | E.V.A. Gallery',
-    description: 'Discover talented artists from around the world showcasing their unique artworks in our gallery.',
+    description: 'Discover talented artists from European Union showcasing their unique artworks in our gallery.',
   },
   alternates: {
     canonical: '/artists',

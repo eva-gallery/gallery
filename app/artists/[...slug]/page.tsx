@@ -10,7 +10,7 @@ interface PageProps {
 export default function ArtistPage({ params }: PageProps) {
   return (
     <>
-      <ArtistDetail slug={params.slug} />
+      <ArtistDetail params={{ slug: params.slug }} />
     </>
   );
 }

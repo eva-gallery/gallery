@@ -55,6 +55,14 @@ const NavbarComponent = () => {
               >
                 Artworks
               </Nav.Link>
+
+              <Nav.Link 
+                as={Link} 
+                href="/artists" 
+                className="mx-1 text-dark hover:text-primary"
+              >
+                Artists
+              </Nav.Link>
               
               <Nav.Link 
                 as={Link} 
@@ -114,29 +122,7 @@ const NavbarComponent = () => {
               </div>
             </div>
           </Navbar.Collapse>
-          <style jsx global>{`
-            a:hover { color:#0d3c81 !important; } 
-            footer a { color:#0d3c81; }
-            footer a:hover { color:#fff !important; }
-            .btn-primary, .btn-outline-primary:focus, .btn-outline-primary:hover { background:#0d3c81; color:#fff !important; }
-            @media (min-width: 992px) {
-          .navbar .container {
-            display: grid;
-            grid-template-columns: auto 300px 1fr;
-            gap: 1rem;
-            align-items: center;
-          }
-        }
-          .navbar-toggler:focus {
-          box-shadow: none;
-        }
-        
-        @media (min-width: 992px) {
-          .navbar-collapse {
-            flex-grow: 0;
-          }
-        }
-      `}</style>
+          
         </Container>
       </Navbar>
     </>

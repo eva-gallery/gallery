@@ -6,7 +6,7 @@ import { Container } from 'react-bootstrap';
 import { AdminType } from '../types';
 import { capitalize } from '../functions/tools';
 import { M } from '../modules';
-
+import { AccountProvider } from '../modules/nft/nft.connect';
 
 
 export default async function Page({ params }: any) {
@@ -23,10 +23,10 @@ export default async function Page({ params }: any) {
    const Modul = M[capitalize(admin.modul) as keyof typeof M] || (() => <div>Unknown module</div>);
 
    return (
-
+      <AccountProvider>
       <Container className='py-5'>
          {Modul(admin)}
       </Container>
-
+      </AccountProvider>
    );
 }
