@@ -10,7 +10,6 @@ import { PassThrough } from 'stream';
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
 
 export async function AdminGetData(endpoint: string) {
-
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     const cookieStore = cookies().get('SESSION_ID');
@@ -29,11 +28,74 @@ export async function AdminGetData(endpoint: string) {
     }
 
     //console.log("********** Backend Get Data form " + endpoint + " **********", data);
+    return data;
+}
+
+
+export async function AdminPutData(endpoint: string, dataInput?: any) {
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    const cookieStore = cookies().get('SESSION_ID');
+    const sessionId = cookieStore?.value;
+
+    const fetchOptions: RequestInit = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionId}`
+        }
+    };
+
+    if (dataInput) {
+        fetchOptions.body = JSON.stringify(dataInput);
+    }
+
+    const data = await fetch(`${backendUrl}/${endpoint}`, fetchOptions).then(res => {
+        return res.json();
+    });
+
+    if (data.message === "Unauthorized" && data.statusCode === 401) {
+        redirect(`/admin/user/login`);
+    }
+
+    //console.log("********** Backend Get Data form " + endpoint + " **********", data);
 
     return data;
 }
 
 
+export async function AdminPostData(endpoint: string, dataInput?: any) {
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    const cookieStore = cookies().get('SESSION_ID');
+    const sessionId = cookieStore?.value;
+
+    const fetchOptions: RequestInit = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionId}`
+        }
+    };
+
+    if (dataInput) {
+        fetchOptions.body = JSON.stringify(dataInput);
+    }
+
+    const data = await fetch(`${backendUrl}/${endpoint}`, fetchOptions).then(res => {
+        return res.json();
+    });
+
+    if (data.message === "Unauthorized" && data.statusCode === 401) {
+        redirect(`/admin/user/login`);
+    }
+
+    //console.log("********** Backend Get Data form " + endpoint + " **********", data);
+
+    return data;
+}
 
 export async function getData(admin: AdminType) {
 

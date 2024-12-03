@@ -10,7 +10,6 @@ import { AdminIcon } from '../../components/components';
 
 export async function Trialminted(nft: any) {
    const data = nft.data;
-   console.log("****** trialMintId", data);
    return (
 
       <>
@@ -19,33 +18,34 @@ export async function Trialminted(nft: any) {
          <Row>
             <Col xs="auto">
                {/* <AdminNftImage src={data['nftData'].image} alt={data['nftData'].name} width={480} /> */}
-               <AdminImage src={`artwork/${data['artwork'].id}/thumbnail`} alt={data['name']} width={480} />
+               <AdminImage src={`artwork/${data.nft['artwork'].id}/thumbnail`} alt={data['name']} width={480} />
             </Col>
             <Col>
                <p>
                   <AdminIcon name='artwork' size={24} className='me-1' />
-                  <a href={`/admin/artwork/detail/${data['artwork'].id}`}>
+                  <a href={`/admin/artwork/detail/${data.nft['artwork'].id}`}>
                      <strong>
-                        {data['artwork'].name}
+                        {data.nft['artwork'].name}
                      </strong><br />
                   </a>
                </p>
-               <h3>{data['nftData'].name}</h3>
-               <p className='border p-3'>{data['nftData'].metadata}</p>
+               <h3>{data.nft['nftData'].name}</h3>
+               <p className='border p-3'>{data.nft['nftData'].description}</p>
 
-               <p>
-                  <AdminIcon name='wallet' size={24} className='me-1' />
-                  {data['walletId']}
-               </p>
+                    <p className="d-flex align-items-center">
+                     <Button as="a" href={`/admin/nft/detail/${data.nft['id']}`} className="btn btn-primary me-2">
+                       NFT Detail
+                       <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
+                     </Button>
 
-               <p>
-                  <Button as="a" href={`/admin/nft/detail/${data['id']}`} className="btn btn-primary me-2">
-                     NFT Detail
-                     <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
-                  </Button>
-
-                  <M.Nft.Ownership />
-               </p>
+                     {data.paid && data.claimed ? (
+                       <span className="text-muted">
+                        Your artwork is already claimed, see NFT detail for more information.
+                       </span>
+                     ) : (
+                       <M.Nft.Ownership />
+                     )}
+                    </p>
 
 
             </Col>

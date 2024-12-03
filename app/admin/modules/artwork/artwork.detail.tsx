@@ -11,6 +11,16 @@ export async function Detail(admin: AdminType) {
 
 
     const data = await AdminGetData("admin/artwork/" + admin.unique);
+    let wallet = null;
+    const evaWallet = await AdminGetData("nft/wallet/eva");
+
+    if (data['nft']) {
+        wallet = await AdminGetData("admin/wallet/" + data['nft'].walletId);
+        if (data['nft'].walletId === evaWallet.id)
+            {
+                wallet.walletAddress = "NFT Trial minted via EVA Gallery";
+            }
+    }
     const option = {
         "artist": await AdminGetData("admin/options/artist"),
         "artwork_genre": await AdminGetData("admin/options/artwork_genre"),
@@ -19,6 +29,7 @@ export async function Detail(admin: AdminType) {
         "artwork_technique": await AdminGetData("admin/options/artwork_technique"),
         "exhibition": await AdminGetData("admin/options/exhibition"),
     };
+
 
     const object = {
         data,
@@ -63,10 +74,10 @@ export async function Detail(admin: AdminType) {
                         <>
                             <AdminBoolean value={true} />
                             <p>
-                                NFT wallet: {data['nft'].walletId} <br />
-                                NFT image:&#160;
-                                <a href={data['nft'].nftData.image} target='_blank'>
-                                    {data['nft'].nftData.image}
+                                Minted by wallet: {wallet.walletAddress} <br />
+                                Check NFT online:&#160;
+                                <a href={data['nft'].onlineCheck} target='_blank'>
+                                    Proof of existence
                                 </a>
                             </p>
                         </>
@@ -84,19 +95,19 @@ export async function Detail(admin: AdminType) {
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="art" name="Genre">
-                    {data['artworkGenre']?.['name']}
+                    {data['artworkGenre']?.name || 'Not specified'}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="worktype" name="Worktype">
-                    {data["artworkWorktype"]?.['name']}
+                    {data["artworkWorktype"]?.name || 'Not specified'}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="paper" name="Material">
-                    {data["artworkMaterial"]?.['name']}
+                    {data["artworkMaterial"]?.name || 'Not specified'}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="palette" name="Technique">
-                    {data["artworkTechnique"]?.['name']}
+                    {data["artworkTechnique"]?.name || 'Not specified'}
                 </AdminDetail.Row>
 
                 <AdminDetail.Row icon="measurements" name="Measurements">
