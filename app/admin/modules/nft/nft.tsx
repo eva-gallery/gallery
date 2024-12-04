@@ -8,7 +8,7 @@ import Cards from './nft.cards';
 
 import AdminAction from '../../components/action';
 import { AdminType } from '../../types';
-import { Connect } from './nft.connect';
+import { AccountProvider, Connect } from './nft.connect';
 import { Trialminted } from './nft.trialminted';
 import { Ownership } from './nft.ownership';
 import { Detail } from './nft.detail';
@@ -20,7 +20,9 @@ import { Show } from './nft.show';
 async function Nft(admin: AdminType) {
 
     return (
+        <AccountProvider>
         <AdminAction admin={admin} actions={Data.actions} />
+        </AccountProvider>
     );
 };
 
