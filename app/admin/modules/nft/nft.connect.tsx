@@ -4,7 +4,7 @@ import { faCircle, faCircleInfo, faExternalLink, faInfo, faWallet } from '@forta
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button, Popover, OverlayTrigger, Modal } from 'react-bootstrap';
 import { useState, createContext, useContext } from 'react';
-import { web3Enable, web3Accounts, web3FromAddress } from '@polkadot/extension-dapp';
+import { web3Enable, web3Accounts } from '@polkadot/extension-dapp';
 import { Keyring } from "@polkadot/keyring";
 import { AdminGetData, AdminPutData } from '../../functions/get.data';
 import ConnectedWallets from './nft.wallets';
@@ -62,8 +62,13 @@ export const Connect: React.FC = () => {
 
 
    const connectWallet = async () => {
-      const extensions = await web3Enable('Eva gallery');
-      const accounts = await web3Accounts();
+      let extensions: any[] = [];
+      let accounts: any[] = [];
+      if (typeof window !== 'undefined') {
+         extensions = await web3Enable('Eva gallery');
+         accounts = await web3Accounts();
+      }
+
       if (extensions.length === 0 || accounts.length === 0) {
 
          handleShow();

@@ -3,10 +3,8 @@ import React from 'react';
 import { OverlayTrigger, Popover, Button, Alert } from "react-bootstrap";
 import AdminDetail from '../../components/detail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDeleteLeft, faEdit, faRadiation, faReceipt, faRecordVinyl, faRecycle, faRemove, faTrash, faTrashAlt, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { AdminGetData, AdminPostData, AdminPutData } from '../../functions/get.data';
-import { web3Enable, web3FromAddress } from '@polkadot/extension-dapp';
-import { ApiPromise, WsProvider } from "@polkadot/api";
+import { faRecordVinyl } from '@fortawesome/free-solid-svg-icons';
+import { AdminGetData, AdminPostData } from '../../functions/get.data';
 
 const NftConvert: React.FC<{ description: string; name: string; id: string}> = ({ description, name, id }) => {
     const [loading, setLoading] = React.useState(false);
@@ -115,7 +113,10 @@ const NftConvert: React.FC<{ description: string; name: string; id: string}> = (
                               await AdminPostData("admin/artwork/nft/create", { name: newName, description: newDescription, artistId: artist, nftId: id})
                               alert("Artwork created successfully");
                                 setLoading(false);
-                                window.location.reload();
+
+                                if (typeof window !== 'undefined') {
+                                    window.location.reload();
+                                }
                             } catch (error) {
                                 alert("Error creating artwork");
                                 setLoading(false);
