@@ -13,7 +13,7 @@ const AdminNavbar: React.FC = () => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/admin">
+        <Navbar.Brand href="/">
           <Image src="/images/logo/logo-eva-gallery.svg" width="128" height="128" alt="logo" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
