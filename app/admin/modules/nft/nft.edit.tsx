@@ -99,10 +99,17 @@ const NftEdit: React.FC<{ description: string; name: string; id: string, artwork
                             setLoading(false);
                             return;
                         }
-                        await web3Enable('Eva gallery');
-                        //Find account that is same as accountAddr
-                        const injector = await web3FromAddress(accountAddr)
-
+                        let injector;
+                        if (typeof window !== 'undefined') {
+                            await web3Enable('Eva gallery');
+                            //Find account that is same as accountAddr
+                            injector = await web3FromAddress(accountAddr)
+                        }
+                        if (!injector) {
+                            alert("Failed to get web3 injector");
+                            setLoading(false);
+                            return;
+                        }
                         //check if account is not found
                         if (!account) {
                             alert("Account not found");

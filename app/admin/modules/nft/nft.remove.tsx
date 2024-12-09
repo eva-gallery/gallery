@@ -90,13 +90,16 @@ const NftRemove: React.FC<{ description: string; name: string; id: string, artwo
                                 setLoading(false);
                                 return;
                             }
-                            await web3Enable('Eva gallery');
-                            //Find account that is same as accountAddr
-                            const injector = await web3FromAddress(accountAddr)
+                            let injector;
+                            if (typeof window !== 'undefined') {
 
+                            await web3Enable('Eva gallery');
+                                //Find account that is same as accountAddr
+                                injector = await web3FromAddress(accountAddr)
+                            }
                             //check if account is not found
-                            if (!account) {
-                                alert("Account not found");
+                            if (!account || !injector) {
+                                alert("Account not found or wallet not properly connected");
                                 setLoading(false);
                                 return;
                             }

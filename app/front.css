@@ -1,3 +1,4 @@
+a:hover { color:#0d3c81 !important; } 
 
 .bg-lightish {
     background-color: rgba(208,204,203,0.4) !important;
@@ -12,24 +13,27 @@ footer a:hover {
     color: #000 !important; 
 }
 
-a:hover { color:#0d3c81 !important; } 
+span.fi { -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.25); }
             
 .btn-primary, .btn-outline-primary:focus, .btn-outline-primary:hover { background:#0d3c81; color:#fff !important; }
 
-            @media (min-width: 992px) {
-          .navbar .container {
+@media (min-width: 992px) {
+    
+          .fixed-top.navbar .container {
             display: grid;
             grid-template-columns: auto 300px 1fr;
             gap: 1rem;
             align-items: center;
           }
+          .navbar-collapse {
+            flex-grow: 0;
+          }  
+    
         }
           .navbar-toggler:focus {
           box-shadow: none;
         }
         
-        @media (min-width: 992px) {
-          .navbar-collapse {
-            flex-grow: 0;
-          }
-        }
+      

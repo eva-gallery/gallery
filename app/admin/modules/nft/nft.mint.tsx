@@ -198,14 +198,15 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               let nftID = txArg.args.item;
                               let colID = txArg.args.collection;
                               let nftData = txArg.args.data;
-
-                              await web3Enable('Eva gallery');
-                              //Find account that is same as accountAddr
-                              const injector = await web3FromAddress(accountAddr)
-
-                              //check if account is not found
-                              if (!account) {
-                                 alert("Account not found");
+                              let injector;
+                              if (typeof window !== 'undefined') {
+                                 await web3Enable('Eva gallery');
+                                 //Find account that is same as accountAddr
+                                 injector = await web3FromAddress(accountAddr)
+                              }
+                              //check if account or injector is not found
+                              if (!account || !injector) {
+                                 alert("Account or wallet injector not found");
                                  return;
                               }
 

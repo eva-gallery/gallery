@@ -34,10 +34,13 @@ export const Ownership: React.FC = () => {
         setLoading(false);
         return;
       }
-      await web3Enable('Eva gallery');
-      //Find account that is same as accountAddr
-      const injector = await web3FromAddress(accountAddr)
+      let injector;
+      if (typeof window !== 'undefined') {
 
+        await web3Enable('Eva gallery');
+        //Find account that is same as accountAddr
+        injector = await web3FromAddress(accountAddr)
+      }
       //check if account is not found
       if (!account) {
         alert("Account not found");
@@ -53,6 +56,9 @@ export const Ownership: React.FC = () => {
       const callData = response.callData;
 
       let call = api.tx(callData);
+      if (!injector) {
+        throw new Error("Unable to get injector");
+      }
       await call.signAndSend(accountAddr, { signer: injector.signer }, async ({ status, txHash, dispatchError }) => {
         if (status.isFinalized) {
           if (dispatchError) {

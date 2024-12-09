@@ -38,9 +38,7 @@ export async function List(admin: AdminType) {
             NFT
          </h1>
 
-         <p className='mb-3'>
             <M.Nft.Connect />
-         </p>
 
          {wallet && wallet.length > 0 ? (
             <>
