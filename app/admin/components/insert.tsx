@@ -28,7 +28,7 @@ const AdminInsert: React.FC<Props> = ({ admin, children }) => {
     <>
       <AdminButtonInsert handleShow={handleShow} />
 
-      <Modal size="lg" show={show} onHide={handleClose}>
+      <Modal size="lg" show={show} onHide={handleClose} scrollable>
         <Modal.Header closeButton>
           <Modal.Title>
             <AdminIcon name={admin.modul} className='me-2' size={36} />

@@ -21,8 +21,12 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
     console.log("**** Cookies ****", sessionId);
 
     console.log("*** Admin module ****", admin.modul);
-    const Module = M[capitalize(admin.modul) as keyof typeof M];
 
+    let modul = admin.modul;
+    if (admin.modul == "resource") {
+        modul = "designer";
+    }
+    const Module = M[capitalize(modul) as keyof typeof M];
 
 
     let body;
@@ -68,7 +72,6 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
         if (err.response && err.response.status === 500) {
             error = "Backend down! Error 500";
         }
-
     }
 
 
@@ -82,17 +85,23 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 
         console.log("**** Admin Action ****", admin.action);
 
+
+
         switch (admin.action) {
             case "list":
-                redirect("/admin/" + admin.modul + "/detail/" + data.id);
+                redirect("/admin/" + modul + "/detail/" + data.id);
                 break;
 
             case "edit":
-                redirect("/admin/" + admin.modul + "/detail/" + admin.unique);
+                if (admin.modul == "resource") {
+
+                } else {
+                    redirect("/admin/" + modul + "/detail/" + admin.unique);
+                }
                 break;
 
             case "delete":
-                redirect("/admin/" + admin.modul);
+                redirect("/admin/" + modul);
                 break;
 
 
@@ -194,7 +203,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
                             secure: true,
                             httpOnly: true,
                             path: '/',
-                            sameSite: 'strict'
+                            //domain: 'cdn.evagallery.eu', // Rovnaká doména ako na produkcii
                         });
                     } else {
                         return { error: "Session ID is null!" };

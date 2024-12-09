@@ -12,7 +12,7 @@ export const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
          <AdminFormInput type="tinytext" icon="tags" label="Tags" name="tags" value={data['tags']} />
          <AdminFormInput type="parent" icon="artist" label="Artist" name="artistId" value={data['artist']?.id ?? ''} option={option?.["artist"]} required />
          <AdminFormInput type="image" icon="artwork" label="Image" name="image" value={data['id']} />
-         <AdminFormInput type="tinytext" icon="date" label="Year" name="year" value={data['year']} />
+         <AdminFormInput type="tinytext" icon="date" label="Year" name="year" value={data['year']} required />
          <AdminFormInput type="parent" icon="art" label="Genre" name="artworkGenreId" value={data['artworkGenre']?.["id"] ?? ''} option={option?.['artwork_genre']} />
          <AdminFormInput type="parent" icon="worktype" label="Worktype" name="artworkWorktypeId" value={data['artworkWorktype']?.id ?? ''} option={option?.["artwork_worktype"]} />
          <AdminFormInput type="parent" icon="paper" label="Material" name="artworkMaterialId" value={data['artworkMaterial']?.id ?? ''} option={option?.["artwork_material"]} />

@@ -40,7 +40,7 @@ export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, 
       const formData = new FormData(form);
 
       let data;
-      if (admin.action == "login") {
+      if (admin.action == "login" || admin.action == "update") {
         data = await AdminSetDataJson(admin, formData, method, endpoint);
       } else {
         data = await AdminSetData(admin, formData, method, endpoint);
@@ -52,6 +52,7 @@ export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, 
       } else {
         // Ak nie je žiadna chyba, zavri modal
         if (method == "PATCH" && onSuccess) { onSuccess(); } // Zavri modal po úspešnom odoslaní
+        if (admin.modul == "resource" && onSuccess) { onSuccess(); }
       }
 
     }
@@ -82,7 +83,7 @@ type AdminFormInputProps = {
   icon: string;
   label: string;
   name: string;
-  value: string;
+  value: any;
   option?: { id: string; name: string }[];
   required?: boolean;
 };

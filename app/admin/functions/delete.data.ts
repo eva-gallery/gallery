@@ -45,8 +45,11 @@ export async function AdminDeleteData(admin: AdminType, endpoint: string) {
 
     console.log("********** Backend Set Data **********", data);
 
-
-    redirect("/admin/" + admin.modul);
+    let modul = admin.modul;
+    if (admin.modul == "resource") {
+        modul = "designer";
+    }
+    redirect("/admin/" + modul);
 
 
 }

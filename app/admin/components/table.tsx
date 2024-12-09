@@ -3,6 +3,9 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import { AdminType } from '@/app/admin/types';
 import { AdminButtonDetail } from '@/app/admin/components/button';
+import AdminEdit from './edit';
+import { capitalize } from '../functions/tools';
+import { M } from '@/app/admin/modules';
 
 
 

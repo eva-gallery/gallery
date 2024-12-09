@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Col, Row, Form, Button, InputGroup } from 'react-bootstrap';
+import { Col, Row, Form, Button, InputGroup, FormCheck } from 'react-bootstrap';
 //import ReactQuill from 'react-quill';
 //import 'react-quill/dist/quill.snow.css';
-import AdminImage from './image';
+import AdminImage, { AdminAudio } from './image';
 
 type PropsControl = {
    type: string;
@@ -39,8 +39,16 @@ export const AdminFormControl: React.FC<PropsControl> = ({ type, name, value, op
          return <FormEnum name={name} value={value} option={option} {...(required ? { required: true } : {})} />;
       case "image":
          return <FormImage name={name} value={value} {...(required ? { required: true } : {})} />;
+      case "resource":
+         return <FormResourceImage name={name} value={value} {...(required ? { required: true } : {})} />;
+      case "resourceimage":
+         return <FormResourceImage name={name} value={value} {...(required ? { required: true } : {})} />;
+      case "resourceaudio":
+         return <FormResourceAudio name={name} value={value} {...(required ? { required: true } : {})} />;
       case "password":
          return <FormPassword name={name} value={value} {...(required ? { required: true } : {})} />;
+      case "set":
+         return <FormSet name={name} value={value} option={option} {...(required ? { required: true } : {})} />;
 
 
       default:
@@ -96,7 +104,6 @@ const FormLongtext: React.FC<PropsInput> = ({ name, value, required }) => {
 
 
 const FormBoolean: React.FC<PropsInput> = ({ name, value, required }) => {
-   console.log("**** FormBoolean ****", value);
    const isChecked = value === true || value === 'true';
    return <Form.Check
       type="checkbox"
@@ -131,7 +138,33 @@ const FormImage: React.FC<PropsInput> = ({ name, value, required }) => {
    return (
       <>
          <Form.Control name={name} type="file" {...(required ? { required: true } : {})} />
-         {value && <AdminImage src={`artwork/${value}/thumbnail`} alt={value} width={300} className='mt-3' />}
+         {/* {value && <AdminImage src={`artwork/${value}/thumbnail`} alt={value} width={300} className='mt-3' />} */}
+      </>
+   );
+};
+
+const FormResource: React.FC<PropsInput> = ({ name, value, required }) => {
+   return (
+      <>
+         <Form.Control name={name} type="file" {...(required ? { required: true } : {})} />
+      </>
+   );
+};
+
+const FormResourceImage: React.FC<PropsInput> = ({ name, value, required }) => {
+   return (
+      <>
+         <Form.Control name={name} type="file" {...(required ? { required: true } : {})} />
+         {value && <AdminImage src={`resource/${value}/content`} alt={value} width={300} className='mt-3' />}
+      </>
+   );
+};
+
+const FormResourceAudio: React.FC<PropsInput> = ({ name, value, required }) => {
+   return (
+      <>
+         <Form.Control name={name} type="file" {...(required ? { required: true } : {})} />
+         {value && <AdminAudio src={`resource/${value}/content`} alt={value} width={300} className='mt-3' />}
       </>
    );
 };
@@ -150,5 +183,29 @@ const FormPassword: React.FC<PropsInput> = ({ name, value, required }) => {
       </>
    );
 
+};
+
+export const FormSet: React.FC<PropsInput> = ({ name, value, option }) => {
+
+   return (
+      <>
+         {option && option.map((option, index) => (
+            <>
+               <AdminImage src={`artwork/${option['id']}/thumbnail`} alt={option['name']} width={80} className="me-3 mb-3" />
+               <FormCheck
+                  key={index}
+                  type="checkbox"
+                  name={`${name}[]`}
+                  value={option.id}
+                  defaultChecked={value?.some((obj: { id: string }) => obj.id === option.id)}
+                  label={option.name}
+                  inline
+               />
+               <br />
+
+            </>
+         ))}
+      </>
+   );
 };
 

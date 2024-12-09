@@ -6,6 +6,13 @@ export async function Transform(formData: FormData) {
 
    formData.forEach((value, key) => {
       switch (key) {
+
+         case 'data':
+            if (value instanceof File && value.size > 0) {
+               json[key] = value;
+            }
+            break;
+
          default:
             json[key] = value;
             break;

@@ -16,6 +16,7 @@ export async function Detail(admin: AdminType) {
     const d = await AdminGetData("admin/designer/room/" + admin.unique);
     const exhibition = await AdminGetData("admin/exhibition/" + d['exhibitionId']);
 
+
     const data = {
         ...d,
         exhibition: {
@@ -56,6 +57,7 @@ export async function Detail(admin: AdminType) {
             </AdminDetail>
 
             <M.Designer.UnityDesign token={sessionId} uuid={data.id} />
+
         </>
     );
 }

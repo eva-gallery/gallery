@@ -9,6 +9,7 @@ import { AdminType } from '../../types';
 import AdminAction from '../../components/action';
 import Formular from './designer.formular';
 import { Transform } from './designer.functions';
+import Resource from './designer.resource';
 
 
 const Data = {
@@ -31,6 +32,7 @@ Designer.UnityDesign = UnityDesign;
 Designer.Detail = Detail;
 Designer.Formular = Formular;
 Designer.Transform = Transform;
+Designer.Resource = Resource;
 
 export default Designer;
 

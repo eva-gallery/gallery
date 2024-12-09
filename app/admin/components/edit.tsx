@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { useState } from 'react';
-import { Col, Row, Form, Button, InputGroup } from 'react-bootstrap';
+import { Col, Row, Form, Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashCan, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +32,7 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
     try {
 
       await AdminDeleteData(admin, `/admin/${admin.modul}/delete/${admin.unique}`);
+      window.location.reload();
 
     } catch (error) {
       console.error("Error while deleting record:", error);
@@ -48,7 +50,7 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
       </Button>
 
 
-      <Modal size="lg" scrollable show={show} onHide={handleClose}>
+      <Modal size="lg" scrollable show={show} onHide={handleClose} >
         <Modal.Header closeButton>
           <Modal.Title>
             <AdminIcon name={admin.modul} className='me-2' size={36} />

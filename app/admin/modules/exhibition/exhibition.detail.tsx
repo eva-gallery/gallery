@@ -8,6 +8,8 @@ import AdminDetail from '../../components/detail';
 import { AdminBoolean, AdminDate, AdminFlag, AdminHtml, AdminLink } from '../../components/components';
 import { M } from '..';
 import AdminInsert from '../../components/insert';
+import AdminEdit from '../../components/edit';
+import AdminUpdate from '../../components/update';
 
 
 export async function Detail(admin: AdminType) {
@@ -47,6 +49,10 @@ export async function Detail(admin: AdminType) {
                     </strong>
                 </AdminDetail.Row>
 
+                <AdminDetail.Row icon="textarea" name="Description">
+                    {data['description']}
+                </AdminDetail.Row>
+
                 <AdminDetail.Row icon="date" name="Date since">
                     <AdminDate date={data['fromDate']} />
                 </AdminDetail.Row>
@@ -73,10 +79,10 @@ export async function Detail(admin: AdminType) {
             <hr className='my-5' />
 
             <h2 className='text-center'>Artworks <small>in Exhibition</small></h2>
-            <M.Artwork.Table admin={{ modul: "artwork" }} data={artwork} />
-            <AdminInsert admin={admin}>
-                <M.Exhibition.FormularArtwork data={object.data} option={object.option} />
-            </AdminInsert>
+            <M.Artwork.Exhibition admin={{ modul: "artwork" }} data={artwork} />
+            <AdminUpdate admin={{ modul: "exhibition", action: "update", unique: admin.unique }}>
+                <M.Exhibition.FormularArtwork data={artwork} option={object.option} />
+            </AdminUpdate>
 
             <hr className='my-5' />
 

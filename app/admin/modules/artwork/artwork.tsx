@@ -10,6 +10,7 @@ import { Formular, FormularExhibition } from './artwork.formular';
 import AdminAction from '../../components/action';
 import { AdminType } from '@/app/admin/types';
 import { Transform } from './artwork.functions';
+import Exhibition from './artwork.exhibition';
 
 
 
@@ -32,6 +33,7 @@ const Data = {
 Artwork.Detail = Detail;
 Artwork.List = List;
 Artwork.Table = Table;
+Artwork.Exhibition = Exhibition;
 Artwork.Data = Data;
 Artwork.Formular = Formular;
 Artwork.FormularExhibition = FormularExhibition;
