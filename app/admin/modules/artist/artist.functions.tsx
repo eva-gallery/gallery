@@ -11,14 +11,6 @@ export async function Transform(formData: FormData) {
          case 'public':
             json[key] = value === 'on' ? "true" : "false";
             break;
-         case 'born':
-            if (value == '') {
-               json[key] = null;
-            } else {
-               json[key] = value;
-            }
-            break;
-
          default:
             json[key] = value;
             break;

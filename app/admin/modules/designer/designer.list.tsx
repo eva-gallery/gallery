@@ -12,8 +12,7 @@ import { AdminType } from '../../types';
 export async function List(admin: AdminType) {
 
    const data = await AdminGetData("admin/room");
-
-
+   const resource = await AdminGetData("admin/resource");
 
    const option = {
       "exhibition": await AdminGetData("admin/options/exhibition"),
@@ -35,8 +34,11 @@ export async function List(admin: AdminType) {
          </AdminList>
 
 
-         <M.Designer.UnityDesignSelect token={sessionId} data={data} />
+         {/* <M.Designer.UnityDesignSelect token={sessionId} data={data} /> */}
 
+         <hr className='my-5' />
+
+         <M.Designer.Resource admin={admin} data={resource} />
       </>
    );
 }
