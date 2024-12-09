@@ -7,7 +7,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import 'flag-icons/css/flag-icons.min.css'
-import "./front.css";
+//import "./front.css";
 
 const hind = Hind({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 
