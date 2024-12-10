@@ -3,14 +3,14 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search, Loader } from 'lucide-react';
 
-const backendUrl = 'https://evagallery.b-cdn.net'; // cdn.evagallery.eu / process.env.NEXT_PUBLIC_BACKEND_URL
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://cdn.evagallery.eu';
+const imgUrl = 'https://evagallery.b-cdn.net';
 
 type ArtworkGalleryProps = {
   artworks: any[];
   seed: number;
 }
 
-// Preload image to get dimensions
 const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
   return new Promise((resolve) => {
     const img = new Image();
@@ -24,7 +24,6 @@ const getImageDimensions = (url: string): Promise<{ width: number; height: numbe
   });
 };
 
-// Loading Skeleton Component
 const ArtworkSkeleton = () => (
   <Card className="artwork-card border-0 shadow-sm skeleton">
     <div className="skeleton-image-container">
@@ -37,11 +36,20 @@ const ArtworkSkeleton = () => (
   </Card>
 );
 
-const ImageWithLazyLoading = ({ artwork }: { artwork: any }) => {
+const LoadingSkeletons = () => (
+  <>
+    {[...Array(12)].map((_, i) => (
+      <ArtworkSkeleton key={i} />
+    ))}
+  </>
+);
+
+const ImageWithLazyLoading = ({ artwork, columnIndex }: { artwork: any; columnIndex: number }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(0);
   const imageRef = useRef<HTMLDivElement>(null);
+  const [imageUrl, setImageUrl] = useState<string>('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,7 +59,10 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: any }) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: '100px' }
+      { 
+        threshold: 0,
+        rootMargin: '200% 0px'
+      }
     );
 
     if (imageRef.current) {
@@ -63,10 +74,15 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: any }) => {
 
   useEffect(() => {
     if (isVisible) {
-      const imageUrl = `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`;
-      getImageDimensions(imageUrl).then(({ width, height }) => {
-        setAspectRatio((height / width) * 100);
-      });
+      const url = `${imgUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`;
+      const img = new Image();
+      
+      img.onload = () => {
+        setAspectRatio((img.height / img.width) * 100);
+        setImageUrl(url);
+      };
+      
+      img.src = url;
     }
   }, [isVisible, artwork.slug]);
 
@@ -74,17 +90,24 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: any }) => {
     <div ref={imageRef} className="image-container">
       <div 
         className="aspect-ratio-box" 
-        style={{ paddingBottom: aspectRatio ? `${aspectRatio}%` : '75%' }}
+        style={{ 
+          paddingBottom: `${aspectRatio || 75}%`,
+          backgroundColor: '#f8f9fa',
+          minHeight: '200px'
+        }}
       >
         {!imageLoaded && (
           <div className="skeleton-image absolute-fill"></div>
         )}
-        {isVisible && (
+        {imageUrl && (
           <img
-            src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
+            src={imageUrl}
             alt={artwork.name}
             className={`absolute-fill ${imageLoaded ? 'image-loaded' : 'image-loading'}`}
-            onLoad={() => setImageLoaded(true)}
+            onLoad={() => {
+              setImageLoaded(true);
+            }}
+            loading="lazy"
           />
         )}
       </div>
@@ -99,17 +122,75 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
+  const maxRetries = 3;
+  const retryDelay = 2000;
 
-  // Create a ref for the intersection observer
   const observer = useRef<IntersectionObserver | null>(null);
   
-  // Create a ref for the last artwork element
+  const loadMore = useCallback(async () => {
+    try {
+      if (loading || !hasMore) return;
+      
+      setLoading(true);
+      setLoadError(null);
+
+      const params = new URLSearchParams({
+        seed: seed.toString(),
+        from: (page * 24).toString(),
+        count: "24"
+      });
+
+      if (!backendUrl) {
+        throw new Error('Backend URL is not configured');
+      }
+
+      const response = await fetch(`${backendUrl}/public/random/artwork?${params}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        signal: AbortSignal.timeout(10000)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const newArtworks = await response.json();
+
+      if (newArtworks.length < 24) {
+        setHasMore(false);
+      }
+
+      setRetryCount(0);
+      setArtworks(prev => [...prev, ...newArtworks]);
+      setPage(prev => prev + 1);
+      setLoading(false);
+
+    } catch (error) {
+      console.error('Error loading more artworks:', error);
+      
+      if (retryCount < maxRetries) {
+        setRetryCount(prev => prev + 1);
+        setLoadError(`Loading failed. Retrying... (${retryCount + 1}/${maxRetries})`);
+        setTimeout(() => {
+          setLoading(false);
+          loadMore();
+        }, retryDelay);
+      } else {
+        setLoadError('Failed to load more artworks. Please check your connection and try again.');
+        setLoading(false);
+      }
+    }
+  }, [loading, hasMore, page, seed, retryCount]);
+
   const lastArtworkRef = useCallback((node: HTMLDivElement) => {
     if (loading) return;
     if (observer.current) observer.current.disconnect();
     
     observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
+      if (entries[0].isIntersecting && hasMore && !loading) {
         loadMore();
       }
     }, {
@@ -118,51 +199,23 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
     });
 
     if (node) observer.current.observe(node);
-  }, [loading, hasMore]);
+  }, [loading, hasMore, loadMore]);
+
+  const handleRetry = useCallback(() => {
+    setRetryCount(0);
+    setLoadError(null);
+    loadMore();
+  }, [loadMore]);
 
   const cleanFileName = (name: string) => {
     return name
-      .replace(/\.(jpg|jpeg|png|gif|tif|tiff|kopie|bmp|webp)$/i, '') // Remove common image extensions
-      .replace(/[-_]/g, ' ') // Optional: Replace dashes and underscores with spaces
-      .trim(); // Remove any leading/trailing spaces
-  };
-
-  const loadMore = async () => {
-    try {
-      setLoading(true);
-      setLoadError(null);
-      const params = new URLSearchParams({
-        seed: seed.toString(),
-        from: (page * 24).toString(),
-        count: "24"
-      });
-
-      const response = await fetch(`${backendUrl}/public/random/artwork?${params}`);
-      if (!response.ok) throw new Error('Failed to fetch artworks');
-      
-      const newArtworks = await response.json();
-
-      if (newArtworks.length < 24) {
-        setHasMore(false);
-      }
-
-      // Add a slight delay to ensure smooth transition
-      setTimeout(() => {
-        setArtworks(prev => [...prev, ...newArtworks]);
-        setPage(prev => prev + 1);
-        setLoading(false);
-      }, 300);
-
-    } catch (error) {
-      console.error('Error loading more artworks:', error);
-      setLoadError('Failed to load more artworks. Scroll to try again.');
-      setLoading(false);
-    }
+      .replace(/\.(jpg|jpeg|png|gif|tif|tiff|kopie|bmp|webp)$/i, '')
+      .replace(/[-_]/g, ' ')
+      .trim();
   };
 
   return (
     <Container className="py-1">
-      {/* Header Row */}
       <Row className="mb-4 align-items-center">
         <Col>
           <h1 className="mb-0">Artworks Gallery</h1>
@@ -185,7 +238,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         </Col>
       </Row>
 
-      {/* Masonry Grid */}
       <div className="masonry-grid">
         {artworks.map((artwork, index) => (
           <Card 
@@ -194,7 +246,10 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
             ref={index === artworks.length - 1 ? lastArtworkRef : null}
           >
             <a href={`/artworks/${artwork.slug}?seed=${seed}`} className="text-decoration-none">
-              <ImageWithLazyLoading artwork={artwork} />
+              <ImageWithLazyLoading 
+                artwork={artwork}
+                columnIndex={index % 4}
+              />
               <Card.Body>
                 <Card.Title className="fs-6 text-truncate text-dark">
                   {cleanFileName(artwork.name)}
@@ -210,20 +265,20 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           </Card>
         ))}
         
-        {/* Loading Skeletons */}
-        {loading && (
-          <>
-            <ArtworkSkeleton />
-            <ArtworkSkeleton />
-            <ArtworkSkeleton />
-            <ArtworkSkeleton />
-          </>
-        )}
+        {loading && <LoadingSkeletons />}
       </div>
 
       {loadError && (
-        <div className="text-center mt-4 mb-4 text-danger">
-          <p>{loadError}</p>
+        <div className="text-center mt-4">
+          <p className="text-danger">{loadError}</p>
+          {retryCount >= maxRetries && (
+            <button 
+              className="btn btn-primary mt-2"
+              onClick={handleRetry}
+            >
+              Try Again
+            </button>
+          )}
         </div>
       )}
 
@@ -232,7 +287,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           columns: 4;
           column-gap: 1.5rem;
           width: 100%;
-          column-fill: initial;
+          column-fill: balanced;
         }
 
         .artwork-card {
@@ -240,9 +295,10 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           margin-bottom: 1.5rem;
           display: inline-block;
           width: 100%;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          transition: transform 0.3s ease;
           background: #fff;
           overflow: hidden;
+          contain: content;
         }
 
         .artwork-card:hover {
@@ -261,6 +317,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           position: relative;
           width: 100%;
           background-color: #f8f9fa;
+          overflow: hidden;
         }
 
         .absolute-fill {
@@ -274,15 +331,13 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
 
         .image-loading {
           opacity: 0;
-          transition: opacity 0.5s ease;
+          transition: opacity 0.3s ease;
         }
 
         .image-loaded {
           opacity: 1;
-          transition: opacity 0.5s ease;
         }
 
-        /* Skeleton Styles */
         .skeleton {
           position: relative;
           overflow: hidden;
@@ -291,7 +346,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         .skeleton-image-container {
           position: relative;
           width: 100%;
-          padding-bottom: 75%; /* Default aspect ratio */
+          padding-bottom: 75%;
         }
 
         .skeleton-image {
