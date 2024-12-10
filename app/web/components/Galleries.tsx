@@ -48,7 +48,7 @@ const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
               <div className="image-container position-absolute top-0 start-0 w-100 h-100">
                 <Card.Img
                   variant="top"
-                  src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
+                  src={`${backendUrl}/public/gallery/image?slug=${encodeURIComponent(artwork.slug)}`}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
