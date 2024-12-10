@@ -8,6 +8,7 @@ import AdminDetail from '../../components/detail';
 import { AdminBoolean, AdminFlag, AdminHtml } from '../../components/components';
 import AdminMap from '../../components/map';
 import { M } from '..';
+import AdminImage from '../../components/image';
 
 
 
@@ -27,6 +28,8 @@ export async function Detail(admin: AdminType) {
     }
 
     const exhibition = await AdminGetData("admin/gallery/" + admin.unique + "/exhibition");
+
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
 
     return (
         <>
@@ -52,10 +55,11 @@ export async function Detail(admin: AdminType) {
                     {data['country']['name']}
                 </AdminDetail.Row>
 
-                {/* <AdminDetail.Row icon="map" name="GPS">
-                    {data.gps}
-                    {data.gps && <AdminMap gps={data.gps} />}
-                </AdminDetail.Row> */}
+                <AdminDetail.Row icon="artwork" name="Image">
+                    <a href={`${backendUrl}/gallery/${data['id']}/image`} target='_blank'>
+                        <AdminImage src={`gallery/${data['id']}/image`} alt={data['name']} width={480} />
+                    </a>
+                </AdminDetail.Row>
 
                 <AdminDetail.Row icon="question" name="Public">
                     <AdminBoolean value={data['public']} />

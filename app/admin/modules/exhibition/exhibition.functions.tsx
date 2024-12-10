@@ -2,9 +2,13 @@
 
 import { redirect } from 'next/navigation';
 import { AdminType } from '../../types';
+import { stringify } from 'querystring';
 
 export async function Transform(formData: FormData) {
    const json: Record<string, any> = {};
+
+
+   let artworks: any[] = [];
 
    formData.forEach((value, key) => {
       switch (key) {
@@ -12,37 +16,23 @@ export async function Transform(formData: FormData) {
             json[key] = value === 'on' ? "true" : "false";
             break;
 
-         case 'fromDate':
-            if (value == '') {
-               json[key] = null;
-            } else {
-               json[key] = value;
-            }
+         case 'artworks[]':
+            artworks.push(value);
             break;
-
-         case 'toDate':
-            if (value == '') {
-               json[key] = null;
-            } else {
-               json[key] = value;
-            }
-            break;
-
-         // case 'fromDate':
-         //    json[key] = new Date(value).toISOString();
-         //    break;
-         // case 'toDate':
-         //    json[key] = new Date(value).toISOString();
-         //    break;
          default:
             json[key] = value;
             break;
       }
    });
 
-   if (!json.hasOwnProperty('public')) {
+
+   json['artworks'] = artworks;
+
+
+   if (!json.hasOwnProperty('public') && !json.hasOwnProperty('artworks')) {
       json['public'] = "false";
    }
+
 
 
    return json;

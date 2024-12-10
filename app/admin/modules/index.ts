@@ -1,5 +1,5 @@
 
-const modules = ["Gallery", "Exhibition", "Artist", "Artwork", "Designer", "Ai", "Nft", "User"] as const;
+const modules = ["Gallery", "Exhibition", "Artist", "Artwork", "Designer", "Nft", "Ai", "User"] as const;
 
 export type ModuleType = {
   [key in (typeof modules)[number]]: any;

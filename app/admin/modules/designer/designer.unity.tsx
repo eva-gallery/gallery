@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { Unity, useUnityContext } from 'react-unity-webgl';
 
@@ -19,8 +19,11 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
 
     const [uuid, setUuid] = useState<string>(data.length > 0 ? data[0].id : '');
     const [selectedRoomId, setSelectedRoomId] = useState<string>(data.length > 0 ? data[0].id : '');
+    const [isFocused, setIsFocused] = useState(false); // Sledovanie focusu
+    const webglRef = useRef<HTMLDivElement>(null);
     const url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
+    // Odošle správy Unity
     useEffect(() => {
         if (isLoaded && token && uuid) {
             sendMessage('Generator', 'ReceiveBackendURL', url);
@@ -28,6 +31,24 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
             sendMessage('Generator', 'ReceiveToken', token);
         }
     }, [isLoaded, token, uuid, sendMessage, url]);
+
+    // Sledovanie kláves
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (isFocused) {
+                event.preventDefault(); // Blokuje default správanie
+                sendMessage('Generator', 'ReceiveKeyPress', event.key);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isFocused, sendMessage]);
+
+    const handleMouseEnter = () => setIsFocused(true);
+    const handleMouseLeave = () => setIsFocused(false);
 
     const handleRoomSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedRoomId(event.target.value);
@@ -65,7 +86,14 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
                 </Button>
             </InputGroup>
 
-            <Unity unityProvider={unityProvider} style={{ width: '100%', height: '100%' }} />
+            <div
+                ref={webglRef}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                style={{ width: '100%', height: '100%' }}
+            >
+                <Unity unityProvider={unityProvider} tabIndex={1} style={{ width: '100%', height: '100%' }} />
+            </div>
         </>
     );
 };
@@ -86,6 +114,8 @@ export const UnityDesign: React.FC<Props> = ({ token, uuid: initialUuid }) => {
     });
 
     const [uuid, setUuid] = useState<string>(initialUuid); // Použi initialUuid ako predvolenú hodnotu
+    const [isFocused, setIsFocused] = useState(false); // Sledovanie focusu na Unity
+    const unityRef = useRef<HTMLDivElement>(null); // Ref na Unity div
     const url = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     useEffect(() => {
@@ -96,9 +126,41 @@ export const UnityDesign: React.FC<Props> = ({ token, uuid: initialUuid }) => {
         }
     }, [isLoaded, token, uuid, sendMessage, url]);
 
+    // Sledovanie klávesových vstupov
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (isFocused) {
+                event.preventDefault(); // Blokuje default správanie
+                sendMessage('Generator', 'ReceiveKeyPress', event.key);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isFocused, sendMessage]);
+
+    // Funkcie pre focus a blur
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
+    };
+
     return (
         <>
-            <Unity unityProvider={unityProvider} style={{ width: '100%', height: '100%' }} />
+            <div
+                ref={unityRef}
+                tabIndex={0} // Umožní focusovať tento div
+                onFocus={handleFocus} // Nastaví isFocused na true pri focusovaní
+                onBlur={handleBlur} // Nastaví isFocused na false pri opustení focusu
+                style={{ width: '100%', height: '100%' }}
+            >
+                <Unity unityProvider={unityProvider} tabIndex={1} style={{ width: '100%', height: '100%' }} />
+            </div>
         </>
     );
 };
