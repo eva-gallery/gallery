@@ -1,8 +1,7 @@
-import NavbarComponent from '../components/NavbarComponent';
-import Galleries from '../components/Galleries';
-import Footer from '../components/Footer';
+// app/galleries/page.tsx
 import { Container, Row } from 'react-bootstrap';
-import { getData } from "../get.data";
+import Galleries from '@/app/web/components/Galleries';
+import { getData } from "@/app/web/get.data";
 
 interface Artwork {
   slug: string;
@@ -14,7 +13,8 @@ interface Artwork {
   address: string;
 }
 
-export default async function GalleriesPage() {
+// Server Component for data fetching
+async function fetchGalleriesData() {
   const seedno = Math.floor(Math.random() * (2 ** 32));
   const params = new URLSearchParams({
     seed: seedno.toString(),
@@ -22,17 +22,18 @@ export default async function GalleriesPage() {
     count: "24"
   });
   
-  const artworks = (await getData(`/public/random/gallery?${params}`)) as Artwork[];
+  const artworks = await getData(`/public/random/gallery?${params}`) as Artwork[];
+  return artworks;
+}
+
+export default async function GalleriesPage() {
+  const artworks = await fetchGalleriesData();
 
   return (
-    <>
-      <NavbarComponent />
-      <Container className="py-3">
-        <Row>
-          <Galleries artworks={artworks} />
-        </Row>
-      </Container>
-      <Footer />
-    </>
+    <Container className="py-3">
+      <Row>
+        <Galleries artworks={artworks} />
+      </Row>
+    </Container>
   );
 }
