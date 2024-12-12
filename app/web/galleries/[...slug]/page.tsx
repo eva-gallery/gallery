@@ -35,7 +35,7 @@ export default async function GalleryDetail({ params }: PageProps) {
   });
 
   const galleryData = await getData(`/public/gallery?slug=${encodeURIComponent(validSlug)}`);
-  const artworksData = await getData(`/public/random/artwork?${params}`);
+  const artworksData = await getData(`/public/random/artwork?${urlParams}`);
 
   const gallery = galleryData as Gallery;
   const artworks = Array.isArray(artworksData) ? artworksData as Artwork[] : [];
