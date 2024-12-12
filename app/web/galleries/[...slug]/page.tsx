@@ -1,5 +1,4 @@
 // app/web/galleries/[...slug]/page.tsx
-
 import NavbarComponent from '@/app/web/components/NavbarComponent'
 import Footer from '@/app/web/components/Footer'
 import ArtworkGrid from '@/app/web/components/ArtworkGallery'
@@ -7,8 +6,10 @@ import GalleryImage from '@/app/web/components/GalleryImage'
 import { Container, Row, Col } from 'react-bootstrap'
 import { getData } from "@/app/web/get.data";
 
-interface GalleryDetailProps {
-  slug: string[];
+interface PageProps {
+  params: {
+    slug: string[];
+  };
 }
 
 interface Gallery {
@@ -22,11 +23,11 @@ interface Artwork {
   slug: string;
 }
 
-export default async function GalleryDetail({ slug }: GalleryDetailProps) {
-  const validSlug = slug.filter(Boolean).join('/');
+export default async function GalleryDetail({ params }: PageProps) {
+  const validSlug = params.slug.filter(Boolean).join('/');
 
   const seedno = Math.floor(Math.random() * (2 ** 32));
-  const params = new URLSearchParams({
+  const urlParams = new URLSearchParams({
     seed: seedno.toString(),
     from: "0",
     count: "24",
@@ -44,8 +45,7 @@ export default async function GalleryDetail({ slug }: GalleryDetailProps) {
       <NavbarComponent />
       
       <Container className="py-3">
-        
-      <Row className="mb-4">
+        <Row className="mb-4">
           <Col>
             <h1 className="mb-0">
               {gallery.name}
@@ -56,7 +56,6 @@ export default async function GalleryDetail({ slug }: GalleryDetailProps) {
           </Col>
         </Row>
 
-        {/* Description and Image Row */}
         <Row className="mb-5">
           <Col md={4} className="mb-4 mb-md-0">
             <GalleryImage slug={validSlug} />
