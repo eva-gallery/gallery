@@ -8,5 +8,5 @@ interface PageProps {
 }
 
 export default function GalleryPage({ params }: PageProps) {
-  return <GalleryDetail slug={params.slug} />;
+  return <GalleryDetail params={params} />;
 }
