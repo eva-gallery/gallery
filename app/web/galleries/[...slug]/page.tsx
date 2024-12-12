@@ -1,9 +1,8 @@
 // app/web/galleries/[...slug]/page.tsx
-import NavbarComponent from '@/app/web/components/NavbarComponent'
-import Footer from '@/app/web/components/Footer'
+
+import { Container, Row, Col } from 'react-bootstrap'
 import ArtworkGrid from '@/app/web/components/ArtworkGallery'
 import GalleryImage from '@/app/web/components/GalleryImage'
-import { Container, Row, Col } from 'react-bootstrap'
 import { getData } from "@/app/web/get.data";
 
 interface PageProps {
@@ -18,9 +17,13 @@ interface Gallery {
   description?: string;
 }
 
-interface Artwork {
-  name: string;
-  slug: string;
+async function getGalleryData(slug: string) {
+  try {
+    return await getData(`/public/gallery?slug=${encodeURIComponent(slug)}`) as Gallery;
+  } catch (error) {
+    console.error('Failed to fetch gallery data:', error);
+    throw error;
+  }
 }
 
 export default async function GalleryDetail({ params }: PageProps) {
@@ -34,16 +37,11 @@ export default async function GalleryDetail({ params }: PageProps) {
     gallery: validSlug
   });
 
-  const galleryData = await getData(`/public/gallery?slug=${encodeURIComponent(validSlug)}`);
+  const gallery = await getGalleryData(validSlug);
   const artworksData = await getData(`/public/random/artwork?${urlParams}`);
-
-  const gallery = galleryData as Gallery;
-  const artworks = Array.isArray(artworksData) ? artworksData as Artwork[] : [];
+  const artworks = Array.isArray(artworksData) ? artworksData : [];
 
   return (
-    <>
-      <NavbarComponent />
-      
       <Container className="py-3">
         <Row className="mb-4">
           <Col>
@@ -62,7 +60,7 @@ export default async function GalleryDetail({ params }: PageProps) {
           </Col>
           <Col md={8}>
             {gallery.description && (
-              <div dangerouslySetInnerHTML={{ __html: gallery.description }}>
+              <div className="gallery-description" dangerouslySetInnerHTML={{ __html: gallery.description }}>
               </div>
             )}
           </Col>
@@ -78,8 +76,5 @@ export default async function GalleryDetail({ params }: PageProps) {
           </Col>
         </Row>
       </Container>
-
-      <Footer />
-    </>
-  )
+  );
 }
