@@ -4,16 +4,20 @@ import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
 import { getData } from "@/app/web/get.data";
 
-const imgUrl = 'https://evagallery.b-cdn.net';
-
-// Comprehensive Artwork Type
+// Inline type definition
 interface Artwork {
   slug: string;
   name: string;
   artistName: string;
+  artist: {
+    name: string;
+  };
   year?: number;
+  medium?: string;
   imageUrl?: string;
 }
+
+const imgUrl = 'https://evagallery.b-cdn.net';
 
 type ArtworkGalleryProps = {
   artworks: Artwork[];
@@ -117,7 +121,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         count: "24"
       });
 
-      // Type assertion to ensure Artwork[]
       const newArtworks = await getData(`/public/random/artwork?${params}`) as Artwork[];
 
       if (newArtworks.length < 24) {
