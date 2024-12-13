@@ -1,50 +1,26 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
-import { Search, Loader } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { getData } from "@/app/web/get.data";
 
-const backendUrl = 'https://cdn.evagallery.eu'; // process.env.NEXT_PUBLIC_BACKEND_URL ||
 const imgUrl = 'https://evagallery.b-cdn.net';
 
+// Comprehensive Artwork Type
+interface Artwork {
+  slug: string;
+  name: string;
+  artistName: string;
+  year?: number;
+  imageUrl?: string;
+}
+
 type ArtworkGalleryProps = {
-  artworks: any[];
+  artworks: Artwork[];
   seed: number;
 }
 
-const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      resolve({
-        width: img.width,
-        height: img.height,
-      });
-    };
-    img.src = url;
-  });
-};
-
-const ArtworkSkeleton = () => (
-  <Card className="artwork-card border-0 shadow-sm skeleton">
-    <div className="skeleton-image-container">
-      <div className="skeleton-image"></div>
-    </div>
-    <Card.Body>
-      <div className="skeleton-title"></div>
-      <div className="skeleton-text"></div>
-    </Card.Body>
-  </Card>
-);
-
-const LoadingSkeletons = () => (
-  <>
-    {[...Array(12)].map((_, i) => (
-      <ArtworkSkeleton key={i} />
-    ))}
-  </>
-);
-
-const ImageWithLazyLoading = ({ artwork, columnIndex }: { artwork: any; columnIndex: number }) => {
+const ImageWithLazyLoading = ({ artwork }: { artwork: Artwork }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [aspectRatio, setAspectRatio] = useState(0);
@@ -117,7 +93,7 @@ const ImageWithLazyLoading = ({ artwork, columnIndex }: { artwork: any; columnIn
 
 const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [artworks, setArtworks] = useState(initialArtworks);
+  const [artworks, setArtworks] = useState<Artwork[]>(initialArtworks);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -141,23 +117,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         count: "24"
       });
 
-      if (!backendUrl) {
-        throw new Error('Backend URL is not configured');
-      }
-
-      const response = await fetch(`${backendUrl}/public/random/artwork?${params}`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        },
-        signal: AbortSignal.timeout(10000)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      const newArtworks = await response.json();
+      // Type assertion to ensure Artwork[]
+      const newArtworks = await getData(`/public/random/artwork?${params}`) as Artwork[];
 
       if (newArtworks.length < 24) {
         setHasMore(false);
@@ -214,6 +175,12 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
       .trim();
   };
 
+  // Filter artworks based on search term
+  const filteredArtworks = artworks.filter(artwork => 
+    artwork.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    artwork.artistName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Container className="py-1">
       <Row className="mb-4 align-items-center">
@@ -239,17 +206,14 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
       </Row>
 
       <div className="masonry-grid">
-        {artworks.map((artwork, index) => (
+        {filteredArtworks.map((artwork, index) => (
           <Card 
-            key={index} 
+            key={artwork.slug} 
             className="artwork-card border-0 shadow-sm"
-            ref={index === artworks.length - 1 ? lastArtworkRef : null}
+            ref={index === filteredArtworks.length - 1 ? lastArtworkRef : null}
           >
             <a href={`/artworks/${artwork.slug}?seed=${seed}`} className="text-decoration-none">
-              <ImageWithLazyLoading 
-                artwork={artwork}
-                columnIndex={index % 4}
-              />
+              <ImageWithLazyLoading artwork={artwork} />
               <Card.Body>
                 <Card.Title className="fs-6 text-truncate text-dark">
                   {cleanFileName(artwork.name)}
@@ -265,7 +229,21 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           </Card>
         ))}
         
-        {loading && <LoadingSkeletons />}
+        {loading && (
+          <>
+            {[...Array(12)].map((_, i) => (
+              <Card key={i} className="artwork-card border-0 shadow-sm skeleton">
+                <div className="skeleton-image-container">
+                  <div className="skeleton-image"></div>
+                </div>
+                <Card.Body>
+                  <div className="skeleton-title"></div>
+                  <div className="skeleton-text"></div>
+                </Card.Body>
+              </Card>
+            ))}
+          </>
+        )}
       </div>
 
       {loadError && (
