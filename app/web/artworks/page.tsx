@@ -1,7 +1,6 @@
-// app/artists/page.tsx
+// app/web/artworks/page.tsx
 import NavbarComponent from '../components/NavbarComponent';
 import ArtworkGallery from '../components/ArtworkGalleryM';
-import CarouselComponent from '../components/CarouselComponent';
 import Footer from '../components/Footer';
 import { Container, Row, Col } from 'react-bootstrap'
 import { getData } from "../get.data";
@@ -10,7 +9,13 @@ interface Artwork {
   id?: string;
   name: string;
   slug: string;
-  // Add other artwork properties as needed
+  artistName: string;
+  artist: {
+    name: string;
+  };
+  year?: number;
+  medium?: string;
+  imageUrl?: string;
 }
 
 export default async function ArtworksPage() {
