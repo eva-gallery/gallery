@@ -1,8 +1,8 @@
 
 
 import React from 'react';
-import AdminLogin from '../../components/login';
 import { AdminType } from '../../types';
+import AdminUserLoginForm from './user.loginform';
 
 
 
@@ -13,7 +13,7 @@ export async function Login(admin: AdminType) {
 	return (
 		<>
 
-			<AdminLogin admin={admin} />
+			<AdminUserLoginForm admin={admin} />
 
 		</>
 

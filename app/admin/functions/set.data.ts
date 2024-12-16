@@ -44,7 +44,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
     body = newFormData;
 
 
-    console.log("**** adminSetData ****", body);
+    console.log("**** adminSetData2 ****", body);
 
     console.log("**** method FORM: endpoint ****", method, endpoint);
 
@@ -61,7 +61,8 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 
     }
     catch (err: any) {
-        error = err.message || 'Error fetching data. Server down?';
+        console.log("**** Error ****", err.response.data);
+        error = err.response.data.message || 'Error fetching data. Server down?';
 
         if (err.response && err.response.status === 401) {
             error = "Wrong Email or Password!";
@@ -78,6 +79,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
     const data = response?.data;
 
     if (error) {
+
         return { data: data, error };
     } else {
 
@@ -104,6 +106,39 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
                 redirect("/admin/" + modul);
                 break;
 
+
+
+            case "create":
+                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('SESSION_ID='));
+                if (cookie) {
+
+                    const getCookieValue = (cookieString: string, cookieName: string) => {
+                        const cookies = cookieString.split('; ');
+                        const targetCookie = cookies.find(cookie => cookie.startsWith(`${cookieName}=`));
+                        return targetCookie ? targetCookie.split('=')[1] : null;
+                    };
+
+                    // Extrahujte iba hodnotu SESSION_ID
+                    const sessionId = getCookieValue(cookie, 'SESSION_ID');
+
+                    console.log("**** Session ID ****", sessionId);
+                    if (sessionId) {
+                        cookies().set({
+                            name: 'SESSION_ID',
+                            value: decodeURIComponent(sessionId),
+                            secure: false,
+                            httpOnly: false,
+                            path: '/',
+                            //domain: 'cdn.evagallery.eu', // Rovnaká doména ako na produkcii
+                        });
+                    } else {
+                        return { error: "Session ID is null!" };
+                    }
+                } else {
+                    return { error: "No cookie" };
+                }
+                redirect("/admin");
+                break;
 
         }
     }
@@ -139,7 +174,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
         "Content-Type": "application/json",
     }
 
-    console.log("**** adminSetData ****", body);
+    console.log("**** adminSetData JSON ****", body);
 
     console.log("**** method: endpoint ****", method, endpoint);
 
@@ -156,7 +191,8 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
 
     }
     catch (err: any) {
-        error = err.message || 'Error fetching data. Server down?';
+        console.log("**** Error ****", err.response.data.message);
+        error = err.response.data.message || 'Error fetching data. Server down?';
 
         if (err.response && err.response.status === 401) {
             error = "Wrong Email or Password!";
@@ -200,8 +236,8 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
                         cookies().set({
                             name: 'SESSION_ID',
                             value: decodeURIComponent(sessionId),
-                            secure: true,
-                            httpOnly: true,
+                            secure: false,
+                            httpOnly: false,
                             path: '/',
                             //domain: 'cdn.evagallery.eu', // Rovnaká doména ako na produkcii
                         });
@@ -214,6 +250,15 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
                     return { error: "Wrong Email or Password!" };
                 }
                 break;
+            case "register":
+            case "reset":
+                return { error: "Check your email!" };
+                break;
+            case "newpassword":
+                console.log("**** New Password ****");
+                redirect("/admin/user/login");
+                break;
+
         }
     }
 

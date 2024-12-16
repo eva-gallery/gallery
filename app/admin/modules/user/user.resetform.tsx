@@ -4,16 +4,18 @@ import React from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { AdminType } from '../types';
-import { AdminIcon } from './components';
-import { AdminForm } from './form';
+import { AdminType } from '../../types';
+import { AdminIcon } from '../../components/components';
+import { AdminForm } from '../../components/form';
+import AdminUserResetPassword from './user.reset';
+import { FormularResetPassword } from './user.formular';
 
 
 type Props = {
   admin: AdminType;
 };
 
-const AdminLogin: React.FC<Props> = ({ admin }) => {
+const AdminUserResetForm: React.FC<Props> = ({ admin }) => {
 
 
 
@@ -21,10 +23,10 @@ const AdminLogin: React.FC<Props> = ({ admin }) => {
     <>
       <h1 className='text-center mb-5'>
         <AdminIcon name="user" size={48} className='me-3' />
-        Login
+        Reset Password
       </h1>
 
-      <AdminForm method="POST" endpoint="/admin/login" admin={admin}>
+      <AdminForm method="POST" type="JSON" endpoint="/admin/user/request-password-reset" admin={admin}>
         <Form.Group className="mb-3" >
           <Row className='justify-content-center'>
             <Col xs={2}>
@@ -39,29 +41,16 @@ const AdminLogin: React.FC<Props> = ({ admin }) => {
           </Row>
         </Form.Group>
 
-        <Form.Group className="mb-3" >
-          <Row className='justify-content-center'>
-            <Col xs={2}>
-              <Form.Label>
-                <AdminIcon name="password" size={24} className='me-2' />
-                Password
-              </Form.Label>
-            </Col>
-            <Col xs={4}>
-              <Form.Control name="password" type="password" placeholder="Password" required />
-            </Col>
-          </Row>
-
-        </Form.Group>
 
         <Row className='justify-content-center'>
           <Col xs={2}>
           </Col>
           <Col xs={4}>
-            <Button variant="primary" type="submit">
-              Login
+            <Button variant="danger" type="submit">
+              Reset
               <FontAwesomeIcon icon={faArrowRight} fixedWidth className='ms-2' />
             </Button>
+
           </Col>
         </Row>
       </AdminForm>
@@ -70,4 +59,4 @@ const AdminLogin: React.FC<Props> = ({ admin }) => {
   );
 }
 
-export default AdminLogin;
+export default AdminUserResetForm;

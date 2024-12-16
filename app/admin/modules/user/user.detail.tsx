@@ -1,14 +1,20 @@
 'use server'
 
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { AdminType } from '../../types';
 import { AdminGetData } from '../../functions/get.data';
 import AdminDetail from '../../components/detail';
-import { AdminEmail, AdminHtml } from '../../components/components';
+import { AdminEmail, AdminHtml, AdminIcon } from '../../components/components';
 import AdminImage from '../../components/image';
+import AdminEdit from '../../components/edit';
+
+import AdminUserFormular, { FormularPassword } from './user.formular';
+import UserEdit from './user.edit';
+import AdminUserEdit from './user.edit';
+import AdminUserPassword from './user.password';
 
 
 
@@ -21,31 +27,51 @@ export async function Detail(admin: AdminType) {
 		data
 	}
 
+
 	return (
 		<>
-			<AdminDetail admin={admin} object={object}>
+			<h1 className='mb-3'>
+				<AdminIcon name="user" size={48} className='me-3' />
+				User
+			</h1>
+
+			<hr />
+
+			<AdminDetail.Row icon="user" name="Name">
+				<strong className='fs-3'>
+					{data['name']}
+				</strong>
+			</AdminDetail.Row>
+
+			<AdminDetail.Row icon="textarea" name="Description">
+				<AdminHtml html={data['description']} />
+			</AdminDetail.Row>
+
+			<AdminDetail.Row icon="user" name="Avatar">
+				<AdminImage src="user/avatar" width={300} height={300} alt="avatar" className='img-thumbnail rounded-circle border' />
+			</AdminDetail.Row>
+
+			<AdminDetail.Row icon="email" name="Email">
+				<AdminEmail email={data['email']} />
+			</AdminDetail.Row>
 
 
-				<AdminDetail.Row icon="user" name="Name">
-					<strong className='fs-3'>
-						{data['name']}
-					</strong>
-				</AdminDetail.Row>
+			<Row className='mb-5'>
+				<Col className='col-md-3 py-2' />
+				<Col className='py-2'>
 
-				<AdminDetail.Row icon="textarea" name="Description">
-					<AdminHtml html={data['description']} />
-				</AdminDetail.Row>
+					<AdminUserEdit admin={admin}>
+						<AdminUserFormular data={object.data} />
+					</AdminUserEdit>
 
-				<AdminDetail.Row icon="user" name="Avatar">
-					<AdminImage src="user/avatar" width={300} height={300} alt="avatar" className='img-thumbnail rounded-circle border' />
-				</AdminDetail.Row>
-
-				<AdminDetail.Row icon="email" name="Email">
-					<AdminEmail email={data['email']} />
-				</AdminDetail.Row>
+					<AdminUserPassword admin={admin}>
+						<FormularPassword data={object.data} />
+					</AdminUserPassword>
 
 
-			</AdminDetail>
+				</Col>
+			</Row>
+
 
 			<hr />
 			<p className='text-center'>
