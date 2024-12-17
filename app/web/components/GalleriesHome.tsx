@@ -77,7 +77,7 @@ const ArtworkGallery = ({ artworks }: { artworks: Artwork[] }) => {
                 <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                   <Card.Img
                     variant="top"
-                    src={`${backendUrl}/public/gallery/image?slug=${encodeURIComponent(artwork.slug)}&width=600`}
+                    src={`${backendUrl}/public/gallery/thumbnail?slug=${encodeURIComponent(artwork.slug)}&width=600`}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
