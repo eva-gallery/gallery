@@ -25,7 +25,7 @@ export const FormularArtwork: React.FC<ModuleFormular> = ({ data, option }) => {
 
    return (
       <>
-         <AdminFormInput type="set" icon="artwork" label="Artwork" name="artworks" value={data} option={option?.['artwork']} required />
+         <AdminFormInput type="set" icon="artwork" label="Artwork" name="artworks" value={data['artworks']} option={option?.['artwork']} required />
       </>
    );
 }

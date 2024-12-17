@@ -45,10 +45,14 @@ export const AdminFormControl: React.FC<PropsControl> = ({ type, name, value, op
          return <FormResourceImage name={name} value={value} {...(required ? { required: true } : {})} />;
       case "resourceaudio":
          return <FormResourceAudio name={name} value={value} {...(required ? { required: true } : {})} />;
+      case "email":
+         return <FormEmail name={name} value={value} {...(required ? { required: true } : {})} />;
       case "password":
          return <FormPassword name={name} value={value} {...(required ? { required: true } : {})} />;
       case "set":
          return <FormSet name={name} value={value} option={option} {...(required ? { required: true } : {})} />;
+      case "hidden":
+         return <FormHidden name={name} value={value} option={option} {...(required ? { required: true } : {})} />;
 
 
       default:
@@ -173,11 +177,6 @@ const FormPassword: React.FC<PropsInput> = ({ name, value, required }) => {
    return (
       <>
          <div className='input-group mb-3'>
-            <span className='input-group-text'>Current</span>
-            <Form.Control name={name} defaultValue={value} type="password" {...(required ? { required: true } : {})} />
-         </div>
-         <div className='input-group'>
-            <span className='input-group-text'>New</span>
             <Form.Control name={name} defaultValue={value} type="password" {...(required ? { required: true } : {})} />
          </div>
       </>
@@ -185,7 +184,14 @@ const FormPassword: React.FC<PropsInput> = ({ name, value, required }) => {
 
 };
 
+const FormEmail: React.FC<PropsInput> = ({ name, value, required }) => {
+   return <Form.Control name={name} defaultValue={value} type="text" {...(required ? { required: true } : {})} />;
+};
+
 export const FormSet: React.FC<PropsInput> = ({ name, value, option }) => {
+
+   console.log("value", value);
+   console.log("option", option);
 
    return (
       <>
@@ -207,5 +213,9 @@ export const FormSet: React.FC<PropsInput> = ({ name, value, option }) => {
          ))}
       </>
    );
+};
+
+const FormHidden: React.FC<PropsInput> = ({ name, value, required }) => {
+   return <Form.Control name={name} defaultValue={value} type="hidden" />;
 };
 

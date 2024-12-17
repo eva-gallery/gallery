@@ -15,6 +15,14 @@ import AdminUpdate from '../../components/update';
 export async function Detail(admin: AdminType) {
 
     const data = await AdminGetData("admin/exhibition/" + admin.unique);
+    const artwork = await AdminGetData("admin/exhibition/" + admin.unique + "/artwork");
+
+
+    const artworkdata = {
+        ...data,
+        artworks: artwork
+    }
+
 
     const option = {
         "gallery": await AdminGetData("admin/options/gallery"),
@@ -22,6 +30,7 @@ export async function Detail(admin: AdminType) {
         "artist_category": await AdminGetData("admin/options/artist_category"),
         "artwork": await AdminGetData("admin/options/artwork"),
     };
+
 
     const object = {
         data,
@@ -37,7 +46,7 @@ export async function Detail(admin: AdminType) {
         }
     }));
 
-    const artwork = await AdminGetData("admin/exhibition/" + admin.unique + "/artwork");
+
 
 
     return (
@@ -81,7 +90,7 @@ export async function Detail(admin: AdminType) {
             <h2 className='text-center'>Artworks <small>in Exhibition</small></h2>
             <M.Artwork.Exhibition admin={{ modul: "artwork" }} data={artwork} />
             <AdminUpdate admin={{ modul: "exhibition", action: "update", unique: admin.unique }}>
-                <M.Exhibition.FormularArtwork data={artwork} option={object.option} />
+                <M.Exhibition.FormularArtwork data={artworkdata} option={object.option} />
             </AdminUpdate>
 
             <hr className='my-5' />

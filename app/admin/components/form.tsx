@@ -16,13 +16,14 @@ import { AdminType } from '../types';
 
 type Props = {
   admin: AdminType;
+  type?: "JSON" | "FORMDATA";
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   endpoint: string;
   children: React.ReactNode;
   onSuccess?: () => void;
 };
 
-export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, onSuccess }) => {
+export const AdminForm: React.FC<Props> = ({ admin, type, method, endpoint, children, onSuccess }) => {
 
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -40,7 +41,7 @@ export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, 
       const formData = new FormData(form);
 
       let data;
-      if (admin.action == "login" || admin.action == "update") {
+      if (type == "JSON") {
         data = await AdminSetDataJson(admin, formData, method, endpoint);
       } else {
         data = await AdminSetData(admin, formData, method, endpoint);
@@ -50,9 +51,7 @@ export const AdminForm: React.FC<Props> = ({ admin, method, endpoint, children, 
         setAlertMessage(data.error);
         setShowAlert(true);
       } else {
-        // Ak nie je žiadna chyba, zavri modal
-        if (method == "PATCH" && onSuccess) { onSuccess(); } // Zavri modal po úspešnom odoslaní
-        if (admin.modul == "resource" && onSuccess) { onSuccess(); }
+        if (onSuccess) { onSuccess(); }
       }
 
     }
