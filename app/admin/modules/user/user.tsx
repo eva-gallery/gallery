@@ -25,8 +25,6 @@ const Data = {
 
 async function User(admin: AdminType) {
 
-
-
   return (
     <AdminAction admin={admin} actions={actions} />
   );

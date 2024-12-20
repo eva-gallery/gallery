@@ -17,6 +17,7 @@ export const Formular: React.FC<ModuleFormular> = ({ data, option }) => {
          <AdminFormInput type="tinytext" icon="client" label="Curator" name="curator" value={data['curator']} />
          <AdminFormInput type="parent" icon="gallery" label="Gallery" name="galleryId" value={data['gallery']?.["id"] ?? ''} option={option?.['gallery']} required />
          <AdminFormInput type="boolean" icon="question" label="Public" name="public" value={data['public']} />
+         <AdminFormInput type="set" icon="artwork" label="Artwork" name="artworks" value={data['artworks']} option={option?.['artwork']} required />
       </>
    );
 }

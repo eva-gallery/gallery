@@ -32,7 +32,7 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
     try {
 
       await AdminDeleteData(admin, `/admin/${admin.modul}/delete/${admin.unique}`);
-      window.location.reload();
+      //window.location.reload();
 
     } catch (error) {
       console.error("Error while deleting record:", error);

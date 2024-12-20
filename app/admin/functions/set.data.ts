@@ -14,11 +14,11 @@ import axios from 'axios';
 export async function AdminSetData(admin: AdminType, formData: FormData, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", endpoint: string) {
 
     axios.defaults.withCredentials = true;
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.INTERNAL_BACKEND_URL;
 
-    const cookieStore = cookies().get('SESSION_ID');
-    const sessionId = cookieStore?.value;
-    console.log("**** Cookies ****", sessionId);
+    const cookieStore = cookies().get('BEARER_TOKEN');
+    const bearerToken = cookieStore?.value;
+    console.log("**** bearerToken ****", bearerToken);
 
     console.log("*** Admin module ****", admin.modul);
 
@@ -30,17 +30,19 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 
 
     let body;
-    let headers: { [key: string]: string } = { "Authorization": `Bearer ${sessionId}` };
+    let headers: { [key: string]: string } = { "Authorization": `Bearer ${bearerToken}` };
 
 
-    const json = await Module.Transform(formData);
-    console.log("**** Transform ****", json);
+    const newFormData = await Module.Transform(formData);
+    console.log("**** Transform ****", newFormData);
 
 
-    let newFormData = new FormData();
+    /*let newFormData = new FormData();
     Object.keys(json).forEach((key) => {
         newFormData.set(key, json[key]);
-    });
+    });*/
+
+
     body = newFormData;
 
 
@@ -109,7 +111,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 
 
             case "create":
-                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('SESSION_ID='));
+                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('BEARER_TOKEN='));
                 if (cookie) {
 
                     const getCookieValue = (cookieString: string, cookieName: string) => {
@@ -118,14 +120,14 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
                         return targetCookie ? targetCookie.split('=')[1] : null;
                     };
 
-                    // Extrahujte iba hodnotu SESSION_ID
-                    const sessionId = getCookieValue(cookie, 'SESSION_ID');
+                    // Extrahujte iba hodnotu BEARER_TOKEN
+                    const bearerToken = getCookieValue(cookie, 'BEARER_TOKEN');
 
-                    console.log("**** Session ID ****", sessionId);
-                    if (sessionId) {
+                    console.log("**** Session ID ****", bearerToken);
+                    if (bearerToken) {
                         cookies().set({
-                            name: 'SESSION_ID',
-                            value: decodeURIComponent(sessionId),
+                            name: 'BEARER_TOKEN',
+                            value: decodeURIComponent(bearerToken),
                             secure: false,
                             httpOnly: false,
                             path: '/',
@@ -149,11 +151,11 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 export async function AdminSetDataJson(admin: AdminType, formData: FormData, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", endpoint: string) {
 
     axios.defaults.withCredentials = true;
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.INTERNAL_BACKEND_URL;
 
-    const cookieStore = cookies().get('SESSION_ID');
-    const sessionId = cookieStore?.value;
-    console.log("**** Cookies ****", sessionId);
+    const cookieStore = cookies().get('BEARER_TOKEN');
+    const bearerToken = cookieStore?.value;
+    console.log("**** Cookies ****", bearerToken);
 
     console.log("*** Admin module ****", admin.modul);
     const Module = M[capitalize(admin.modul) as keyof typeof M];
@@ -161,7 +163,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
 
 
     let body;
-    let headers: { [key: string]: string } = { "Authorization": `Bearer ${sessionId}` };
+    let headers: { [key: string]: string } = { "Authorization": `Bearer ${bearerToken}` };
 
 
     const json = await Module.Transform(formData);
@@ -199,6 +201,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
         }
         if (err.response && err.response.status === 404) {
             error = `Wrong url: ${backendUrl}${endpoint}! Error 404`;
+            error = err.response.data.message;
         }
         if (err.response && err.response.status === 500) {
             error = "Backend down! Error 500";
@@ -219,7 +222,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
         switch (admin.action) {
 
             case "login":
-                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('SESSION_ID='));
+                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('BEARER_TOKEN='));
                 if (cookie) {
 
                     const getCookieValue = (cookieString: string, cookieName: string) => {
@@ -228,14 +231,14 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
                         return targetCookie ? targetCookie.split('=')[1] : null;
                     };
 
-                    // Extrahujte iba hodnotu SESSION_ID
-                    const sessionId = getCookieValue(cookie, 'SESSION_ID');
+                    // Extrahujte iba hodnotu BEARER_TOKEN
+                    const bearerToken = getCookieValue(cookie, 'BEARER_TOKEN');
 
-                    console.log("**** Session ID ****", sessionId);
-                    if (sessionId) {
+                    console.log("**** Session ID ****", bearerToken);
+                    if (bearerToken) {
                         cookies().set({
-                            name: 'SESSION_ID',
-                            value: decodeURIComponent(sessionId),
+                            name: 'BEARER_TOKEN',
+                            value: decodeURIComponent(bearerToken),
                             secure: false,
                             httpOnly: false,
                             path: '/',

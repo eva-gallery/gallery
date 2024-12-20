@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 
@@ -17,6 +17,28 @@ const AdminImage: React.FC<Props> = ({ src, className = '', ...options }) => {
   return (
     <>
       <img src={`${backendUrl}/${src}`} {...options} className={`img-fluid ${className}`} />
+
+    </>
+  );
+};
+
+export const AdminImageCheck: React.FC<Props> = ({ src, className = '', ...options }) => {
+
+  const [isValid, setIsValid] = useState<boolean>(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = `${backendUrl}/${src}`;
+
+    img.onload = () => setIsValid(true);
+    img.onerror = () => setIsValid(false);
+  }, [src]);
+
+  return (
+    <>
+      {isValid ? (
+        <img src={`${backendUrl}/${src}`} {...options} className={`img-fluid ${className}`} />
+      ) : (null)}
     </>
   );
 };

@@ -18,6 +18,11 @@ export async function Logout(admin: AdminType) {
 			<p className='text-center'>
 				You were logged out.
 			</p>
+			<p className='text-center'>
+				<a href="/" className='btn btn-primary'>
+					Go to Public webpage
+				</a>
+			</p >
 
 		</>
 

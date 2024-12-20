@@ -8,7 +8,7 @@ import AdminDetail from '../../components/detail';
 import { AdminBoolean, AdminFlag, AdminHtml } from '../../components/components';
 import AdminMap from '../../components/map';
 import { M } from '..';
-import AdminImage from '../../components/image';
+import { AdminImageCheck } from '../../components/image';
 
 
 
@@ -57,7 +57,7 @@ export async function Detail(admin: AdminType) {
 
                 <AdminDetail.Row icon="artwork" name="Image">
                     <a href={`${backendUrl}/gallery/${data['id']}/image`} target='_blank'>
-                        <AdminImage src={`gallery/${data['id']}/image`} alt={data['name']} width={480} />
+                        <AdminImageCheck src={`gallery/${data['id']}/image`} alt={data['name']} width={480} />
                     </a>
                 </AdminDetail.Row>
 

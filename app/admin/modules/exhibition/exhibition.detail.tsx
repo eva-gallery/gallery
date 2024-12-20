@@ -89,14 +89,10 @@ export async function Detail(admin: AdminType) {
 
             <h2 className='text-center'>Artworks <small>in Exhibition</small></h2>
             <M.Artwork.Exhibition admin={{ modul: "artwork" }} data={artwork} />
-            <AdminUpdate admin={{ modul: "exhibition", action: "update", unique: admin.unique }}>
-                <M.Exhibition.FormularArtwork data={artworkdata} option={object.option} />
-            </AdminUpdate>
 
-            <hr className='my-5' />
 
-            <h2 className='text-center'>3D Designs <small>in Exhibition</small></h2>
-            <M.Designer.Table admin={{ modul: "designer" }} data={updatedDesigner} />
+            {/* <h2 className='text-center'>3D Designs <small>in Exhibition</small></h2>
+            <M.Designer.Table admin={{ modul: "designer" }} data={updatedDesigner} /> */}
 
 
 

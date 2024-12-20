@@ -8,7 +8,7 @@ import { AdminType } from '../../types';
 import { AdminGetData } from '../../functions/get.data';
 import AdminDetail from '../../components/detail';
 import { AdminEmail, AdminHtml, AdminIcon } from '../../components/components';
-import AdminImage from '../../components/image';
+import { AdminImageCheck } from '../../components/image';
 import AdminEdit from '../../components/edit';
 
 import AdminUserFormular, { FormularPassword } from './user.formular';
@@ -48,7 +48,7 @@ export async function Detail(admin: AdminType) {
 			</AdminDetail.Row>
 
 			<AdminDetail.Row icon="user" name="Avatar">
-				<AdminImage src="user/avatar" width={300} height={300} alt="avatar" className='img-thumbnail rounded-circle border' />
+				<AdminImageCheck src="user/avatar" width={300} height={300} alt="avatar" className='img-thumbnail rounded-circle border' />
 			</AdminDetail.Row>
 
 			<AdminDetail.Row icon="email" name="Email">
@@ -68,18 +68,14 @@ export async function Detail(admin: AdminType) {
 						<FormularPassword data={object.data} />
 					</AdminUserPassword>
 
+					<Button as='a' href='/admin/user/logout' variant='primary' className='ms-2'>
+						<FontAwesomeIcon icon={faArrowRight} className='me-2' />
+						Logout
+					</Button>
 
 				</Col>
 			</Row>
 
-
-			<hr />
-			<p className='text-center'>
-				<Button as='a' href='/admin/user/logout' variant='primary'>
-					<FontAwesomeIcon icon={faArrowRight} className='me-2' />
-					Logout
-				</Button>
-			</p>
 		</>
 
 

@@ -24,12 +24,7 @@ export const FormularPassword: React.FC<ModuleFormular> = ({ data, option }) => 
       <>
          <AdminFormInput type="password" icon="password" label="Old Password" name="oldPassword" value={null} required />
          <AdminFormInput type="password" icon="password" label="New Password" name="newPassword" value={null} required />
-         <small>New Password must have at least 8 characters, capital letters, numbers and special characters.
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1
+         <small>New Password must have minimun length 8 characters, 1 uppercase and 1 lowercase character, 1 number an 1 symbol.
          </small>
       </>
    );
@@ -55,12 +50,7 @@ export const FormularCreateUser: React.FC = () => {
          {loginType === 'credentials' &&
             <>
                <AdminFormInput type="password" icon="password" label="Password" name="password" value={null} required />
-               <small>New Password must have at least 8 characters, capital letters, numbers and special characters.
-                  minLength: 8,
-                  minLowercase: 1,
-                  minUppercase: 1,
-                  minNumbers: 1,
-                  minSymbols: 1
+               <small>New Password must have minimun length 8 characters, 1 uppercase and 1 lowercase character, 1 number an 1 symbol.
                </small>
             </>
          }
@@ -81,12 +71,8 @@ export const FormularResetPassword: React.FC<ModuleFormular> = ({ data, option }
    return (
       <>
          <AdminFormInput type="password" icon="password" label="New Password" name="newPassword" value={null} required />
-         <small>New Password must have at least 8 characters, capital letters, numbers and special characters.
-            minLength: 8,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1
+         <small>
+            New Password must have minimun length 8 characters, 1 uppercase and 1 lowercase character, 1 number an 1 symbol.
          </small>
       </>
    );

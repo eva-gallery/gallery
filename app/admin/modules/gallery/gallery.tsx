@@ -20,6 +20,7 @@ const Data = {
 
 
 async function Gallery(admin: AdminType) {
+
    return (
       <AdminAction admin={admin} actions={Data.actions} />
    );
