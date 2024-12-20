@@ -13,7 +13,7 @@ export async function Login(admin: AdminType) {
 	return (
 		<>
 
-			<AdminUserLoginForm admin={admin} />
+			<AdminUserLoginForm />
 
 		</>
 

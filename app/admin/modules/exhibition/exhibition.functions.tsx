@@ -1,39 +1,29 @@
 'use server'
 
-import { redirect } from 'next/navigation';
-import { AdminType } from '../../types';
-import { stringify } from 'querystring';
-
 export async function Transform(formData: FormData) {
-   const json: Record<string, any> = {};
 
 
-   let artworks: any[] = [];
+   const newFormData = new FormData();
 
    formData.forEach((value, key) => {
       switch (key) {
-         case 'public':
-            json[key] = value === 'on' ? "true" : "false";
+         case 'artworks':
+            newFormData.append('artworks[]', value);
             break;
 
-         case 'artworks[]':
-            artworks.push(value);
+         case 'public':
+            newFormData.append(key, value === 'on' ? 'true' : 'false');
             break;
+
          default:
-            json[key] = value;
+            newFormData.append(key, value);
             break;
       }
    });
 
-
-   json['artworks'] = artworks;
-
-
-   if (!json.hasOwnProperty('public') && !json.hasOwnProperty('artworks')) {
-      json['public'] = "false";
+   if (!newFormData.has('public')) {
+      newFormData.append('public', 'false');
    }
 
-
-
-   return json;
+   return newFormData;
 }

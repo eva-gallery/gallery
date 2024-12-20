@@ -16,10 +16,10 @@ export async function AdminDeleteData(admin: AdminType, endpoint: string) {
 
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-    const cookieStore = cookies().get('SESSION_ID');
-    const sessionId = cookieStore?.value;
+    const cookieStore = cookies().get('BEARER_TOKEN');
+    const bearerToken = cookieStore?.value;
 
-    console.log("**** Cookies ****", sessionId);
+    console.log("**** Cookies ****", bearerToken);
 
 
 
@@ -28,7 +28,7 @@ export async function AdminDeleteData(admin: AdminType, endpoint: string) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${sessionId}`
+            "Authorization": `Bearer ${bearerToken}`
         }
     }).then(async (res) => {
         // Skontroluj, či odpoveď obsahuje nejaké telo
