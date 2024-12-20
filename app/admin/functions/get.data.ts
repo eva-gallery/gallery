@@ -7,10 +7,10 @@ import { cookies } from 'next/headers'
 import { PassThrough } from 'stream';
 
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
+const backendUrl = process.env.INTERNAL_BACKEND_URL + '/admin';
 
 export async function AdminGetData(endpoint: string) {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.INTERNAL_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -35,7 +35,7 @@ export async function AdminGetData(endpoint: string) {
 
 export async function AdminPutData(endpoint: string, dataInput?: any) {
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.INTERNAL_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -68,7 +68,7 @@ export async function AdminPutData(endpoint: string, dataInput?: any) {
 
 export async function AdminPostData(endpoint: string, dataInput?: any) {
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.INTERNAL_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -204,7 +204,4 @@ export async function getOption(name: string) {
     //console.log("********** Backend Get Option **********", option);
     return option;
 }
-
-
-
 
