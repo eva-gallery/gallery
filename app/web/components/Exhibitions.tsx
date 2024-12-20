@@ -4,21 +4,30 @@ import { format, isValid } from 'date-fns';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const backendUrl = 'https://evagallery.b-cdn.net'; 
 
-interface Artwork {
+interface Exhibition {
   slug: string;
   name: string;
   fromDate: string | Date;
   toDate: string | Date;
-  // Add other artwork properties as needed
+  curator: string;
+  gallery: {
+    name: string;
+    slug: string;
+  };
+  artwork: {
+    name: string;
+    slug: string;
+  };
+  activeRoomId: string | null;
 }
 
-interface ArtworkGridProps {
-  artworks: Artwork[];
+interface ExhibitionsGridProps {
+  artworks: Exhibition[];
 }
 
-const ArtworkGrid: React.FC<ArtworkGridProps> = ({ artworks }) => {
+const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ artworks }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const formatDate = (date: string | Date) => {
@@ -28,7 +37,6 @@ const ArtworkGrid: React.FC<ArtworkGridProps> = ({ artworks }) => {
 
   return (
     <Container className="py-5">
-      {/* Header Row */}
       <Row className="mb-4 align-items-center">
         <Col>
           <h1 className="mb-0">Exhibitions</h1>
@@ -52,23 +60,28 @@ const ArtworkGrid: React.FC<ArtworkGridProps> = ({ artworks }) => {
       </Row>
 
       <Row className="g-4">
-        {artworks.slice(0, 24).map((artwork, index) => (
+        {artworks.slice(0, 24).map((exhibition, index) => (
           <Col key={index} xs={12} sm={6} md={3}>
             <Card className="artwork-card h-100 border-0 shadow-sm">
               <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                 <div className="image-container position-absolute top-0 start-0 w-100 h-100">
                   <Card.Img
                     variant="top"
-                    src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
-                    alt={artwork.name}
+                    src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = '/images/placeholder.png';
+                    }}
+                    alt={exhibition.name}
                     className="w-100 h-100 transition-transform duration-300"
                   />
                 </div>
               </div>
               <Card.Body className="d-flex flex-column">
-                <Card.Title className="fs-6 text-truncate">{artwork.name}</Card.Title>
+                <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
                 <Card.Text className="text-muted small mb-0 text-truncate">
-                  {formatDate(artwork.fromDate)} - {formatDate(artwork.toDate)}
+                  {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
                 </Card.Text>
               </Card.Body>
             </Card>
@@ -76,7 +89,6 @@ const ArtworkGrid: React.FC<ArtworkGridProps> = ({ artworks }) => {
         ))}
       </Row>
 
-      {/* Styles */}
       <style jsx global>{`
         .artwork-card {
           transition: all 0.3s ease;
@@ -100,13 +112,9 @@ const ArtworkGrid: React.FC<ArtworkGridProps> = ({ artworks }) => {
           object-fit: cover;
           object-position: center;
         }
-
-        /* .artwork-card:hover .image-container img {
-          transform: scale(1.1);
-        } */
       `}</style>
     </Container>
   );
 };
 
-export default ArtworkGrid;
+export default ExhibitionsGrid;
