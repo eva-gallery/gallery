@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { format, isValid } from 'date-fns';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
+import Image from 'next/image';
 
-const backendUrl = 'https://evagallery.b-cdn.net'; 
+const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL || 
 
 interface Exhibition {
   slug: string;
@@ -24,10 +25,10 @@ interface Exhibition {
 }
 
 interface ExhibitionsGridProps {
-  artworks: Exhibition[];
+  exhibitions: Exhibition[];
 }
 
-const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ artworks }) => {
+const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const formatDate = (date: string | Date) => {
@@ -60,21 +61,18 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ artworks }) => {
       </Row>
 
       <Row className="g-4">
-        {artworks.slice(0, 24).map((exhibition, index) => (
+        {exhibitions.slice(0, 24).map((exhibition, index) => (
           <Col key={index} xs={12} sm={6} md={3}>
             <Card className="artwork-card h-100 border-0 shadow-sm">
               <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                 <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                  <Card.Img
-                    variant="top"
+                  <Image
                     src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null;
-                      target.src = '/images/placeholder.png';
-                    }}
                     alt={exhibition.name}
-                    className="w-100 h-100 transition-transform duration-300"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-cover object-center transition-transform duration-300"
+                    priority={index < 4}
                   />
                 </div>
               </div>
@@ -106,11 +104,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ artworks }) => {
           justify-content: center;
           overflow: hidden;
           background-color: #f8f9fa;
-        }
-
-        .image-container img {
-          object-fit: cover;
-          object-position: center;
+          position: relative;
         }
       `}</style>
     </Container>
