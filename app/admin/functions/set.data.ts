@@ -14,7 +14,8 @@ import axios from 'axios';
 export async function AdminSetData(admin: AdminType, formData: FormData, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", endpoint: string) {
 
     axios.defaults.withCredentials = true;
-    const backendUrl = process.env.INTERNAL_BACKEND_URL;
+    #const backendUrl = process.env.NEXT_INTERNAL_BACKEND_URL;
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -151,7 +152,8 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 export async function AdminSetDataJson(admin: AdminType, formData: FormData, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", endpoint: string) {
 
     axios.defaults.withCredentials = true;
-    const backendUrl = process.env.INTERNAL_BACKEND_URL;
+    // const backendUrl = process.env.NEXT_INTERNAL_BACKEND_URL;
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
