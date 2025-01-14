@@ -14,8 +14,7 @@ import axios from 'axios';
 export async function AdminSetData(admin: AdminType, formData: FormData, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", endpoint: string) {
 
     axios.defaults.withCredentials = true;
-    // const backendUrl = process.env.NEXT_INTERNAL_BACKEND_URL;
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.NEXT_INTERNAL_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -47,9 +46,9 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
     body = newFormData;
 
 
-    console.log("**** adminSetData2 ****", body);
+    console.log("**** adminSetData ****", body);
 
-    console.log("**** method FORM: endpoint ****", method, endpoint);
+    console.log("**** method FORM: endpoint ****", backendUrl, method, endpoint);
 
     let response = null;
     let error = null;
@@ -65,7 +64,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
     }
     catch (err: any) {
         console.log("**** Error ****", err.response.data);
-        error = err.response.data.message || 'Error fetching data. Server down?';
+        error = err.response.data.message || 'Error fetching data.';
 
         if (err.response && err.response.status === 401) {
             error = "Wrong Email or Password!";
@@ -74,7 +73,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
             error = `Wrong url: ${backendUrl}${endpoint}! Error 404`;
         }
         if (err.response && err.response.status === 500) {
-            error = "Backend down! Error 500";
+            error = "Error 500";
         }
     }
 
@@ -152,8 +151,8 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 export async function AdminSetDataJson(admin: AdminType, formData: FormData, method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE", endpoint: string) {
 
     axios.defaults.withCredentials = true;
-    // const backendUrl = process.env.NEXT_INTERNAL_BACKEND_URL;
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    const backendUrl = process.env.NEXT_INTERNAL_BACKEND_URL;
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -180,7 +179,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
 
     console.log("**** adminSetData JSON ****", body);
 
-    console.log("**** method: endpoint ****", method, endpoint);
+    console.log("**** method: endpoint ****",backendUrl, method, endpoint);
 
     let response = null;
     let error = null;
@@ -195,8 +194,8 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
 
     }
     catch (err: any) {
-        console.log("**** Error ****", err.response.data.message);
-        error = err.response.data.message || 'Error fetching data. Server down?';
+        console.log("**** Error ****", err.response?.data.message);
+        error = err.response?.data.message || 'Error fetching data.';
 
         if (err.response && err.response.status === 401) {
             error = "Wrong Email or Password!";
@@ -206,7 +205,7 @@ export async function AdminSetDataJson(admin: AdminType, formData: FormData, met
             error = err.response.data.message;
         }
         if (err.response && err.response.status === 500) {
-            error = "Backend down! Error 500";
+            error = "Error 500";
         }
 
     }
