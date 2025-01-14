@@ -12,6 +12,7 @@ import SaveSession from '../../functions/savesession';
 const AdminUserLoginForm: React.FC = () => {
   const router = useRouter();
   const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  console.log("**** backendUrl ****", backendUrl);
 
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
