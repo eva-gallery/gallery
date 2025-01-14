@@ -13,7 +13,7 @@ const AdminUserLoginForm: React.FC = () => {
   const router = useRouter();
   //const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const backendUrl = "https://cdn.evagallery.eu";
-  console.log("**** backendUrl ****", backendUrl);
+  //console.log("**** backendUrl ****", backendUrl);
 
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -38,7 +38,7 @@ const AdminUserLoginForm: React.FC = () => {
         "Content-Type": "application/json",
       };
 
-      console.log("**** adminSetData JSON ****", body);
+      //console.log("**** adminSetData JSON ****", body);
 
       try {
         const response = await axios({
