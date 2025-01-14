@@ -1,4 +1,8 @@
+/*
+toto tu nemoze byt, ze menis farbu vsetkych linkov na stranke, 
+lebo su buttony, ktore maju bielu pri hoveri.
 a:hover { color:#0d3c81 !important; } 
+*/
 
 .bg-lightish {
     background-color: rgba(208,204,203,0.4) !important;
