@@ -74,14 +74,14 @@ const NavbarComponent = () => {
               <Nav.Link 
                 as={Link} 
                 href="/exhibitions" 
-                className="mx-1 text-dark hover:text-primary"
+                className="mx-1 d-none text-dark hover:text-primary"
               >
                 Exhibitions
               </Nav.Link>
               <Nav.Link 
                 as={Link} 
                 href="/nfts" 
-                className="mx-1 text-dark hover:text-primary"
+                className="mx-1 d-none text-dark hover:text-primary"
               >
                 NFTs
               </Nav.Link>
