@@ -20,7 +20,56 @@ const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <Container className="py-5">
+
+          <div className="container py-3 py-lg-4">
+        {/* First row with two columns */}
+        <div className="row mb-4 mb-lg-2">
+        <div className="col-md-6">
+            <div className="py-2 px-2 px-lg-0 h-100 rounded d-flex align-items-center">
+                <div>
+              <h2>NFT minting and presentation</h2>  
+              <p>The platform integrates wallet connection mechanisms and NFT functionality, allowing artists to incorporate blockchain technology into their collections. An AI-based recommendation engine provides personalized experiences for visitors, enhancing engagement with the artworks.
+</p>
+                      <a href="/admin/user/login"><button className="btn btn-primary mb-4">
+                      <span className="thq-body-small">Register now</span>
+                    </button></a></div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="h-100 rounded">
+            <div className="position-relative mb-3" style={{ height: '400px' }}>
+                <Image
+                  src="/images/nft.jpg"
+                  alt="AI Art Protection"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+          
+          
+        </div>
+
+        {/* Second row with responsive YouTube video */}
+        <div className="row">
+          <div className="col-12">
+            <div className="ratio ratio-16x9">
+              <iframe 
+                src="https://www.youtube.com/embed/lsyDyHHdPRM" 
+                title="EVA Gallery YouTube video"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <Container className="py-4 d-none">
+      
       {/* Header Row */}
       <Row className="mb-4 align-items-center">
         <Col>
