@@ -68,7 +68,7 @@ const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
         </div>
       </div>
     
-    <Container className="py-4 d-none">
+    <Container className="d-none">
       
       {/* Header Row */}
       <Row className="mb-4 align-items-center">
