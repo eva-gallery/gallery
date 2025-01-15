@@ -22,8 +22,7 @@ const AdminNavbar: React.FC = () => {
             {M.modules.map((module, index) => (
               (module !== 'Designer' && module !== 'Ai') && (
                 <Nav.Link key={index} href={`/admin/${module.toLowerCase()}`} className='text-center text-uppercase'>
-                  <Image src={`/images/icons/${module.toLowerCase()}.png`} width="64" height="64" alt={module} className='mb-2' />
-                  <br />
+                  <Image src={`/images/icons/${module.toLowerCase()}.png`} width="64" height="64" alt={module} className='mb-2 d-none' />
                   {module}
                 </Nav.Link>
               )
