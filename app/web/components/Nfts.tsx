@@ -1,10 +1,6 @@
-'use client'
 import React, { useState } from 'react';
-import { format, isValid } from 'date-fns';
-import { Container, Card, Form, Row, Col } from 'react-bootstrap';
+import Image from 'next/image';
 import { Search } from 'lucide-react';
-
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 interface Artwork {
   nftData: {
@@ -20,132 +16,100 @@ const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
+    <div className="w-full">
+      {/* Hero Section */}
+      <div className="container mx-auto py-6 lg:py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          {/* Left Column */}
+          <div className="flex items-center">
+            <div>
+              <h2 className="text-2xl font-bold mb-4">NFT minting and presentation</h2>
+              <p className="mb-6">
+                The platform integrates wallet connection mechanisms and NFT functionality, 
+                allowing artists to incorporate blockchain technology into their collections. 
+                An AI-based recommendation engine provides personalized experiences for visitors, 
+                enhancing engagement with the artworks.
+              </p>
+              <a href="/admin/user/login">
+                <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  Register now
+                </button>
+              </a>
+            </div>
+          </div>
 
-          <div className="container py-3 py-lg-4">
-        {/* First row with two columns */}
-        <div className="row mb-4 mb-lg-2">
-        <div className="col-md-6">
-            <div className="py-2 px-2 px-lg-0 h-100 rounded d-flex align-items-center">
-                <div>
-              <h2>NFT minting and presentation</h2>  
-              <p>The platform integrates wallet connection mechanisms and NFT functionality, allowing artists to incorporate blockchain technology into their collections. An AI-based recommendation engine provides personalized experiences for visitors, enhancing engagement with the artworks.
-</p>
-                      <a href="/admin/user/login"><button className="btn btn-primary mb-4">
-                      <span className="thq-body-small">Register now</span>
-                    </button></a></div>
-            </div>
+          {/* Right Column */}
+          <div className="relative h-[400px] w-full rounded-lg overflow-hidden">
+            <Image
+              src="/images/nft.jpg"
+              alt="AI Art Protection"
+              fill
+              className="object-cover rounded-lg"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
           </div>
-          <div className="col-md-6">
-            <div className="h-100 rounded">
-            <div className="position-relative mb-3" style={{ height: '400px' }}>
-                <Image
-                  src="/images/nft.jpg"
-                  alt="AI Art Protection"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  className="rounded"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-          
-          
         </div>
 
-        {/* Second row with responsive YouTube video */}
-        <div className="row">
-          <div className="col-12">
-            <div className="ratio ratio-16x9">
-              <iframe 
-                src="https://www.youtube.com/embed/lsyDyHHdPRM" 
-                title="EVA Gallery YouTube video"
-                allowFullScreen
-              ></iframe>
-            </div>
-          </div>
+        {/* Video Section */}
+        <div className="w-full aspect-w-16 aspect-h-9 mt-8">
+          <iframe 
+            src="https://www.youtube.com/embed/lsyDyHHdPRM" 
+            title="EVA Gallery YouTube video"
+            className="w-full h-full rounded-lg"
+            allowFullScreen
+          />
         </div>
       </div>
-    
-    <Container className="d-none">
-      
-      {/* Header Row */}
-      <Row className="mb-4 align-items-center">
-        <Col>
-          <h1 className="mb-0">NFTs</h1>
-        </Col>
-        <Col xs="auto">
-          <div className="position-relative">
-            <Form.Control
+
+      {/* NFT Grid Section */}
+      <div className="container mx-auto px-4 mt-12 hidden">
+        {/* Header */}
+        <div className="flex flex-wrap items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold">NFTs</h1>
+          <div className="relative">
+            <input
               type="search"
               placeholder="Search NFTs..."
-              className="ps-4"
+              className="pl-10 pr-4 py-2 w-72 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ width: '300px' }}
             />
             <Search 
               size={18} 
-              className="position-absolute top-50 start-0 translate-middle-y ms-2 text-muted"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
             />
           </div>
-        </Col>
-      </Row>
+        </div>
 
-      <Row className="g-4">
-      {artworks.slice(0, 24).map((artwork, index) => (
-        <Col key={index} xs={12} sm={6} md={3}>
-          <Card className="artwork-card h-100 border-0 shadow-sm">
-            <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
-              <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                <Card.Img
-                  variant="top"
-                  src={`${artwork.nftData.image}`}
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {artworks.slice(0, 24).map((artwork, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-lg shadow-sm overflow-hidden transform transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+            >
+              <div className="relative pt-[100%]">
+                <img
+                  src={artwork.nftData.image}
                   alt={artwork.artwork.name}
-                  className="w-100 h-100 transition-transform duration-300"
+                  className="absolute top-0 left-0 w-full h-full object-cover"
                 />
               </div>
+              <div className="p-4">
+                <h3 className="font-medium text-gray-900 truncate">
+                  {artwork.nftData.name}
+                </h3>
+                <p className="text-sm text-gray-500 truncate">
+                  {artwork.artwork.name}
+                </p>
+              </div>
             </div>
-            <Card.Body className="d-flex flex-column">
-              <Card.Title className="fs-6 text-truncate">{artwork.nftData.name}</Card.Title>
-              <Card.Text className="text-muted small mb-0 text-truncate">
-              {artwork.artwork.name}
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-
-    </Row>
-
-    {/* Styles */}
-    <style jsx global>{`
-      .artwork-card {
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
-
-      .artwork-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-      }
-
-      .image-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        background-color: #f8f9fa;
-      }
-
-      .image-container img {
-        object-fit: cover;
-        object-position: center;
-      }
-    `}</style>
-  </Container>
-);
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default ArtworkGrid;
