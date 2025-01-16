@@ -51,7 +51,7 @@ const backendUrl = 'https://evagallery.b-cdn.net'; // cdn.evagallery.eu / proces
           <Card className="artwork-card h-100 border-0 shadow-sm">
             <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
               <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                <a href={`/gallery/${artwork.slug}?seed=${seed}`}>
+                <a href={`/galleries/${artwork.slug}`}>
                 <Card.Img
                   variant="top"
                   src={`${backendUrl}/public/gallery/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
