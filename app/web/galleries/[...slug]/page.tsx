@@ -1,7 +1,7 @@
 // app/web/galleries/[...slug]/page.tsx
 
 import { Container, Row, Col } from 'react-bootstrap'
-import ArtworkGrid from '@/app/web/components/ArtworkGallery'
+import ArtworkGrid from '@/app/web/components/GalleriesMore'
 import GalleryImage from '@/app/web/components/GalleryImage'
 import { getData } from "@/app/web/get.data";
 
