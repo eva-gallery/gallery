@@ -38,7 +38,7 @@ export default async function GalleryDetail({ params }: PageProps) {
   });
 
   const gallery = await getGalleryData(validSlug);
-  const artworksData = await getData(`/public/random/artwork?${urlParams}`);
+  const artworksData = await getData(`/public/random/gallery?${urlParams}`);
   const artworks = Array.isArray(artworksData) ? artworksData : [];
 
   return (
@@ -68,7 +68,7 @@ export default async function GalleryDetail({ params }: PageProps) {
 
         <Row className="mb-4">
           <Col>
-            <h2 className="mb-4">Artworks at {gallery.name}</h2>
+            <h2 className="mb-4">Other galleries</h2>
             <ArtworkGrid 
               artworks={artworks}
               seed={seedno}
