@@ -111,35 +111,35 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
 
 
             case "create":
-                // const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('BEARER_TOKEN='));
-                // if (cookie) {
+                const cookie = response?.headers?.['set-cookie']?.find(cookie => cookie.startsWith('BEARER_TOKEN='));
+                if (cookie) {
 
-                //     const getCookieValue = (cookieString: string, cookieName: string) => {
-                //         const cookies = cookieString.split('; ');
-                //         const targetCookie = cookies.find(cookie => cookie.startsWith(`${cookieName}=`));
-                //         return targetCookie ? targetCookie.split('=')[1] : null;
-                //     };
+                    const getCookieValue = (cookieString: string, cookieName: string) => {
+                        const cookies = cookieString.split('; ');
+                        const targetCookie = cookies.find(cookie => cookie.startsWith(`${cookieName}=`));
+                        return targetCookie ? targetCookie.split('=')[1] : null;
+                    };
 
-                //     // Extrahujte iba hodnotu BEARER_TOKEN
-                //     const bearerToken = getCookieValue(cookie, 'BEARER_TOKEN');
+                    // Extrahujte iba hodnotu BEARER_TOKEN
+                    const bearerToken = getCookieValue(cookie, 'BEARER_TOKEN');
 
-                //     console.log("**** Session ID ****", bearerToken);
-                //     if (bearerToken) {
-                //         cookies().set({
-                //             name: 'BEARER_TOKEN',
-                //             value: decodeURIComponent(bearerToken),
-                //             secure: false,
-                //             httpOnly: false,
-                //             path: '/',
-                //             //domain: 'cdn.evagallery.eu', // Rovnaká doména ako na produkcii
-                //         });
-                //     } else {
-                //         return { error: "Session ID is null!" };
-                //     }
-                // } else {
-                //     return { error: "No cookie" };
-                // }
-                redirect("/admin/login");
+                    console.log("**** Session ID ****", bearerToken);
+                    if (bearerToken) {
+                        cookies().set({
+                            name: 'BEARER_TOKEN',
+                            value: decodeURIComponent(bearerToken),
+                            secure: false,
+                            httpOnly: false,
+                            path: '/',
+                            //domain: 'cdn.evagallery.eu', // Rovnaká doména ako na produkcii
+                        });
+                    } else {
+                        return { error: "Session ID is null!" };
+                    }
+                } else {
+                    return { error: "No cookie" };
+                }
+                redirect("/admin");
                 break;
 
         }
