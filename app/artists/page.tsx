@@ -49,7 +49,7 @@ export default async function ArtistsPage() {
     const params = new URLSearchParams({
       seed: seedno.toString(),
       from: "0",
-      count: "24"
+      count: "96"
     });
     
     const artists = await getData(`/public/random/artist?${params}`);

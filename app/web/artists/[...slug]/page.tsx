@@ -32,7 +32,7 @@ export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
   const paramsQuery = new URLSearchParams({
     seed: seedno.toString(),
     from: "0",
-    count: "24",
+    count: "96",
     artist: validSlug
   });
 
