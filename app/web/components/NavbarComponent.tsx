@@ -101,7 +101,7 @@ const NavbarComponent = () => {
               </Nav.Link>
               <Nav.Link 
                 as={Link} 
-                href="/admin/user/login" 
+                href="/admin/user" 
                 className="ms-1 btn btn-outline-primary"
               >
                 Login
