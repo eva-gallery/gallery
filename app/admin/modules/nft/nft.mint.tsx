@@ -142,7 +142,6 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                         const response = await AdminPutData(`mint/trial/artwork/${artworkId}`, {})
                         setLoading(false);
                         console.log("THIS IS NFT RESPONSE", response.status);
-                        console.log("THIS IS NFT RESPONSE", response);
                         if (response.status === 'MintedAlready') {
                            alert('NFT has already been minted, only one allowed per account.');
                         }

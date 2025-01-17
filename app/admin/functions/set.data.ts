@@ -139,7 +139,7 @@ export async function AdminSetData(admin: AdminType, formData: FormData, method:
                 // } else {
                 //     return { error: "No cookie" };
                 // }
-                redirect("/admin/user/login");
+                redirect("/admin/login");
                 break;
 
         }
