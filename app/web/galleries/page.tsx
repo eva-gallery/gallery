@@ -19,7 +19,7 @@ async function fetchGalleriesData() {
   const params = new URLSearchParams({
     seed: seedno.toString(),
     from: "0",
-    count: "96"
+    count: "24"
   });
   
   const artworks = await getData(`/public/random/gallery?${params}`) as Artwork[];

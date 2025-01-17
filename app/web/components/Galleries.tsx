@@ -40,7 +40,7 @@ const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
       </Row>
 
       <Row className="g-4">
-      {artworks.slice(0, 96).map((artwork, index) => (
+      {artworks.slice(0, 24).map((artwork, index) => (
         <Col key={index} xs={12} sm={6} md={3}>
           <a href={`/galleries/${artwork.slug}`} className="text-decoration-none">
           <Card className="artwork-card h-100 border-0 shadow-sm">

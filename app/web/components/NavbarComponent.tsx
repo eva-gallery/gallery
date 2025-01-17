@@ -74,7 +74,7 @@ const NavbarComponent = () => {
               <Nav.Link 
                 as={Link} 
                 href="/exhibitions" 
-                className="mx-1 d-none text-dark hover:text-primary"
+                className="mx-1 text-dark hover:text-primary"
               >
                 Exhibitions
               </Nav.Link>
@@ -101,7 +101,7 @@ const NavbarComponent = () => {
               </Nav.Link>
               <Nav.Link 
                 as={Link} 
-                href="/admin/user" 
+                href="/admin/user/login" 
                 className="ms-1 btn btn-outline-primary"
               >
                 Login
