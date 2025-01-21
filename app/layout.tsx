@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   title: {
     template: '%s | EVA Gallery',
-    default: 'EVA Gallery'
+    default: 'E.V.A. Gallery - European Visual Arts Gallery - where art meets the future'
   },
   description: "European Visual Arts Gallery - Europes first AI-Powered Web3 Gallery for professional Artists and Gallerists.",
 };
