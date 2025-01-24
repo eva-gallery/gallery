@@ -13,21 +13,20 @@ const AdminUserLoginForm: React.FC = () => {
   const router = useRouter();
   //const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const backendUrl = "https://cdn.evagallery.eu";
-  //console.log("**** backendUrl ****", backendUrl);
 
   const [validated, setValidated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setShowAlert(false);
 
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
+    if (!form.checkValidity()) {
       event.stopPropagation();
     } else {
-      event.preventDefault();
+
       setValidated(true);
       const json = new FormData(form);
 
@@ -37,8 +36,6 @@ const AdminUserLoginForm: React.FC = () => {
       const headers = {
         "Content-Type": "application/json",
       };
-
-      //console.log("**** adminSetData JSON ****", body);
 
       try {
         const response = await axios({
@@ -91,49 +88,50 @@ const AdminUserLoginForm: React.FC = () => {
       <Form id="form" noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Row className='justify-content-center'>
-            <Col xs={2}>
+            <Col xs={3} lg={2}>
               <Form.Label>
                 <AdminIcon name="email" size={24} className='me-2' />
                 Email
               </Form.Label>
             </Col>
-            <Col xs={4}>
-              <Form.Control name="email" type="email" placeholder="email@domain.com" required />
+            <Col xs={8} lg={6}>
+              <Form.Control name="email" type="text" placeholder="email@domain.com" required />
             </Col>
           </Row>
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Row className='justify-content-center'>
-            <Col xs={2}>
+            <Col xs={3} lg={2}>
               <Form.Label>
                 <AdminIcon name="password" size={24} className='me-2' />
                 Password
               </Form.Label>
             </Col>
-            <Col xs={4}>
+            <Col xs={8} lg={6}>
               <Form.Control name="password" type="password" placeholder="Password" required />
             </Col>
           </Row>
         </Form.Group>
 
         <Row className='justify-content-center'>
-          <Col xs={2}></Col>
-          <Col xs={4}>
-            <Button variant="primary" type="submit">
+          <Col xs={3} lg={2}></Col>
+          <Col xs={8} lg={6}>
+            <Button variant="primary" type="submit" className='mb-2 me-2'>
               Login
-              <FontAwesomeIcon icon={faArrowRight} fixedWidth className='ms-2' />
+              <FontAwesomeIcon icon={faArrowRight} fixedWidth />
             </Button>
 
-            <Button as="a" href="/admin/user/reset" variant="danger" className='ms-2'>
-              <FontAwesomeIcon icon={faTriangleExclamation} fixedWidth className='me-2' />
+            <Button as="a" href="/admin/user/reset" variant="danger" className='mb-2 me-2'>
+              <FontAwesomeIcon icon={faTriangleExclamation} fixedWidth />
               Reset Password
             </Button>
 
-            <Button as="a" href={`/admin/user/register`} variant="success" className='ms-2'>
-              <FontAwesomeIcon icon={faUser} fixedWidth className='me-2' />
+            <Button as="a" href={`/admin/user/register`} variant="success" className='mb-2 me-2'>
+              <FontAwesomeIcon icon={faUser} fixedWidth />
               Register
             </Button>
+            <br />
             <Button as="a" href={`${backendUrl}/admin/google/login?redirect_url=/admin`} variant="light" className='mt-5 border'>
               <img src="/images/logo/google_logo.svg" className='me-2' />
               Login with Google
