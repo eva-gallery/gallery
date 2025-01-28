@@ -45,12 +45,11 @@ export default async function ArtworkDetailPage({ params, searchParams }: PagePr
 
   try {
     const validSlug = params.slug.filter(Boolean).join('/');
-    const slugSegments = validSlug.split('/');
     
-    // Only encode the last segment (artwork name) which might contain quotes
+    const slugSegments = validSlug.split('/');
     const encodedSlug = slugSegments.length > 1 
-        ? `${slugSegments.slice(0, -1).join('/')}/${encodeURIComponent(slugSegments[slugSegments.length - 1]).replace(/"/g, '%22')}`
-        : encodeURIComponent(validSlug).replace(/"/g, '%22');
+        ? `${slugSegments.slice(0, -1).join('/')}/${slugSegments[slugSegments.length - 1].replace(/"/g, '%22')}`
+        : validSlug.replace(/"/g, '%22');
     
     const data = await getData<Artwork>(`/public/artwork?slug=${encodeURIComponent(encodedSlug)}`);
     
