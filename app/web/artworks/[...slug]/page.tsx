@@ -46,9 +46,7 @@ export default async function ArtworkDetailPage({ params, searchParams }: PagePr
   try {
     const validSlug = params.slug.filter(Boolean).join('/');
     
-    const encodedSlug = validSlug
-        .replace(/"/g, '%22')
-        .replace(/\//g, '%2F');
+   const encodedSlug = validSlug.replace(/"/g, '%22');
     
     const data = await getData<Artwork>(`/public/artwork?slug=${encodeURIComponent(encodedSlug)}`);
     
