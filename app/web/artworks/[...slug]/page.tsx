@@ -46,18 +46,16 @@ export default async function ArtworkDetailPage({ params, searchParams }: PagePr
   try {
     const validSlug = params.slug.filter(Boolean).join('/');
     
-    const encodedSlug = validSlug
-        // First handle any quotes that might be present
-        .replace(/"/g, '%22')
-        // Then encode forward slashes manually to get %2F
-        .replace(/\//g, '%2F');
+    const encodedSlug = validSlug.includes('"') 
+        ? validSlug.replace(/"/g, '%22') 
+        : validSlug;
     
     const data = await getData<Artwork>(`/public/artwork?slug=${encodedSlug}`);
     
     const artworkData: Artwork = {
       ...data,
       year: data.year ? Number(data.year) : undefined,
-      tags: data.tags || undefined,
+      tags: Array.isArray(data.tags) ? data.tags : [],
       slug: validSlug  // Store the slug
     };
 
