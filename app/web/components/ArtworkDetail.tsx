@@ -41,10 +41,12 @@ const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
         <Col lg={8} className="mb-4 mb-lg-0">
           <div className="position-relative bg-light rounded-3 overflow-hidden">
             <img
-              src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(imageSlug)}`}
-              alt={artwork.name}
-              className="img-fluid w-100 h-auto"
-            />
+  src={`${backendUrl}/public/artwork/thumbnail?slug=${imageSlug.includes('"') 
+    ? imageSlug.replace(/"/g, '%22') 
+    : imageSlug}`}
+  alt={artwork.name}
+  className="img-fluid w-100 h-auto"
+/>
             <pre></pre>
           </div>
         </Col>
