@@ -45,7 +45,14 @@ export default async function ArtworkDetailPage({ params, searchParams }: PagePr
 
   try {
     const validSlug = params.slug.filter(Boolean).join('/');
-    const data = await getData<Artwork>(`/public/artwork?slug=${encodeURIComponent(validSlug)}`);
+    const slugSegments = validSlug.split('/');
+    
+    // Only encode the last segment (artwork name) which might contain quotes
+    const encodedSlug = slugSegments.length > 1 
+        ? `${slugSegments.slice(0, -1).join('/')}/${encodeURIComponent(slugSegments[slugSegments.length - 1]).replace(/"/g, '%22')}`
+        : encodeURIComponent(validSlug).replace(/"/g, '%22');
+    
+    const data = await getData<Artwork>(`/public/artwork?slug=${encodeURIComponent(encodedSlug)}`);
     
     const artworkData: Artwork = {
       ...data,
