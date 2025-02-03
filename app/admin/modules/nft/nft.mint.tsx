@@ -154,7 +154,7 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                      <Popover id="take-ownership-guide">
                         <Popover.Header as="h3">Creating a new NFT Collection</Popover.Header>
                         <Popover.Body>
-                           Your NFTs need to be in a collection in order for you to be able to mint them. Think of collections as folders and of NFTs as file you store in folders. <b>NOTE: Make sure to fetch your wallet data via "Fetch wallet Collections & NFTs" button again after new collection is minted in order for it to appear in selector. </b>
+                           Your NFTs need to be in a collection in order for you to be able to mint them. Think of collections as folders and of NFTs as file you store in folders. <b>NOTE: Make sure to fetch your wallet data via &quot;Fetch wallet Collections & NFTs&quot; button again after new collection is minted in order for it to appear in selector. </b>
                         </Popover.Body>
                      </Popover>
                    }
