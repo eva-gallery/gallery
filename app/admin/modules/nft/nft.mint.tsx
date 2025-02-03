@@ -244,10 +244,10 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                         {loading ? (
                            <>
                               <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                              Minting...
+                              {'Minting...'}
                            </>
                         ) : (
-                           'Sign & Submit Transaction'
+                           {'Sign & Submit Transaction'}
                         )}
                      </Button>
                   ) : null
