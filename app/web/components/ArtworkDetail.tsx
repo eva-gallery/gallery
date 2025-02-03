@@ -19,6 +19,8 @@ interface Artwork {
   description?: string;
   measurements?: string;
   tags?: string[];
+  imageFilename?: string;
+  thumbnailFilename?: string;
 }
 
 interface ArtworkDetailProps {
@@ -34,6 +36,13 @@ const cleanFileName = (name: string) => {
 };
 
 const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
+
+  const imageUrl = artwork.thumbnailFilename
+    ? `${backendUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`
+    : `${backendUrl}/public/artwork/thumbnail?slug=${imageSlug.includes('"') 
+        ? imageSlug.replace(/"/g, '%22') 
+        : imageSlug}`;
+  
   return (
     <Container className="py-5">
       <Row className="gx-5">
@@ -41,12 +50,10 @@ const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
         <Col lg={8} className="mb-4 mb-lg-0">
           <div className="position-relative bg-light rounded-3 overflow-hidden">
             <img
-  src={`${backendUrl}/public/artwork/thumbnail?slug=${imageSlug.includes('"') 
-    ? imageSlug.replace(/"/g, '%22') 
-    : imageSlug}`}
-  alt={artwork.name}
-  className="img-fluid w-100 h-auto"
-/>
+    src={imageUrl}
+    alt={artwork.name}
+    className="img-fluid w-100 h-auto"
+  />
             <pre></pre>
           </div>
         </Col>
