@@ -4,12 +4,14 @@ import { Container, Card, Button, Form, Row, Col } from 'react-bootstrap';
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // cdn.evagallery.eu / process.env.NEXT_PUBLIC_BACKEND_URL
+const imgUrl = 'https://beta.evagallery.eu';
 
 interface Artwork {
   slug: string;
   name: string;
   artistName: string;
-  // Add other artwork properties as needed
+  imageFilename?: string;
+  thumbnailFilename?: string;
 }
 
 interface ArtworkGalleryProps {
@@ -43,7 +45,7 @@ const ArtworkGallery = ({ artworks }: ArtworkGalleryProps) => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextPage();
-    }, 7000);
+    }, 12000);
 
     return () => clearInterval(interval);
   }, [startIndex, isTransitioning]);
@@ -94,7 +96,7 @@ const ArtworkGallery = ({ artworks }: ArtworkGalleryProps) => {
                     <a href={`/artworks/${artwork.slug}`} className="image-link">  
                       <Card.Img
                         variant="top"
-                        src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`} 
+                        src={`${imgUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`} 
                         alt={artwork.name}
                         className="artwork-image"
                       />
