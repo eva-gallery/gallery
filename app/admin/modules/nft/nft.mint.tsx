@@ -247,7 +247,7 @@ export const Mint: React.FC<MintProps> = ({ admin, data, collection }) => {
                               {'Minting...'}
                            </>
                         ) : (
-                           {'Sign & Submit Transaction'}
+                           'Sign & Submit Transaction'
                         )}
                      </Button>
                   ) : null
