@@ -27,6 +27,8 @@ interface Artwork {
   ai?: boolean;
   tags?: string[];
   slug?: string;  // Added slug to identify artwork
+  imageFilename?: string;
+  thumbnailFilename?: string;
 }
 
 interface PageProps {
@@ -56,7 +58,9 @@ export default async function ArtworkDetailPage({ params, searchParams }: PagePr
       ...data,
       year: data.year ? Number(data.year) : undefined,
       tags: Array.isArray(data.tags) ? data.tags : [],
-      slug: validSlug  // Store the slug
+      slug: validSlug,  // Store the slug
+      imageFilename: data.imageFilename,
+      thumbnailFilename: data.thumbnailFilename
     };
 
     if (!artworkData.name || !artworkData.artist) {
