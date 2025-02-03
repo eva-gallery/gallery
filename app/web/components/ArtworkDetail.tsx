@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { User, Calendar, Brush, Ruler } from 'lucide-react'
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // https://cdn.evagallery.eu process.env.NEXT_PUBLIC_BACKEND_URL
+const frontendUrl = 'https://beta.evagallery.eu';
 
 interface Artist {
   name: string;
@@ -38,7 +39,7 @@ const cleanFileName = (name: string) => {
 const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
 
   const imageUrl = artwork.thumbnailFilename
-    ? `${backendUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`
+    ? `${frontendUrl}/protected/assets/thumbnail/${artwork.imageFilename}`
     : `${backendUrl}/public/artwork/thumbnail?slug=${imageSlug.includes('"') 
         ? imageSlug.replace(/"/g, '%22') 
         : imageSlug}`;
