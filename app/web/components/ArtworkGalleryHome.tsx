@@ -18,6 +18,13 @@ interface ArtworkGalleryProps {
   artworks: Artwork[];
 }
 
+const cleanFileName = (name: string) => {
+  return name
+    .replace(/\.(jpg|jpeg|png|gif|tif|tiff|kopie|bmp|webp)$/i, '') // Remove common image extensions
+    .replace(/[-_]/g, ' ') // Optional: Replace dashes and underscores with spaces
+    .trim(); // Remove any leading/trailing spaces
+};
+
 const ArtworkGallery = ({ artworks }: ArtworkGalleryProps) => {
   const [startIndex, setStartIndex] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
@@ -97,13 +104,13 @@ const ArtworkGallery = ({ artworks }: ArtworkGalleryProps) => {
                       <Card.Img
                         variant="top"
                         src={`${imgUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`} 
-                        alt={artwork.name}
+                        alt={cleanFileName(artwork.name)}
                         className="artwork-image"
                       />
                     </a>
                   </div>
                   <Card.Body className="d-flex flex-column">
-                    <Card.Title className="fs-6 text-truncate">{artwork.name}</Card.Title>
+                    <Card.Title className="fs-6 text-truncate">{cleanFileName(artwork.name)}</Card.Title>
                     <Card.Text className="text-muted small mb-0 text-truncate">
                       {artwork.artistName}
                     </Card.Text>
