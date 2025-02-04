@@ -4,6 +4,7 @@ import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // cdn.evagallery.eu / process.env.NEXT_PUBLIC_BACKEND_URL
+const imgUrl = 'https://beta.evagallery.eu';
 
   type ArtworkGalleryProps = {
     artworks: any[];
@@ -54,7 +55,7 @@ const backendUrl = 'https://evagallery.b-cdn.net'; // cdn.evagallery.eu / proces
                 <a href={`/artworks/${artwork.slug}?seed=${seed}`}>
                 <Card.Img
                   variant="top"
-                  src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`}
+                  src={`${imgUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`}
                   alt={artwork.name}
                   className="w-100 h-100 transition-transform duration-300"
                 /></a>
