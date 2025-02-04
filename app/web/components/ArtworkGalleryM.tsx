@@ -7,6 +7,8 @@ import { getData } from "@/app/web/get.data";
 // Inline type definition
 interface Artwork {
   slug: string;
+  imageFilename?: string;
+  thumbnailFilename?: string;
   name: string;
   artistName: string;
   artist: {
@@ -17,7 +19,7 @@ interface Artwork {
   imageUrl?: string;
 }
 
-const imgUrl = 'https://evagallery.b-cdn.net';
+const imgUrl = 'https://beta.evagallery.eu';
 
 type ArtworkGalleryProps = {
   artworks: Artwork[];
@@ -54,7 +56,7 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: Artwork }) => {
 
   useEffect(() => {
     if (isVisible) {
-      const url = `${imgUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`;
+      const url = `${imgUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`;
       const img = new Image();
       
       img.onload = () => {
@@ -191,7 +193,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           <h1 className="mb-0">Artworks Gallery</h1>
         </Col>
         <Col xs="auto">
-          <div className="position-relative">
+          <div className="position-relative d-none">
             <Form.Control
               type="search"
               placeholder="Search artworks..."
