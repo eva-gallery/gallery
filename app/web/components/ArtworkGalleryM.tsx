@@ -192,8 +192,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         <Col>
           <h1 className="mb-0">Artworks Gallery</h1>
         </Col>
-        <Col xs="auto d-none">
-          <div className="position-relative">
+        <Col xs="auto">
+          <div className="position-relative d-none">
             <Form.Control
               type="search"
               placeholder="Search artworks..."
