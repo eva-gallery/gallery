@@ -39,7 +39,7 @@ const cleanFileName = (name: string) => {
 const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
 
   const imageUrl = artwork.thumbnailFilename
-    ? `${frontendUrl}/protected/assets/thumbnail/${artwork.imageFilename}`
+    ? `${frontendUrl}/protected/assets/thumbnail/${artwork.thumbnailFilename}`
     : `${backendUrl}/public/artwork/thumbnail?slug=${imageSlug.includes('"') 
         ? imageSlug.replace(/"/g, '%22') 
         : imageSlug}`;
