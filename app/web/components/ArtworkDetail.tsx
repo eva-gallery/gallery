@@ -62,7 +62,7 @@ const ArtworkDetail = ({ artwork, imageSlug }: ArtworkDetailProps) => {
         {/* Details Section */}
         <Col lg={4}>
           <div className="sticky-lg-top" style={{ top: '100px' }}>
-            <h1 className="h2 mb-3">{artwork.name}</h1>
+            <h1 className="h2 mb-3">{cleanFileName(artwork.name)}</h1>
             
             <Link 
               href={`/artists/${artwork.artist.slug}`} 
