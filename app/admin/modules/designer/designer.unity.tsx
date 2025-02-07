@@ -19,9 +19,9 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
 
     const [uuid, setUuid] = useState<string>(data.length > 0 ? data[0].id : '');
     const [selectedRoomId, setSelectedRoomId] = useState<string>(data.length > 0 ? data[0].id : '');
-    const [isFocused, setIsFocused] = useState(false); // Sledovanie focusu
-    const webglRef = useRef<HTMLDivElement>(null);
-    const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+    //const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const url = "https://cdn.evagallery.eu";
 
     // Odošle správy Unity
     useEffect(() => {
@@ -29,26 +29,11 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
             sendMessage('Generator', 'ReceiveBackendURL', url);
             sendMessage('Generator', 'ReceiveUUID', uuid);
             sendMessage('Generator', 'ReceiveToken', token);
+            sendMessage('Generator', 'Admin', "false");
         }
     }, [isLoaded, token, uuid, sendMessage, url]);
 
-    // Sledovanie kláves
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (isFocused) {
-                event.preventDefault(); // Blokuje default správanie
-                sendMessage('Generator', 'ReceiveKeyPress', event.key);
-            }
-        };
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isFocused, sendMessage]);
-
-    const handleMouseEnter = () => setIsFocused(true);
-    const handleMouseLeave = () => setIsFocused(false);
 
     const handleRoomSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedRoomId(event.target.value);
@@ -63,9 +48,10 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
 
     return (
         <>
-            <InputGroup className="mb-3 mt-5">
+            <h3 className='text-center mt-5'>3D Viewer</h3>
+            <InputGroup className="mb-3">
                 <InputGroup.Text>
-                    <strong>Designer</strong>
+                    <strong>Scene</strong>
                 </InputGroup.Text>
 
                 <Form.Select
@@ -82,18 +68,13 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
                 </Form.Select>
 
                 <Button variant="primary" onClick={handleLoadButtonClick}>
-                    Load
+                    View
                 </Button>
             </InputGroup>
 
-            <div
-                ref={webglRef}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                style={{ width: '100%', height: '100%' }}
-            >
-                <Unity unityProvider={unityProvider} tabIndex={1} style={{ width: '100%', height: '100%' }} />
-            </div>
+
+            <Unity unityProvider={unityProvider} tabIndex={-1} style={{ width: '100%', height: '100%' }} />
+
         </>
     );
 };
@@ -106,6 +87,8 @@ interface Props {
 }
 
 export const UnityDesign: React.FC<Props> = ({ token, uuid: initialUuid }) => {
+
+
     const { unityProvider, isLoaded, sendMessage } = useUnityContext({
         loaderUrl: '/3dplanner/Build/3dplanner.loader.js',
         dataUrl: '/3dplanner/Build/3dplanner.data',
@@ -113,54 +96,24 @@ export const UnityDesign: React.FC<Props> = ({ token, uuid: initialUuid }) => {
         codeUrl: '/3dplanner/Build/3dplanner.wasm',
     });
 
-    const [uuid, setUuid] = useState<string>(initialUuid); // Použi initialUuid ako predvolenú hodnotu
-    const [isFocused, setIsFocused] = useState(false); // Sledovanie focusu na Unity
-    const unityRef = useRef<HTMLDivElement>(null); // Ref na Unity div
-    const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+    //const url = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const url = "https://cdn.evagallery.eu";
 
     useEffect(() => {
-        if (isLoaded && token && uuid) {
+        if (isLoaded && token && initialUuid) {
             sendMessage('Generator', 'ReceiveBackendURL', url);
-            sendMessage('Generator', 'ReceiveUUID', uuid);
+            sendMessage('Generator', 'ReceiveUUID', initialUuid);
             sendMessage('Generator', 'ReceiveToken', token);
+            sendMessage('Generator', 'Admin', "true");
         }
-    }, [isLoaded, token, uuid, sendMessage, url]);
+    }, [isLoaded, token, initialUuid, sendMessage, url]);
 
-    // Sledovanie klávesových vstupov
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (isFocused) {
-                event.preventDefault(); // Blokuje default správanie
-                sendMessage('Generator', 'ReceiveKeyPress', event.key);
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isFocused, sendMessage]);
-
-    // Funkcie pre focus a blur
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-    };
 
     return (
         <>
-            <div
-                ref={unityRef}
-                tabIndex={0} // Umožní focusovať tento div
-                onFocus={handleFocus} // Nastaví isFocused na true pri focusovaní
-                onBlur={handleBlur} // Nastaví isFocused na false pri opustení focusu
-                style={{ width: '100%', height: '100%' }}
-            >
-                <Unity unityProvider={unityProvider} tabIndex={1} style={{ width: '100%', height: '100%' }} />
-            </div>
+            <h3 className='text-center mt-5'>3D Designer</h3>
+            <Unity unityProvider={unityProvider} tabIndex={-1} style={{ width: '100%', height: '100%' }} />
+
         </>
     );
 };

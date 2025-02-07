@@ -13,9 +13,13 @@ export async function List(admin: AdminType) {
 
    const data = await AdminGetData("admin/room");
    const resource = await AdminGetData("admin/resource");
+   const resourceAudio = await AdminGetData("admin/resource/audio");
+   const resourceImage = await AdminGetData("admin/resource/image");
 
    const option = {
       "exhibition": await AdminGetData("admin/options/exhibition"),
+      "resourceAudio": resourceAudio,
+      "resourceImage": resourceImage,
    };
 
    const object = {
@@ -24,7 +28,7 @@ export async function List(admin: AdminType) {
    }
 
 
-   const cookieStore = cookies().get('SESSION_ID');
+   const cookieStore = cookies().get('BEARER_TOKEN');
    const sessionId = cookieStore?.value || '';
 
    return (
@@ -34,7 +38,7 @@ export async function List(admin: AdminType) {
          </AdminList>
 
 
-         {/* <M.Designer.UnityDesignSelect token={sessionId} data={data} /> */}
+         <M.Designer.UnityDesignSelect token={sessionId} data={data} />
 
          <hr className='my-5' />
 

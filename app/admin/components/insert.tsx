@@ -22,7 +22,13 @@ type Props = {
 const AdminInsert: React.FC<Props> = ({ admin, children }) => {
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    if (admin.modul == "resource") {
+      window.location.href = "/admin/designer/";
+    }
+  }
+
   const handleShow = () => setShow(true);
   return (
     <>
