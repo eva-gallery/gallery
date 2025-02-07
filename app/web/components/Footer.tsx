@@ -55,15 +55,19 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
             <ul className="list-unstyled">
               <li className="mb-3 d-flex align-items-center gap-2">
                 <MapPin size={18} className='text-black' />
-                <span className="text-light-emphasis"><a target="_blank" href="https://www.euforion.sk" rel="noopener noreferrer">euforion.sk</a></span>
-              </li>
-              <li className="mb-3 d-flex align-items-center gap-2">
-                <Phone size={18} className='text-black' />
-                <span className="text-light-emphasis"><a href="tel:+421907796660">+421 907 796 660</a></span>
+                <span className="text-light-emphasis"><a target="_blank" href="https://zdruzenie.euforion.sk/" rel="noopener noreferrer">euforion.sk</a></span>
               </li>
               <li className="mb-3 d-flex align-items-center gap-2">
                 <Mail size={18} className='text-black' />
-                <span className="text-light-emphasis"><a href="mailto:info@evagallery.eu">info@evagallery.eu</a></span>
+                <span className="text-light-emphasis">Artist: <a href="mailto:content@evagallery.eu">content@evagallery.eu</a></span>
+              </li>
+              <li className="mb-3 d-flex align-items-center gap-2">
+                <Mail size={18} className='text-black' />
+                <span className="text-light-emphasis">Galleries: <a href="mailto:galleries@evagallery.eu">galleries@evagallery.eu</a></span>
+              </li>
+              <li className="mb-3 d-flex align-items-center gap-2">
+                <Mail size={18} className='text-black' />
+                <span className="text-light-emphasis">Support: <a href="mailto:support@evagallery.eu">support@evagallery.eu</a></span>
               </li>
             </ul>
           </Col>
