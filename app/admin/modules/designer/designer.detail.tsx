@@ -16,6 +16,8 @@ export async function Detail(admin: AdminType) {
     const d = await AdminGetData("admin/designer/room/" + admin.unique);
     const exhibition = await AdminGetData("admin/exhibition/" + d['exhibitionId']);
 
+    const resourceAudio = await AdminGetData("admin/resource/audio");
+    const resourceImage = await AdminGetData("admin/resource/image");
 
     const data = {
         ...d,
@@ -26,6 +28,8 @@ export async function Detail(admin: AdminType) {
 
     const option = {
         "exhibition": await AdminGetData("admin/options/exhibition"),
+        "resourceAudio": resourceAudio,
+        "resourceImage": resourceImage,
     };
 
     const object = {
@@ -34,7 +38,7 @@ export async function Detail(admin: AdminType) {
     }
 
 
-    const cookieStore = cookies().get('SESSION_ID');
+    const cookieStore = cookies().get('BEARER_TOKEN');
     const sessionId = cookieStore?.value || '';
 
     return (

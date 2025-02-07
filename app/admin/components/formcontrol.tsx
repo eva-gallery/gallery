@@ -19,6 +19,8 @@ type PropsControl = {
 
 export const AdminFormControl: React.FC<PropsControl> = ({ type, name, value, option, required }) => {
    switch (type) {
+      case "int":
+         return <FormInt name={name} value={value} {...(required ? { required: true } : {})} />;
       case "tinytext":
          return <FormTinytext name={name} value={value} {...(required ? { required: true } : {})} />;
       case "varchar":
@@ -68,6 +70,9 @@ type PropsInput = {
    required?: boolean;
 };
 
+const FormInt: React.FC<PropsInput> = ({ name, value, required }) => {
+   return <Form.Control name={name} defaultValue={value} type="int" {...(required ? { required: true } : {})} />;
+};
 
 const FormTinytext: React.FC<PropsInput> = ({ name, value, required }) => {
    return <Form.Control name={name} defaultValue={value} type="text" {...(required ? { required: true } : {})} />;

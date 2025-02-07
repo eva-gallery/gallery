@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 
 
 
-//const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
-const backendUrl = 'https://cdn.evagallery.eu/admin';
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL + '/admin';
+//const backendUrl = 'https://cdn.evagallery.eu/admin';
 
 
 type Props = {

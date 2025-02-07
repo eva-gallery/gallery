@@ -40,6 +40,9 @@ export const AdminForm: React.FC<Props> = ({ admin, type, method, endpoint, chil
       event.preventDefault();
       const formData = new FormData(form);
 
+      if (admin.modul == "designer" && admin.action == "edit") { type = "JSON"; }
+      if (admin.modul == "designer" && admin.action == "list") { type = "JSON"; }
+
       let data;
       if (type == "JSON") {
         data = await AdminSetDataJson(admin, formData, method, endpoint);

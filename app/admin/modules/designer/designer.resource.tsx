@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+import React, { use, useEffect, useState } from 'react';
 import { ModuleTable } from '../../types';
 import { AdminTable, AdminTableColumn, AdminTableRow } from '../../components/table';
 import { AdminIcon, AdminLinkIcon } from '../../components/components';
@@ -6,11 +7,19 @@ import AdminImage, { AdminAudio } from '../../components/image';
 import AdminEdit from '../../components/edit';
 import { FormularResources } from './designer.formular';
 import AdminInsert from '../../components/insert';
-
+import { Button, Modal } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { AdminForm } from '../../components/form';
 
 
 
 const Resource: React.FC<ModuleTable> = ({ admin, data }) => {
+   const [show, setShow] = useState(false);
+
+   const handleClose = () => setShow(false);
+   const handleShow = () => setShow(true);
+
 
    const columns = [
       { name: "Name" },

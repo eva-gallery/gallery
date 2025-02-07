@@ -24,15 +24,30 @@ const AdminEdit: React.FC<Props> = ({ admin, children }) => {
 
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    if (admin.modul == "designer" && admin.action == "edit") {
+      window.location.href = "/admin/designer/detail/" + admin.unique;
+    }
+    if (admin.modul == "resource") {
+      window.location.href = "/admin/designer/";
+    }
+
+  }
   const handleShow = () => setShow(true);
 
 
   const handleDelete = async () => {
     try {
 
-      await AdminDeleteData(admin, `/admin/${admin.modul}/delete/${admin.unique}`);
-      //window.location.reload();
+      let endpoint = "";
+      if (admin.modul == "designer") {
+        endpoint = `/admin/${admin.modul}/room/delete/${admin.unique}`;
+      } else {
+        endpoint = `/admin/${admin.modul}/delete/${admin.unique}`;
+      }
+      await AdminDeleteData(admin, endpoint);
+      if (admin.modul == "resource") { window.location.reload(); }
 
     } catch (error) {
       console.error("Error while deleting record:", error);
