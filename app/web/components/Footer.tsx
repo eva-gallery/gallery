@@ -45,6 +45,11 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
               <li className="mb-2">
               <a href="/nfts" className="text-decoration-none hover:text-primary">NFTs </a> / <a href="/3d" className="text-decoration-none hover:text-primary">3D</a> / <a href="/ai" className="text-decoration-none hover:text-primary">AI</a>
               </li>
+
+              <li className="mb-2">
+                <a target="_blank" href="https://support.evagallery.eu/en/" className="text-decoration-none hover:text-primary">Help & Support</a>
+              </li>
+              
               
             </ul>
           </Col>
