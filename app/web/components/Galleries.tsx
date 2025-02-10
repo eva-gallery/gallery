@@ -21,7 +21,7 @@ const ArtworkGrid = ({ artworks }: { artworks: Artwork[] }) => {
         <Col>
           <h1 className="mb-0">Recommended galleries</h1>
         </Col>
-        <Col xs="auto">
+        <Col xs="auto" className="d-none">
           <div className="position-relative">
             <Form.Control
               type="search"
