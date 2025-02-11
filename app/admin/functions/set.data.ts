@@ -15,7 +15,8 @@ export async function AdminSetData(
   endpoint: string
 ) {
   axios.defaults.withCredentials = true;
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  // const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const backendUrl = 'https://cdn.evagallery.eu';
 
   const cookieStore = cookies().get("BEARER_TOKEN");
   const bearerToken = cookieStore?.value;
@@ -114,7 +115,8 @@ export async function AdminSetDataJson(
 ) {
   axios.defaults.withCredentials = true;
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  //const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const backendUrl = 'https://cdn.evagallery.eu';
 
   const cookieStore = cookies().get("BEARER_TOKEN");
   const bearerToken = cookieStore?.value;
