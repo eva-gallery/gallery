@@ -8,7 +8,8 @@ import { PassThrough } from 'stream';
 
 
 export async function AdminGetData(endpoint: string) {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    // const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = 'https://cdn.evagallery.eu/admin';
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -33,7 +34,8 @@ export async function AdminGetData(endpoint: string) {
 
 export async function AdminPutData(endpoint: string, dataInput?: any) {
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    // const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = 'https://cdn.evagallery.eu/admin';
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -66,7 +68,8 @@ export async function AdminPutData(endpoint: string, dataInput?: any) {
 
 export async function AdminPostData(endpoint: string, dataInput?: any) {
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    //const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = 'https://cdn.evagallery.eu/admin';
 
     const cookieStore = cookies().get('BEARER_TOKEN');
     const bearerToken = cookieStore?.value;
@@ -98,7 +101,8 @@ export async function AdminPostData(endpoint: string, dataInput?: any) {
 
 export async function getOption(name: string) {
 
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    // const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = 'https://cdn.evagallery.eu/admin';
 
     let option;
     const cookieStore = cookies().get('BEARER_TOKEN');
