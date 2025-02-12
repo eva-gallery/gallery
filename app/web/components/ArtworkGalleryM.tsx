@@ -302,7 +302,6 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   border-radius: 4px;
   position: relative;
   overflow: visible;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: box-shadow 0.2s ease-in-out;
 }
 
@@ -310,15 +309,26 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 @media not all and (min-resolution:.001dpcm) {
   @supports (-webkit-appearance:none) {
     .artwork-card {
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      isolation: isolate;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    
+    .artwork-card:hover {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
+                  0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
   }
 }
 
-.artwork-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+/* Non-Safari shadows */
+@supports not (-webkit-appearance:none) {
+  .artwork-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .artwork-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
 }
 
 .artwork-card a {
