@@ -304,10 +304,6 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   overflow: visible;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: box-shadow 0.2s ease-in-out;
-  /* Force GPU rendering for Safari */
-  -webkit-transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  -webkit-perspective: 1000;
 }
 
 /* Safari-specific fix for shadows */
