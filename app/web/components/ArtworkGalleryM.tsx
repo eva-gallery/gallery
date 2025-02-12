@@ -290,7 +290,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   columns: 4;
   column-gap: 1.5rem;
   width: 100%;
-  padding: 0.5rem;
+  padding: 8px;
 }
 
 .artwork-card {
@@ -302,41 +302,18 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   border-radius: 4px;
   position: relative;
   overflow: visible;
-  transition: box-shadow 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
 }
 
-/* Safari-specific fix for shadows */
-@media not all and (min-resolution:.001dpcm) {
-  @supports (-webkit-appearance:none) {
-    .artwork-card {
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
-                  0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-    
-    .artwork-card:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
-                  0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-  }
-}
-
-/* Non-Safari shadows */
-@supports not (-webkit-appearance:none) {
-  .artwork-card {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  .artwork-card:hover {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  }
+.artwork-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
 .artwork-card a {
   color: inherit;
   text-decoration: none;
   display: block;
-  position: relative;
-  z-index: 1;
 }
 
 .image-container {
@@ -373,7 +350,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   padding: 1rem;
   background: #fff;
   position: relative;
-  z-index: 2;
+  z-index: 1;
   border-radius: 0 0 4px 4px;
 }
 
@@ -386,7 +363,6 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   opacity: 1;
 }
 
-/* Skeleton styles */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -419,6 +395,31 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   background: #f0f0f0;
   width: 60%;
   border-radius: 4px;
+}
+
+.skeleton-image::after,
+.skeleton-title::after,
+.skeleton-text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @media (max-width: 1200px) {
