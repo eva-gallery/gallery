@@ -32,7 +32,7 @@ export async function Trialminted(nft: any) {
                <h3>{data.nft['nftData'].name}</h3>
                <p className='border p-3'>{data.nft['nftData'].description}</p>
 
-                    <p className="d-flex align-items-center">
+                    <div className="d-flex align-items-center">
                      <Button as="a" href={`/admin/nft/detail/${data.nft['id']}`} className="btn btn-primary me-2">
                        NFT Detail
                        <FontAwesomeIcon icon={faArrowRight} className="ms-2" />
@@ -45,7 +45,7 @@ export async function Trialminted(nft: any) {
                      ) : (
                        <M.Nft.Ownership />
                      )}
-                    </p>
+                    </div>
 
 
             </Col>
