@@ -271,7 +271,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   column-gap: 1.5rem;
   width: 100%;
   column-fill: balanced;
-  padding: 0.5rem;  /* Add padding to show shadows */
 }
 
 .artwork-card {
@@ -281,22 +280,23 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  overflow: visible;  /* Changed to visible to show shadow */
   position: relative;
-  transform: translateZ(0);  /* Create stacking context for Safari */
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);  /* Initial subtle shadow */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  transition: box-shadow 0.25s ease-in-out;
 }
 
 .artwork-card:hover {
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px;
 }
 
 .artwork-card a {
   color: inherit;
   text-decoration: none;
   display: block;
-  transform: translateZ(0);  /* Establish new stacking context */
 }
 
 .image-container {
@@ -306,7 +306,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
-  transform: translateZ(0);  /* For Safari */
 }
 
 .aspect-ratio-box {
@@ -314,11 +313,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background-color: #f8f9fa;
   overflow: hidden;
-  transition: transform 0.3s ease;
-}
-
-.artwork-card:hover .aspect-ratio-box {
-  transform: scale(1.03);
 }
 
 .absolute-fill {
@@ -328,13 +322,18 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.25s ease-in-out;
+}
+
+.artwork-card:hover .absolute-fill {
+  transform: scale(1.05);
 }
 
 .card-body {
   padding: 1rem;
   position: relative;
-  z-index: 1;
   background: #fff;
+  z-index: 1;
 }
 
 .image-loading {
