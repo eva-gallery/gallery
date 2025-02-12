@@ -278,22 +278,28 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
           margin-bottom: 1.5rem;
           display: inline-block;
           width: 100%;
-          transition: transform 0.3s ease;
           background: #fff;
-          overflow: hidden;
+          overflow: visible; /* Changed from hidden to visible */
           contain: content;
+          will-change: transform; /* Add will-change to optimize performance */
+          -webkit-transform: translateZ(0); /* Add transform layer for Safari */
+          transform: translateZ(0);
         }
 
         .artwork-card:hover {
-          transform: translateY(-5px);
+          transform: translateY(-5px) translateZ(0); /* Add translateZ for Safari */
           box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
         }
 
+        /* Move overflow: hidden to the image container instead */
         .image-container {
           width: 100%;
           background-color: #f8f9fa;
           line-height: 0;
           position: relative;
+          overflow: hidden;
+          -webkit-transform: translateZ(0); /* Force GPU acceleration */
+          transform: translateZ(0);
         }
 
         .aspect-ratio-box {
