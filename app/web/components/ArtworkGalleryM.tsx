@@ -291,12 +291,15 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   column-gap: 1.5rem;
   width: 100%;
   padding: 8px;
+  position: relative; /* Added */
 }
 
 .artwork-card {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
   break-inside: avoid;
   margin-bottom: 1.5rem;
-  display: inline-block;
+  display: block; /* Changed from inline-block */
   width: 100%;
   background: #fff;
   border-radius: 4px;
@@ -304,6 +307,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   overflow: visible;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: all 0.2s ease-in-out;
+  transform: translateY(0); /* Force new rendering context */
 }
 
 .artwork-card:hover {
@@ -419,6 +423,16 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
+  }
+}
+
+/* Safari-specific fixes */
+@media not all and (min-resolution:.001dpcm) {
+  @supports (-webkit-appearance:none) {
+    .artwork-card {
+      transform: translate3d(0,0,0); /* Force GPU rendering in Safari */
+      will-change: box-shadow; /* Hint for optimization */
+    }
   }
 }
 
