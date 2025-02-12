@@ -301,12 +301,14 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   background: #fff;
   border-radius: 4px;
   position: relative;
-  overflow: visible;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;  /* Try this to prevent shadow issues */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Ensure consistent shadow */
+  z-index: 1; /* Ensure it is above other elements */
 }
 
 .artwork-card:hover {
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  transform: scale(1.05); /* Hover scale */
 }
 
 .artwork-card a {
@@ -319,6 +321,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   width: 100%;
   background-color: #f8f9fa;
   line-height: 0;
+  z-index: 1; /* Ensure image stays on top */
   position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
