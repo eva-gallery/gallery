@@ -287,47 +287,26 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 
       <style jsx global>{`
 .masonry-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  columns: 4;
+  column-gap: 1.5rem;
   width: 100%;
   padding: 8px;
-  grid-auto-rows: 1fr; /* Auto row height to handle varied content sizes */
-}
-
-@media (max-width: 1200px) {
-  .masonry-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .masonry-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 576px) {
-  .masonry-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .artwork-card {
-  position: relative;
+  break-inside: avoid;
   margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
   background: #fff;
   border-radius: 4px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .artwork-card:hover {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
 .artwork-card a {
@@ -343,7 +322,6 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
-  transform: translate3d(0, 0, 0); /* Force GPU rendering in Safari */
 }
 
 .aspect-ratio-box {
@@ -371,6 +349,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   padding: 1rem;
   background: #fff;
   position: relative;
+  z-index: 1;
   border-radius: 0 0 4px 4px;
 }
 
@@ -439,6 +418,24 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
+  }
+}
+
+@media (max-width: 1200px) {
+  .masonry-grid {
+    columns: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .masonry-grid {
+    columns: 2;
+  }
+}
+
+@media (max-width: 576px) {
+  .masonry-grid {
+    columns: 1;
   }
 }
       `}</style>
