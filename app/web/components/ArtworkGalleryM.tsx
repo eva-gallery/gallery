@@ -197,11 +197,14 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
       .trim();
   };
 
-  // Filter artworks based on search term
-  const filteredArtworks = artworks.filter(artwork => 
-    artwork.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    artwork.artistName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+const uniqueArtworks = artworks.filter((artwork, index, self) =>
+  index === self.findIndex((t) => t.slug === artwork.slug)
+);
+
+const filteredArtworks = uniqueArtworks.filter(artwork => 
+  artwork.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  artwork.artistName.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <Container className="py-1">
@@ -287,6 +290,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   columns: 4;
   column-gap: 1.5rem;
   width: 100%;
+  padding: 0.5rem; /* Added padding to show shadows */
 }
 
 .artwork-card {
@@ -296,7 +300,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  overflow: hidden;
+  position: relative; /* Changed to relative */
+  overflow: visible; /* Changed to visible for shadow */
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: box-shadow 0.2s ease-in-out;
 }
@@ -309,6 +314,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   color: inherit;
   text-decoration: none;
   display: block;
+  position: relative; /* Added position relative */
+  z-index: 1; /* Ensure proper stacking */
 }
 
 .image-container {
@@ -317,6 +324,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   line-height: 0;
   position: relative;
   overflow: hidden;
+  border-radius: 4px 4px 0 0;
 }
 
 .aspect-ratio-box {
@@ -333,11 +341,19 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.2s ease-in-out;
+}
+
+.artwork-card:hover .absolute-fill {
+  transform: scale(1.05);
 }
 
 .card-body {
   padding: 1rem;
   background: #fff;
+  position: relative; /* Added position relative */
+  z-index: 2; /* Ensure it stays above the image */
+  border-radius: 0 0 4px 4px;
 }
 
 .image-loading {
