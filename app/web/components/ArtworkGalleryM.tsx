@@ -290,7 +290,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   columns: 4;
   column-gap: 1.5rem;
   width: 100%;
-  padding: 0.5rem; /* Added padding to show shadows */
+  padding: 0.5rem;
 }
 
 .artwork-card {
@@ -300,10 +300,25 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  position: relative; /* Changed to relative */
-  overflow: visible; /* Changed to visible for shadow */
+  position: relative;
+  overflow: visible;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: box-shadow 0.2s ease-in-out;
+  /* Force GPU rendering for Safari */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+}
+
+/* Safari-specific fix for shadows */
+@media not all and (min-resolution:.001dpcm) {
+  @supports (-webkit-appearance:none) {
+    .artwork-card {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      isolation: isolate;
+    }
+  }
 }
 
 .artwork-card:hover {
@@ -314,8 +329,8 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   color: inherit;
   text-decoration: none;
   display: block;
-  position: relative; /* Added position relative */
-  z-index: 1; /* Ensure proper stacking */
+  position: relative;
+  z-index: 1;
 }
 
 .image-container {
@@ -351,8 +366,8 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 .card-body {
   padding: 1rem;
   background: #fff;
-  position: relative; /* Added position relative */
-  z-index: 2; /* Ensure it stays above the image */
+  position: relative;
+  z-index: 2;
   border-radius: 0 0 4px 4px;
 }
 
