@@ -267,144 +267,151 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
 
       <style jsx global>{`
         .masonry-grid {
-          columns: 4;
-          column-gap: 1.5rem;
-          width: 100%;
-          column-fill: balanced;
-        }
+  columns: 4;
+  column-gap: 1.5rem;
+  width: 100%;
+  column-fill: balanced;
+}
 
-        .artwork-card {
-          break-inside: avoid;
-          margin-bottom: 1.5rem;
-          display: inline-block;
-          width: 100%;
-          background: #fff;
-          overflow: visible; /* Changed from hidden to visible */
-          contain: content;
-          will-change: transform; /* Add will-change to optimize performance */
-          -webkit-transform: translateZ(0); /* Add transform layer for Safari */
-          transform: translateZ(0);
-        }
+.artwork-card {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  width: 100%;
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+}
 
-        .artwork-card:hover {
-          transform: translateY(-5px) translateZ(0); /* Add translateZ for Safari */
-          box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-        }
+.artwork-card:hover {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
 
-        /* Move overflow: hidden to the image container instead */
-        .image-container {
-          width: 100%;
-          background-color: #f8f9fa;
-          line-height: 0;
-          position: relative;
-          overflow: hidden;
-          -webkit-transform: translateZ(0); /* Force GPU acceleration */
-          transform: translateZ(0);
-        }
+.image-container {
+  width: 100%;
+  background-color: #f8f9fa;
+  line-height: 0;
+  position: relative;
+  overflow: hidden;
+}
 
-        .aspect-ratio-box {
-          position: relative;
-          width: 100%;
-          background-color: #f8f9fa;
-          overflow: hidden;
-        }
+.aspect-ratio-box {
+  position: relative;
+  width: 100%;
+  background-color: #f8f9fa;
+  overflow: hidden;
+}
 
-        .absolute-fill {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
+.absolute-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-        .image-loading {
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
+.card-body {
+  padding: 1rem;
+  position: relative;
+  z-index: 1;
+  background: #fff;
+}
 
-        .image-loaded {
-          opacity: 1;
-        }
+.image-loading {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-        .skeleton {
-          position: relative;
-          overflow: hidden;
-        }
+.image-loaded {
+  opacity: 1;
+}
 
-        .skeleton-image-container {
-          position: relative;
-          width: 100%;
-          padding-bottom: 75%;
-        }
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
 
-        .skeleton-image {
-          background: #f0f0f0;
-          position: relative;
-          overflow: hidden;
-        }
+.skeleton-image-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 75%;
+}
 
-        .skeleton-title {
-          height: 20px;
-          background: #f0f0f0;
-          margin-bottom: 8px;
-          border-radius: 4px;
-        }
+.skeleton-image {
+  background: #f0f0f0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
 
-        .skeleton-text {
-          height: 16px;
-          background: #f0f0f0;
-          width: 60%;
-          border-radius: 4px;
-        }
+.skeleton-title {
+  height: 20px;
+  background: #f0f0f0;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
 
-        .skeleton-image::after,
-        .skeleton-title::after,
-        .skeleton-text::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          animation: shimmer 2s infinite linear;
-          background: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0.5) 50%,
-            rgba(255, 255, 255, 0) 100%
-          );
-          transform: translateX(-100%);
-        }
+.skeleton-text {
+  height: 16px;
+  background: #f0f0f0;
+  width: 60%;
+  border-radius: 4px;
+}
 
-        @keyframes shimmer {
-          100% {
-            transform: translateX(100%);
-          }
-        }
+.skeleton-image::after,
+.skeleton-title::after,
+.skeleton-text::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: translateX(-100%);
+}
 
-        @media (max-width: 1200px) {
-          .masonry-grid {
-            columns: 3;
-          }
-        }
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
 
-        @media (max-width: 768px) {
-          .masonry-grid {
-            columns: 2;
-          }
-        }
+@media (max-width: 1200px) {
+  .masonry-grid {
+    columns: 3;
+  }
+}
 
-        @media (max-width: 576px) {
-          .masonry-grid {
-            columns: 1;
-          }
-        }
+@media (max-width: 768px) {
+  .masonry-grid {
+    columns: 2;
+  }
+}
 
-        .artwork-card a {
-          color: inherit;
-          text-decoration: none;
-        }
+@media (max-width: 576px) {
+  .masonry-grid {
+    columns: 1;
+  }
+}
+
+.artwork-card a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+}
       `}</style>
     </Container>
   );
