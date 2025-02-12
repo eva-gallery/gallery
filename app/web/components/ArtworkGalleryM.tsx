@@ -292,6 +292,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   gap: 1.5rem;
   width: 100%;
   padding: 8px;
+  grid-auto-rows: 1fr; /* Auto row height to handle varied content sizes */
 }
 
 @media (max-width: 1200px) {
@@ -313,23 +314,20 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 }
 
 .artwork-card {
-  position: relative; /* Ensure stacking context */
-  break-inside: avoid;
+  position: relative;
   margin-bottom: 1.5rem;
-  display: inline-block;
-  width: 100%;
   background: #fff;
   border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  z-index: 1; /* Ensures shadow appears above content */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .artwork-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-  transform: scale(1.05); /* Hover scale */
-  z-index: 2; /* Ensures shadow appears above other elements */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
 }
 
 .artwork-card a {
@@ -342,7 +340,6 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   width: 100%;
   background-color: #f8f9fa;
   line-height: 0;
-  z-index: 1; /* Ensure image stays on top */
   position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
@@ -374,9 +371,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   padding: 1rem;
   background: #fff;
   position: relative;
-  z-index: 2; /* Ensure it sits above image and shadow */
   border-radius: 0 0 4px 4px;
-  transition: z-index 0.3s ease;
 }
 
 .image-loading {
