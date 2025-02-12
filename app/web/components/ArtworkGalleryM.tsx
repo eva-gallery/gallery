@@ -271,6 +271,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   column-gap: 1.5rem;
   width: 100%;
   column-fill: balanced;
+  padding: 0.5rem;  /* Add padding to show shadows */
 }
 
 .artwork-card {
@@ -280,13 +281,22 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: visible;  /* Changed to visible to show shadow */
   position: relative;
-  transition: box-shadow 0.2s ease;
+  transform: translateZ(0);  /* Create stacking context for Safari */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);  /* Initial subtle shadow */
 }
 
 .artwork-card:hover {
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.artwork-card a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  transform: translateZ(0);  /* Establish new stacking context */
 }
 
 .image-container {
@@ -295,6 +305,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   line-height: 0;
   position: relative;
   overflow: hidden;
+  border-radius: 4px 4px 0 0;
+  transform: translateZ(0);  /* For Safari */
 }
 
 .aspect-ratio-box {
@@ -302,6 +314,11 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background-color: #f8f9fa;
   overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.artwork-card:hover .aspect-ratio-box {
+  transform: scale(1.03);
 }
 
 .absolute-fill {
@@ -329,6 +346,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   opacity: 1;
 }
 
+/* Skeleton styles */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -389,6 +407,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   }
 }
 
+/* Responsive columns */
 @media (max-width: 1200px) {
   .masonry-grid {
     columns: 3;
@@ -405,12 +424,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   .masonry-grid {
     columns: 1;
   }
-}
-
-.artwork-card a {
-  color: inherit;
-  text-decoration: none;
-  display: block;
 }
       `}</style>
     </Container>
