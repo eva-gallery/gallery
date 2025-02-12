@@ -197,14 +197,40 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
       .trim();
   };
 
-const uniqueArtworks = artworks.filter((artwork, index, self) =>
-  index === self.findIndex((t) => t.slug === artwork.slug)
-);
-
-const filteredArtworks = uniqueArtworks.filter(artwork => 
-  artwork.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  artwork.artistName.toLowerCase().includes(searchTerm.toLowerCase())
-);
+const distributeArtworks = (artworks: Artwork[]): Artwork[] => {
+    // First remove exact duplicates by slug
+    const uniqueBySlug = artworks.filter((artwork: Artwork, index: number, self: Artwork[]) =>
+      index === self.findIndex((t: Artwork) => t.slug === artwork.slug)
+    );
+  
+    // Group artworks by artist
+    const byArtist = uniqueBySlug.reduce((acc: Record<string, Artwork[]>, artwork: Artwork) => {
+      const artist = artwork.artistName;
+      if (!acc[artist]) {
+        acc[artist] = [];
+      }
+      acc[artist].push(artwork);
+      return acc;
+    }, {});
+  
+    let result: Artwork[] = [];
+    const maxArtworksPerArtist = 2; // Adjust this number as needed
+  
+    // For each artist, limit their artworks
+    Object.values(byArtist).forEach((artistWorks: Artwork[]) => {
+      const limitedWorks = artistWorks.slice(0, maxArtworksPerArtist);
+      result.push(...limitedWorks);
+    });
+  
+    // Shuffle the results
+    return result.sort(() => Math.random() - 0.5);
+  };
+  
+  // Replace your current filteredArtworks with:
+  const filteredArtworks = distributeArtworks(artworks).filter((artwork: Artwork) => 
+    artwork.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    artwork.artistName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <Container className="py-1">
@@ -302,11 +328,31 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   border-radius: 4px;
   position: relative;
   overflow: visible;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s ease-in-out;
 }
 
-.artwork-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+/* Default shadow styles for non-Safari browsers */
+@supports not (-webkit-hyphens:none) {
+  .artwork-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .artwork-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+}
+
+/* Safari-specific shadow styles */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  _::-webkit-full-page-media, _:future, :root .artwork-card {
+    -webkit-filter: drop-shadow(0 1px 3px rgba(0,0,0,0.1));
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.1));
+  }
+  
+  _::-webkit-full-page-media, _:future, :root .artwork-card:hover {
+    -webkit-filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+  }
 }
 
 .artwork-card a {
@@ -320,8 +366,22 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   background-color: #f8f9fa;
   line-height: 0;
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Important for containing the scaled image */
   border-radius: 4px 4px 0 0;
+}
+
+/* Modified image effects */
+.image-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+.artwork-card:hover .image-container img {
+  transform: scale(1.1);
 }
 
 .aspect-ratio-box {
@@ -338,11 +398,11 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.3s ease-out;
 }
 
 .artwork-card:hover .absolute-fill {
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .card-body {
@@ -353,6 +413,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   border-radius: 0 0 4px 4px;
 }
 
+/* Loading states */
 .image-loading {
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -362,82 +423,13 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   opacity: 1;
 }
 
-.skeleton {
-  position: relative;
-  overflow: hidden;
+.image-container img {
+  transition: transform 0.3s ease-out;
 }
 
-.skeleton-image-container {
-  position: relative;
-  width: 100%;
-  padding-bottom: 75%;
-}
-
-.skeleton-image {
-  background: #f0f0f0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.skeleton-title {
-  height: 20px;
-  background: #f0f0f0;
-  margin-bottom: 8px;
-  border-radius: 4px;
-}
-
-.skeleton-text {
-  height: 16px;
-  background: #f0f0f0;
-  width: 60%;
-  border-radius: 4px;
-}
-
-.skeleton-image::after,
-.skeleton-title::after,
-.skeleton-text::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  animation: shimmer 2s infinite linear;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: translateX(-100%);
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@media (max-width: 1200px) {
-  .masonry-grid {
-    columns: 3;
-  }
-}
-
-@media (max-width: 768px) {
-  .masonry-grid {
-    columns: 2;
-  }
-}
-
-@media (max-width: 576px) {
-  .masonry-grid {
-    columns: 1;
-  }
-}
+.image-container:hover img {
+  transform: scale(1.1) !important;
+} 
       `}</style>
     </Container>
   );
