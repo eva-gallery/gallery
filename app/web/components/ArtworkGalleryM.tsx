@@ -294,16 +294,16 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 }
 
 .artwork-card {
+  position: relative; /* Ensure stacking context */
   break-inside: avoid;
   margin-bottom: 1.5rem;
   display: inline-block;
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  position: relative;
-  overflow: hidden;  /* Try this to prevent shadow issues */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Ensure consistent shadow */
-  z-index: 1; /* Ensure it is above other elements */
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  z-index: 1; /* Ensures shadow appears above content */
 }
 
 .artwork-card:hover {
@@ -352,7 +352,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   padding: 1rem;
   background: #fff;
   position: relative;
-  z-index: 1;
+  z-index: 2; /* Ensure it sits above image and shadow */
   border-radius: 0 0 4px 4px;
 }
 
