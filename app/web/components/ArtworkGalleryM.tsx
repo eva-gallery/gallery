@@ -287,33 +287,22 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   columns: 4;
   column-gap: 1.5rem;
   width: 100%;
-  column-fill: balanced;
-  position: relative;
-  z-index: 1;
 }
 
 .artwork-card {
   break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-  break-inside: avoid-column;
   margin-bottom: 1.5rem;
   display: inline-block;
   width: 100%;
   background: #fff;
   border-radius: 4px;
-  position: relative;
-  z-index: 1;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   transition: box-shadow 0.2s ease-in-out;
 }
 
 .artwork-card:hover {
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
 .artwork-card a {
@@ -328,11 +317,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   line-height: 0;
   position: relative;
   overflow: hidden;
-  border-radius: 4px 4px 0 0;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .aspect-ratio-box {
@@ -340,8 +324,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background-color: #f8f9fa;
   overflow: hidden;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
 }
 
 .absolute-fill {
@@ -351,22 +333,11 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   height: 100%;
   object-fit: cover;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
-  will-change: transform;
-  transition: transform 0.2s ease-in-out;
-}
-
-.artwork-card:hover .absolute-fill {
-  -webkit-transform: scale(1.05);
-  transform: scale(1.05);
 }
 
 .card-body {
   padding: 1rem;
-  position: relative;
   background: #fff;
-  z-index: 2;
 }
 
 .image-loading {
@@ -378,6 +349,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   opacity: 1;
 }
 
+/* Skeleton styles */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -396,7 +368,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .skeleton-title {
@@ -413,50 +384,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   border-radius: 4px;
 }
 
-.skeleton-image::after,
-.skeleton-title::after,
-.skeleton-text::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  animation: shimmer 2s infinite linear;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  transform: translateX(-100%);
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* Safari-specific fixes */
-@media not all and (min-resolution:.001dpcm) { 
-  @supports (-webkit-appearance:none) {
-    .artwork-card {
-      -webkit-column-break-inside: avoid;
-      page-break-inside: avoid;
-      break-inside: avoid-column;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-    
-    .image-container {
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-    }
-  }
-}
-
-/* Responsive layouts */
 @media (max-width: 1200px) {
   .masonry-grid {
     columns: 3;
