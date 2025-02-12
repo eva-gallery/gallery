@@ -283,7 +283,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
       )}
 
       <style jsx global>{`
-        .masonry-grid {
+.masonry-grid {
   columns: 4;
   column-gap: 1.5rem;
   width: 100%;
@@ -306,7 +306,14 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   z-index: 1;
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
-  transition: all 0.2s ease-in-out;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.artwork-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px;
 }
 
 .artwork-card a {
@@ -324,6 +331,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   border-radius: 4px 4px 0 0;
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .aspect-ratio-box {
