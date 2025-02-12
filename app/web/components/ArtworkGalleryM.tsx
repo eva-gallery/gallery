@@ -287,10 +287,29 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 
       <style jsx global>{`
 .masonry-grid {
-  columns: 4;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
   width: 100%;
   padding: 8px;
+}
+
+@media (max-width: 1200px) {
+  .masonry-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .masonry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .masonry-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .artwork-card {
@@ -304,11 +323,13 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   z-index: 1; /* Ensures shadow appears above content */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .artwork-card:hover {
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   transform: scale(1.05); /* Hover scale */
+  z-index: 2; /* Ensures shadow appears above other elements */
 }
 
 .artwork-card a {
@@ -325,6 +346,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
+  transform: translate3d(0, 0, 0); /* Force GPU rendering in Safari */
 }
 
 .aspect-ratio-box {
@@ -354,6 +376,7 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
   position: relative;
   z-index: 2; /* Ensure it sits above image and shadow */
   border-radius: 0 0 4px 4px;
+  transition: z-index 0.3s ease;
 }
 
 .image-loading {
@@ -421,24 +444,6 @@ const filteredArtworks = uniqueArtworks.filter(artwork =>
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
-  }
-}
-
-@media (max-width: 1200px) {
-  .masonry-grid {
-    columns: 3;
-  }
-}
-
-@media (max-width: 768px) {
-  .masonry-grid {
-    columns: 2;
-  }
-}
-
-@media (max-width: 576px) {
-  .masonry-grid {
-    columns: 1;
   }
 }
       `}</style>
