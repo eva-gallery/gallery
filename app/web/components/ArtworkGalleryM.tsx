@@ -34,6 +34,7 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: Artwork }) => {
   const [imageUrl, setImageUrl] = useState<string>('');
 
   useEffect(() => {
+    // Create IntersectionObserver with larger threshold for Safari
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -42,8 +43,8 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: Artwork }) => {
         }
       },
       { 
-        threshold: 0,
-        rootMargin: '200% 0px'
+        threshold: 0.1,
+        rootMargin: '50px 0px'  // Reduced rootMargin for better Safari support
       }
     );
 
@@ -62,20 +63,32 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: Artwork }) => {
       img.onload = () => {
         setAspectRatio((img.height / img.width) * 100);
         setImageUrl(url);
+        setImageLoaded(true);  // Set loaded state when image is ready
       };
       
       img.src = url;
+
+      // Add error handling
+      img.onerror = () => {
+        console.error('Failed to load image:', url);
+        // Optionally set a fallback image or show error state
+      };
     }
-  }, [isVisible, artwork.slug]);
+  }, [isVisible, artwork.thumbnailFilename]);
 
   return (
-    <div ref={imageRef} className="image-container">
+    <div 
+      ref={imageRef} 
+      className="image-container"
+      style={{ opacity: 1 }} // Force opacity in Safari
+    >
       <div 
         className="aspect-ratio-box" 
         style={{ 
           paddingBottom: `${aspectRatio || 75}%`,
           backgroundColor: '#f8f9fa',
-          minHeight: '200px'
+          minHeight: '200px',
+          transform: 'translate3d(0,0,0)' // Force GPU rendering
         }}
       >
         {!imageLoaded && (
@@ -88,6 +101,10 @@ const ImageWithLazyLoading = ({ artwork }: { artwork: Artwork }) => {
             className={`absolute-fill ${imageLoaded ? 'image-loaded' : 'image-loading'}`}
             onLoad={() => {
               setImageLoaded(true);
+            }}
+            style={{
+              transform: 'translate3d(0,0,0)', // Force GPU rendering
+              opacity: imageLoaded ? 1 : 0
             }}
             loading="lazy"
           />
@@ -214,7 +231,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         {filteredArtworks.map((artwork, index) => (
           <Card 
             key={artwork.slug} 
-            className="artwork-card border-0 shadow-sm"
+            className="artwork-card border-0"
             ref={index === filteredArtworks.length - 1 ? lastArtworkRef : null}
           >
             <a href={`/artworks/${artwork.slug}?seed=${seed}`} className="text-decoration-none">
@@ -237,7 +254,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
         {loading && (
           <>
             {[...Array(12)].map((_, i) => (
-              <Card key={i} className="artwork-card border-0 shadow-sm skeleton">
+              <Card key={i} className="artwork-card border-0 skeleton">
                 <div className="skeleton-image-container">
                   <div className="skeleton-image"></div>
                 </div>
@@ -271,26 +288,25 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   column-gap: 1.5rem;
   width: 100%;
   column-fill: balanced;
+  position: relative;
+  z-index: 1;
 }
 
 .artwork-card {
   break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid-column;
   margin-bottom: 1.5rem;
   display: inline-block;
   width: 100%;
   background: #fff;
   border-radius: 4px;
   position: relative;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
-  transition: box-shadow 0.25s ease-in-out;
-}
-
-.artwork-card:hover {
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 24px;
+  z-index: 1;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  transition: all 0.2s ease-in-out;
 }
 
 .artwork-card a {
@@ -306,6 +322,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   position: relative;
   overflow: hidden;
   border-radius: 4px 4px 0 0;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }
 
 .aspect-ratio-box {
@@ -313,6 +331,8 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   background-color: #f8f9fa;
   overflow: hidden;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
 }
 
 .absolute-fill {
@@ -322,10 +342,14 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.25s ease-in-out;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  transition: transform 0.2s ease-in-out;
 }
 
 .artwork-card:hover .absolute-fill {
+  -webkit-transform: scale(1.05);
   transform: scale(1.05);
 }
 
@@ -333,7 +357,7 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   padding: 1rem;
   position: relative;
   background: #fff;
-  z-index: 1;
+  z-index: 2;
 }
 
 .image-loading {
@@ -345,7 +369,6 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   opacity: 1;
 }
 
-/* Skeleton styles */
 .skeleton {
   position: relative;
   overflow: hidden;
@@ -406,7 +429,25 @@ const ArtworkGallery = ({ artworks: initialArtworks, seed }: ArtworkGalleryProps
   }
 }
 
-/* Responsive columns */
+/* Safari-specific fixes */
+@media not all and (min-resolution:.001dpcm) { 
+  @supports (-webkit-appearance:none) {
+    .artwork-card {
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      break-inside: avoid-column;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+    
+    .image-container {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+  }
+}
+
+/* Responsive layouts */
 @media (max-width: 1200px) {
   .masonry-grid {
     columns: 3;
