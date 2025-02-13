@@ -7,6 +7,10 @@ function stripHtmlTags(html: string): string {
   return html.replace(/<[^>]*>/g, '');
 }
 
+function constructImageUrl(thumbnailFilename: string): string {
+  return `https://beta.evagallery.eu/protected/assets/thumbnail/${thumbnailFilename}`;
+}
+
 // Types
 interface ArtworkDetailProps {
   params: { slug: string[] };
@@ -27,6 +31,7 @@ interface Artwork {
   measurements?: string;
   tags?: string[];
   imageUrl?: string;
+  thumbnailFilename?: string;
 }
 
 // Metadata Generation
@@ -37,9 +42,14 @@ export async function generateMetadata(
   try {
     // Join slug array and clean
     const cleanSlug = params.slug.join('/');
-
+    
     // Fetch artwork details using the cleaned slug
     const artwork = await getData(`/public/artwork?slug=${cleanSlug}`) as Artwork;
+    
+    // Construct image URL from thumbnailFilename
+    const imageUrl = artwork.thumbnailFilename 
+      ? constructImageUrl(artwork.thumbnailFilename)
+      : undefined;
 
     // Construct metadata description
     const baseDescription = `${artwork.name} artwork by ${artwork.artist.name}`;
@@ -49,7 +59,7 @@ export async function generateMetadata(
       artwork.medium && `in ${artwork.medium}`,
       artwork.dimensions && `${artwork.dimensions}`
     ].filter(Boolean).join(' ');
-
+    
     const fullDescription = artwork.description 
       ? `${baseDescription}. ${stripHtmlTags(artwork.description)}`
       : detailDescription;
@@ -60,14 +70,14 @@ export async function generateMetadata(
       openGraph: {
         title: `${artwork.name} - ${artwork.artist.name}`,
         description: fullDescription,
-        images: artwork.imageUrl ? [{ url: artwork.imageUrl }] : [],
+        images: imageUrl ? [{ url: imageUrl }] : [],
         type: 'article'
       },
       twitter: {
         card: 'summary_large_image',
         title: `${artwork.name} | Artwork`,
         description: fullDescription,
-        images: artwork.imageUrl ? [artwork.imageUrl] : []
+        images: imageUrl ? [imageUrl] : []
       },
       keywords: artwork.tags,
       alternates: {
