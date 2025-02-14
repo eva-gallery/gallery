@@ -11,10 +11,8 @@ const Footer = () => {
           <Col md={3} className="mb-4">
             <h5 className="mb-3 font-bold">About Us</h5>
             <p className="text-light-emphasis">
-            <b>European Visual Arts Gallery</b><br></br>
-
-Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Gallerists.
-
+            <b>European Visual Arts Gallery</b><br />
+            Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Gallerists.
             </p>
             <div className="d-flex gap-3 mt-3">
               <a target="_blank" href="https://www.facebook.com/evagallery.eu" rel="noopener noreferrer"><Facebook size={20} className="cursor-pointer hover:text-primary" /></a>
@@ -28,7 +26,6 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
           <Col md={3} className="mb-4">
             <h5 className="mb-3 font-bold">Quick Links</h5>
             <ul className="list-unstyled">
-              
               <li className="mb-2">
                 <a href="/artworks" className="text-decoration-none hover:text-primary">Artworks</a>
               </li>
@@ -41,16 +38,12 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
               <li className="mb-2">
                 <a href="/exhibitions" className="d-none text-decoration-none hover:text-primary">Exhibitions</a>
               </li>
-              
               <li className="mb-2">
-              <a href="/nfts" className="text-decoration-none hover:text-primary">NFTs </a> / <a href="/3d" className="text-decoration-none hover:text-primary">3D</a> / <a href="/ai" className="text-decoration-none hover:text-primary">AI</a>
+                <a href="/nfts" className="text-decoration-none hover:text-primary">NFTs </a> / <a href="/3d" className="text-decoration-none hover:text-primary">3D</a> / <a href="/ai" className="text-decoration-none hover:text-primary">AI</a>
               </li>
-
               <li className="mb-2">
                 <a target="_blank" href="https://support.evagallery.eu/en/" className="text-decoration-none hover:text-primary">Help & Support</a>
               </li>
-              
-              
             </ul>
           </Col>
 
@@ -77,21 +70,24 @@ Europe&apos;s first AI-Powered Web3 Gallery for professional Artists and Galleri
             </ul>
           </Col>
 
-          {/* Newsletter Column */}
-          <Col md={3} className="mb-4">
-            <h5 className="mb-3 font-bold">Newsletter</h5>
-            <p className="text-light-emphasis mb-3">
-              Subscribe to our newsletter for updates on new artworks and exhibitions.
-            </p>
-            <div className="d-flex flex-column gap-2">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="form-control bg-light text-light border-secondary"
-              />
-              <button className="btn btn-primary">
-                Subscribe
-              </button>
+          {/* Partners Column (Replacing Newsletter) */}
+           <Col md={3} className="mb-4">
+            <h5 className="mb-3 font-bold">Partners</h5>
+            <div className="d-flex flex-column gap-4">
+              <div className="d-flex justify-content-evenly align-items-center">
+              <a target="_blank" href="https://european-union.europa.eu/" rel="noopener noreferrer">
+                  <img src="/images/eu_funded_en.png" alt="EU Funded" className="img-fluid" style={{maxHeight: '60px'}} />
+                </a>
+                <a target="_blank" href="https://www.ngisearch.eu/" rel="noopener noreferrer">
+                  <img src="/images/NGISearch_logo.png" alt="NGI Search" className="img-fluid" style={{maxHeight: '80px'}} />
+                </a>
+                
+              </div>
+              <div className="d-flex justify-content-left align-items-center ">
+                <a target="_blank" href="https://www.fiit.stuba.sk/" rel="noopener noreferrer">
+                  <img src="/images/STU-FIIT-white.png" alt="STU FIIT" className="img-fluid" style={{maxHeight: '80px'}} />
+                </a>
+              </div>
             </div>
           </Col>
         </Row>
