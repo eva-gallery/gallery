@@ -319,6 +319,16 @@ const TermsAndConditions = () => {
           </p>
         </div>
       </div>
+      <style jsx global>{`
+      section {
+        margin-bottom: 2rem;
+      }
+        p, p:last-child {
+          margin-bottom: 1rem !important;
+        }
+        .font-medium {
+          font-weight: 600;}  
+       `}</style>
     </div>
   );
 };
