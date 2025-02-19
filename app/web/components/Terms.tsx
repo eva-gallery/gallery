@@ -61,7 +61,7 @@ const TermsAndConditions = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-medium text-gray-800 mb-2">2.1. Entire Agreement</h3>
-                <p className="text-gray-700">These Terms & Conditions constitute the entire agreement between users and E.V.A. Gallery, superseding all prior agreements, communications, or understandings related to the platform's services.</p>
+                <p className="text-gray-700">These Terms & Conditions constitute the entire agreement between users and E.V.A. Gallery, superseding all prior agreements, communications, or understandings related to the platform&apos;s services.</p>
               </div>
               <div>
                 <h3 className="font-medium text-gray-800 mb-2">2.2. Severability</h3>
@@ -178,7 +178,7 @@ const TermsAndConditions = () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-800 mb-2">7.2. Data Processing & Privacy</h3>
-                <p className="text-gray-700">No user-uploaded artwork is stored outside the artist's account without consent. AI analysis is conducted in compliance with GDPR, and users have the right to request deletion of associated data.</p>
+                <p className="text-gray-700">No user-uploaded artwork is stored outside the artist&apos;s account without consent. AI analysis is conducted in compliance with GDPR, and users have the right to request deletion of associated data.</p>
               </div>
             </div>
           </section>
@@ -191,8 +191,8 @@ const TermsAndConditions = () => {
                 <h3 className="font-medium text-gray-800 mb-2">8.1. NFT Minting & Ownership</h3>
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Users retain full intellectual property rights over their minted NFTs.</li>
-                  <li>NFTs created via E.V.A. Gallery are stored on the blockchain and linked to the user's connected crypto wallet.</li>
-                  <li>Once minted, NFTs cannot be altered or deleted due to blockchain immutability. If a user wishes to destroy an NFT mint, they can opt to "burn" them.</li>
+                  <li>NFTs created via E.V.A. Gallery are stored on the blockchain and linked to the user&apos;s connected crypto wallet.</li>
+                  <li>Once minted, NFTs cannot be altered or deleted due to blockchain immutability. If a user wishes to destroy an NFT mint, they can opt to &quot;burn&quot; them.</li>
                 </ul>
               </div>
               <div>
@@ -251,7 +251,7 @@ const TermsAndConditions = () => {
                 <ul className="list-disc pl-6 mt-2 space-y-1">
                   <li>Access: Request a copy of their personal data.</li>
                   <li>Rectification: Correct inaccurate or incomplete data.</li>
-                  <li>Erasure ("Right to Be Forgotten"): Request deletion of their account and associated data.</li>
+                  <li>Erasure (&quot;Right to Be Forgotten&quot;): Request deletion of their account and associated data.</li>
                   <li>Data Portability: Obtain their data in a structured format for transfer.</li>
                 </ul>
                 <p className="mt-2">Requests can be submitted to support@evagallery.eu, and will be processed within 30 days, in compliance with GDPR Article 12.</p>
