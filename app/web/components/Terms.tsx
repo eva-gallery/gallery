@@ -183,7 +183,7 @@ const TermsAndConditions = () => {
                 <ul className="list-disc pl-6 space-y-1">
                   <li>Users retain full intellectual property rights over their minted NFTs.</li>
                   <li>NFTs created via E.V.A. Gallery are stored on the blockchain and linked to the user&apos;s connected crypto wallet.</li>
-                  <li>Once minted, NFTs cannot be altered or deleted due to blockchain immutability. If a user wishes to destroy an NFT mint, they can opt to "burn" them.</li>
+                  <li>Once minted, NFTs cannot be altered or deleted due to blockchain immutability. If a user wishes to destroy an NFT mint, they can opt to &quot;burn&quot; them.</li>
                 </ul>
               </div>
               <div>
