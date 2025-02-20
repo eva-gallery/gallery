@@ -91,7 +91,7 @@ const TermsAndConditions = () => {
                   <li>Misuse of AI protection, NFT minting, or crypto integration is detected.</li>
                   <li>The user created multiple identical accounts.</li>
                 </ul>
-                <p className="mt-4">Users may voluntarily delete their account at any time, with data erasure confirmed within 30 days.</p>
+                <p className="mt-2">Users may voluntarily delete their account at any time, with data erasure confirmed within 30 days.</p>
               </div>
             </div>
           </section>
@@ -292,7 +292,7 @@ const TermsAndConditions = () => {
                 <p className="text-gray-700 mb-2">Where possible, users will be provided with reasonable advance notice of significant modifications via email, platform notifications, or the official website.</p>
               </div>
               <div>
-                <p className="font-medium text-gray-800 mb-4">12.3. User Responsibility</p>
+                <p className="font-medium text-gray-800 mb-2">12.3. User Responsibility</p>
                 <p className="text-gray-700 mb-4">Continued use of E.V.A. Gallery after updates constitutes acceptance of the revised terms. Users are encouraged to review updates periodically.</p>
               </div>
             </div>
@@ -307,7 +307,7 @@ const TermsAndConditions = () => {
                 <p className="text-gray-700 mb-2">These Terms & Conditions shall be governed under the laws of Slovakia and EU regulations, including GDPR and MiCA compliance.</p>
               </div>
               <div>
-                <p className="font-medium text-gray-800 mb-4">13.2. Dispute Resolution</p>
+                <p className="font-medium text-gray-800 mb-2">13.2. Dispute Resolution</p>
                 <p className="text-gray-700 mb-4">Disputes shall first be resolved through mediation. If no resolution is reached, cases will be handled by the courts of Bratislava, Slovakia.</p>
               </div>
             </div>
