@@ -52,7 +52,7 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
         </Col>
       </Row>
 
-      {/* Artists Grid */}
+      {/* Artists Grid - src={`${imgUrl}/protected/assets/thumbnail/${artist.artwork.thumbnailFilename}`} */}
       <Row className="g-4">
         {artistsList.map((artist, index) => (
           <Col key={index} xs={12} sm={6} md={3}>
@@ -63,8 +63,9 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
               <div className="artist-card h-100 card border-0 shadow-sm">
                 <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                   <div className="position-absolute top-0 start-0 w-100 h-100">
+                    
                     <img
-                      src={`${imgUrl}/protected/assets/thumbnail/${artist.artwork.thumbnailFilename}`}
+                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`}
                       alt={artist.name}
                       className="w-100 h-100 object-cover"
                     />
