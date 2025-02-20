@@ -10,6 +10,8 @@ import { Metadata } from 'next';
 interface Artwork {
   slug: string;
   name: string;
+  imageFilename?: string;
+  thumbnailFilename?: string;
   // Add other artwork properties as needed
 }
 
