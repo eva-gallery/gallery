@@ -71,9 +71,9 @@ const Footer = () => {
           </Col>
 
           {/* Partners Column (Replacing Newsletter) */}
-           <Col md={3} className="mb-4">
+          <Col md={3} className="mb-4">
             <h5 className="mb-3 font-bold">Partners</h5>
-            <div className="d-flex flex-column gap-4">
+            <div className="d-flex flex-column gap-3">
               <div className="d-flex justify-content-evenly align-items-center">
               <a target="_blank" href="https://european-union.europa.eu/" rel="noopener noreferrer">
                   <img src="/images/eu_funded_en.png" alt="EU Funded" className="img-fluid" style={{maxHeight: '60px'}} />
@@ -83,9 +83,12 @@ const Footer = () => {
                 </a>
                 
               </div>
-              <div className="d-flex justify-content-left align-items-center ">
+              <div className="d-flex justify-content-between align-items-center ">
                 <a target="_blank" href="https://www.fiit.stuba.sk/" rel="noopener noreferrer">
-                  <img src="/images/STU-FIIT-white.png" alt="STU FIIT" className="img-fluid" style={{maxHeight: '80px'}} />
+                  <img src="/images/STU-FIIT.png" alt="STU FIIT" className="img-fluid" style={{maxHeight: '80px'}} />
+                </a>
+                <a target="_blank" href="https://www.netfire.com/" rel="noopener noreferrer">
+                  <img src="/images/netfire2.png" alt="NETFIRE" className="img-fluid" style={{maxHeight: '40px'}} />
                 </a>
               </div>
             </div>
@@ -94,8 +97,16 @@ const Footer = () => {
 
         {/* Copyright */}
         <Row className="mt-4 pt-4 border-top border-secondary">
-          <Col className="text-center text-light-emphasis">
+          <Col className="text-left text-light-emphasis">
             <p className="mb-0">© {new Date().getFullYear()} E.V.A Gallery. All rights reserved.</p>
+          </Col>
+          <Col className="text-center text-light-emphasis">
+            <a href="/terms">Terms of Service | Privacy Policy</a>
+          </Col>
+          <Col className="text-end text-light-emphasis">
+           Powered by: <a target="_blank" href="https://www.netfire.com/" rel="noopener noreferrer">
+                   <img src="/images/netfire.png" alt="NETFIRE" className="img-fluid" style={{maxHeight: '20px'}} />
+                </a>
           </Col>
         </Row>
       </Container>
