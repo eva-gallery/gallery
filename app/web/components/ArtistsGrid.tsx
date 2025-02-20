@@ -4,9 +4,12 @@ import { Search } from 'lucide-react';
 // import type { Artist } from '@/app/web/types/artist';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // https://cdn.evagallery.eu process.env.NEXT_PUBLIC_BACKEND_URL
+const imgUrl = 'https://beta.evagallery.eu';
 
 interface Artwork {
   slug: string;
+  imageFilename?: string;
+  thumbnailFilename?: string;
   // Add other artwork properties as needed
 }
 
@@ -61,7 +64,7 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
                 <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                   <div className="position-absolute top-0 start-0 w-100 h-100">
                     <img
-                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`}
+                      src={`${imgUrl}/protected/assets/thumbnail/${artist.artwork.thumbnailFilename}`}
                       alt={artist.name}
                       className="w-100 h-100 object-cover"
                     />
