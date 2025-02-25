@@ -52,7 +52,7 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
         </Col>
       </Row>
 
-      {/* Artists Grid - src={`${imgUrl}/protected/assets/thumbnail/${artist.artwork.thumbnailFilename}`} */}
+      {/* Artists Grid - src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`} */}
       <Row className="g-4">
         {artistsList.map((artist, index) => (
           <Col key={index} xs={12} sm={6} md={3}>
@@ -65,7 +65,7 @@ const ArtistsGrid: React.FC<ArtistsGridProps> = ({ artists = [] }) => {
                   <div className="position-absolute top-0 start-0 w-100 h-100">
                     
                     <img
-                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artist.artwork.slug)}`}
+                      src={`${imgUrl}/protected/assets/thumbnail/${artist.artwork.thumbnailFilename}`}
                       alt={artist.name}
                       className="w-100 h-100 object-cover"
                     />
