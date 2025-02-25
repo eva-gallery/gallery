@@ -28,8 +28,9 @@ export const UnityDesignSelect: React.FC<PropsSelect> = ({ token, data }) => {
         if (isLoaded && token && uuid) {
             sendMessage('Generator', 'ReceiveBackendURL', url);
             sendMessage('Generator', 'ReceiveUUID', uuid);
-            sendMessage('Generator', 'ReceiveToken', token);
             sendMessage('Generator', 'Admin', "false");
+            sendMessage('Generator', 'ReceiveToken', token);
+
         }
     }, [isLoaded, token, uuid, sendMessage, url]);
 
@@ -103,8 +104,9 @@ export const UnityDesign: React.FC<Props> = ({ token, uuid: initialUuid }) => {
         if (isLoaded && token && initialUuid) {
             sendMessage('Generator', 'ReceiveBackendURL', url);
             sendMessage('Generator', 'ReceiveUUID', initialUuid);
-            sendMessage('Generator', 'ReceiveToken', token);
             sendMessage('Generator', 'Admin', "true");
+            sendMessage('Generator', 'ReceiveToken', token);
+
         }
     }, [isLoaded, token, initialUuid, sendMessage, url]);
 
