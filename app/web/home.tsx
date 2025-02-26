@@ -38,10 +38,10 @@ export default async function PublicHome() {
   const params4 = new URLSearchParams({ seed: seedno.toString(), from: "0", count: "16" });
 
   const artworks = await getData(`/public/random/artwork?${params1}`) as Artwork[];
-  const artworks2 = await getData(`/public/random/artwork?${params2}`) as Artwork[];
+  // const artworks2 = await getData(`/public/random/artwork?${params2}`) as Artwork[];
   const galleries = await getData(`/public/random/gallery?${params3}`) as Gallery[];
-  const exhibitions = await getData(`/public/random/exhibition?${params4}`) as Exhibition[];    
-  const nfts = await getData(`/public/random/nft?${params4}`) as NFT[];         
+  // const exhibitions = await getData(`/public/random/exhibition?${params4}`) as Exhibition[];    
+  // const nfts = await getData(`/public/random/nft?${params4}`) as NFT[];         
 
   return (
     <>
