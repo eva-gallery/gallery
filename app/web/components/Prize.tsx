@@ -40,7 +40,7 @@ const Prize = () => {
         <div className="lead mb-5 max-w-4xl mx-auto">
           <p>
             The first EVA Gallery Prize ceremony took place on the 28th of February, 2025,
-            where the platform's top-scoring artists were celebrated in an international
+            where the platform&apos;s top-scoring artists were celebrated in an international
             virtual event. The jury consisting of representatives from NGI Search and
             members of the EVA Gallery team took a vote, and selected the top 3 winning
             artists of the first-ever EVA Gallery Prize! Congratulations to all artists who
