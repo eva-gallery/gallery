@@ -34,21 +34,21 @@ const Prize = () => {
   const backendUrl = 'https://evagallery.b-cdn.net';
 
   return (
-    <div className="py-5 px-4 mx-auto" style={{ maxWidth: '1200px' }}>
-      <div className="blue-stripe w-100 mb-4" style={{ height: '8px', backgroundColor: '#0d3c81' }}></div>
+    <div className="py-2 px-0 mx-auto">
+      <a href="/eva-gallery-prize"><div className="blue-stripe w-100 mb-4" style={{ height: '8px', backgroundColor: '#0d3c81' }}></div>
       <div className="text-center mb-4">
-        <h1 className="display-6 fw-bold mb-4" style={{ color: '#0d3c81' }}>INTRODUCING THE WINNERS OF THE 1ST EVA GALLERY PRIZE!</h1>
+        <h1 className="display-7 fw-bold mb-4" style={{ color: '#0d3c81', fontSize: '2.2rem' }}>INTRODUCING THE WINNERS OF THE 1ST EVA GALLERY PRIZE!</h1>
       </div>
-      <div className="blue-stripe w-100 mb-5" style={{ height: '8px', backgroundColor: '#0d3c81' }}></div>
+      <div className="blue-stripe w-100 mb-5" style={{ height: '8px', backgroundColor: '#0d3c81' }}></div></a>
       
       <div className="text-center mb-5">
-        <div className="lead mb-5 max-w-4xl mx-auto">
+        <div className="lead mb-4 max-w-4xl mx-auto">
           <p>
             The first EVA Gallery Prize ceremony took place on the 28th of February, 2025,
             where the platform&apos;s top-scoring artists were celebrated in an international
             virtual event. The jury consisting of representatives from NGI Search and
             members of the EVA Gallery team took a vote, and selected the top 3 winning
-            artists of the first-ever EVA Gallery Prize!<br></br> Congratulations to all artists who
+            artists of the first-ever EVA Gallery Prize! Congratulations to all artists who
             participated, it was a very close call.
           </p>
         </div>
@@ -85,7 +85,7 @@ const Prize = () => {
                 <p className="text-muted">{winner.artworkName}</p>
               </div>
               <div className="mt-4">
-                <h2 className="display-6 fw-bold" style={{ color: '#0d3c81' }}>{winner.place}</h2>
+                <h2 className="display-8 fw-bold" style={{ color: '#0d3c81' }}>{winner.place}</h2>
               </div>
             </div>
           </div>
@@ -115,6 +115,12 @@ const Prize = () => {
         a {
           color: #0d3c81;
         }
+         .display-8 {
+          font-size: 2rem;
+          }
+          .display-7 {
+          font-size: 2.2rem;
+          }  
       `}</style>
     </div>
   );
