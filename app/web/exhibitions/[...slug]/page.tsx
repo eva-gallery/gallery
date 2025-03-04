@@ -69,7 +69,7 @@ export default async function ExhibitionDetail({ params }: PageProps) {
         
         <Container className="py-3">
           {/* Exhibition Header */}
-          <Row className="mb-5">
+          <Row className="mb-3">
             <Col>
               <h1 className="display-5 mb-3">{exhibition.name}</h1>
               
