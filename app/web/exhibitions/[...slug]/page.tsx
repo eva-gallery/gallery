@@ -73,7 +73,7 @@ export default async function ExhibitionDetail({ params }: PageProps) {
             <Col>
               <h1 className="display-5 mb-3">{exhibition.name}</h1>
               
-              <div className="d-flex flex-wrap gap-4 mb-4">
+              <div className="d-flex flex-wrap gap-4 mb-2">
                 <div>
                   <strong>Gallery:</strong> {exhibition.gallery.name}
                   {exhibition.gallery.countryCode && (
@@ -87,7 +87,7 @@ export default async function ExhibitionDetail({ params }: PageProps) {
                   </div>
                 )}
                 
-                <div>
+                <div className="d-none">
                   <strong>Dates:</strong> {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default async function ExhibitionDetail({ params }: PageProps) {
           )}
           
           {/* Artworks Section */}
-          <Row className="mb-4">
+          <Row className="mb-4 d-none">
             <Col>
               <h2 className="h3 mb-4">Artworks in this Exhibition</h2>
             </Col>
