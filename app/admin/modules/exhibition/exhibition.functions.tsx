@@ -8,7 +8,7 @@ export async function Transform(formData: FormData) {
    formData.forEach((value, key) => {
       switch (key) {
          case 'artworks':
-            newFormData.append('artworks[]', value);
+            newFormData.append('artworks[]', value === 'on' ? 'true' : 'false');
             break;
 
          case 'public':

@@ -195,8 +195,9 @@ const FormEmail: React.FC<PropsInput> = ({ name, value, required }) => {
 
 export const FormSet: React.FC<PropsInput> = ({ name, value, option }) => {
 
-   console.log("value", value);
-   console.log("option", option);
+   // console.log("**** FormSet ****");
+   // console.log("value", value);
+   // console.log("option", option);
 
    return (
       <>
