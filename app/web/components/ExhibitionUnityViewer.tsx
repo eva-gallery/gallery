@@ -22,20 +22,29 @@ const ExhibitionUnityViewer: React.FC<ExhibitionUnityViewerProps> = ({ roomId })
   // Backend URL
   const url = "https://cdn.evagallery.eu";
 
-  // Error handler for Unity
-  const handleUnityError = (message: string) => {
-    console.error("Unity Error:", message);
-    setErrorState("An error occurred while loading the 3D view. Please try again later.");
-  };
+  // We're not using event listeners directly because of type issues
+  // Instead, we'll handle errors in the initialization effect
 
-  // Add event listeners for Unity errors
+  // Monitor for Unity errors with a manual approach
   useEffect(() => {
-    addEventListener("error", handleUnityError);
-    
-    return () => {
-      removeEventListener("error", handleUnityError);
+    const handleUnityError = () => {
+      console.error("Unity error detected");
+      setErrorState("An error occurred while loading the 3D view. Please try again later.");
     };
-  }, [addEventListener, removeEventListener]);
+
+    // Add a global error handler for Unity-related errors
+    const originalOnError = window.onerror;
+    window.onerror = function(message, source, lineno, colno, error) {
+      if (source && source.includes('3dplanner')) {
+        handleUnityError();
+      }
+      return originalOnError ? originalOnError(message, source, lineno, colno, error) : false;
+    };
+
+    return () => {
+      window.onerror = originalOnError;
+    };
+  }, []);
 
   // Send messages to Unity once loaded, with error handling
   useEffect(() => {
@@ -43,13 +52,24 @@ const ExhibitionUnityViewer: React.FC<ExhibitionUnityViewerProps> = ({ roomId })
       try {
         console.log("Initializing Unity with roomId:", roomId);
         
-        // Send required parameters to Unity
-        sendMessage('Generator', 'ReceiveBackendURL', url);
-        sendMessage('Generator', 'ReceiveUUID', roomId);
-        sendMessage('Generator', 'ReceiveToken', ""); // Empty token for public view
-        sendMessage('Generator', 'Admin', "false"); // Set to false for public view
-        
-        setIsInitialized(true);
+        // Use setTimeout to ensure Unity is fully initialized before sending messages
+        setTimeout(() => {
+          // Send required parameters to Unity in the specific order expected
+          sendMessage('Generator', 'ReceiveBackendURL', url);
+          console.log("Sent Backend URL:", url);
+          
+          setTimeout(() => {
+            sendMessage('Generator', 'ReceiveUUID', roomId);
+            console.log("Sent Room ID:", roomId);
+            
+            setTimeout(() => {
+              sendMessage('Generator', 'Admin', "false"); // Set to false for public view
+              console.log("Sent Admin mode: false");
+              
+              setIsInitialized(true);
+            }, 100);
+          }, 100);
+        }, 500);
       } catch (error) {
         console.error("Failed to initialize Unity:", error);
         setErrorState("Failed to initialize 3D view.");
