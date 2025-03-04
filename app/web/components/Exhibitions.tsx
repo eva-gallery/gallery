@@ -4,6 +4,7 @@ import { format, isValid } from 'date-fns';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL || 
 
@@ -63,26 +64,34 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
       <Row className="g-4">
         {exhibitions.slice(0, 24).map((exhibition, index) => (
           <Col key={index} xs={12} sm={6} md={3}>
-            <Card className="artwork-card h-100 border-0 shadow-sm">
-              <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
-                <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                  <Image
-                    src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
-                    alt={exhibition.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    className="object-cover object-center transition-transform duration-300"
-                    priority={index < 4}
-                  />
+            <Link 
+              href={`/exhibitions/${exhibition.slug}`}
+              className="text-decoration-none"
+            >
+              <Card className="artwork-card h-100 border-0 shadow-sm">
+                <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
+                  <div className="image-container position-absolute top-0 start-0 w-100 h-100">
+                    <Image
+                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
+                      alt={exhibition.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      className="object-cover object-center transition-transform duration-300"
+                      priority={index < 4}
+                    />
+                  </div>
                 </div>
-              </div>
-              <Card.Body className="d-flex flex-column">
-                <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
-                <Card.Text className="text-muted small mb-0 text-truncate d-none">
-                  {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
-                </Card.Text>
-              </Card.Body>
-            </Card>
+                <Card.Body className="d-flex flex-column">
+                  <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
+                  <Card.Text className="text-muted small mb-0 text-truncate">
+                    {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
+                  </Card.Text>
+                  {exhibition.activeRoomId && (
+                    <span className="badge bg-primary mt-2">3D View Available</span>
+                  )}
+                </Card.Body>
+              </Card>
+            </Link>
           </Col>
         ))}
       </Row>
