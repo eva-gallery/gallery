@@ -46,8 +46,9 @@ const ExhibitionUnityViewer: React.FC<ExhibitionUnityViewerProps> = ({ roomId })
         // Required parameters for Unity initialization
         sendMessage('Generator', 'ReceiveBackendURL', url);
         sendMessage('Generator', 'ReceiveUUID', roomId);
-        sendMessage('Generator', 'ReceiveToken', ""); // Empty token for public view
         sendMessage('Generator', 'Admin', "false");
+        sendMessage('Generator', 'ReceiveToken', ""); // Empty token for public view
+        
       } catch (error) {
         console.error("Failed to initialize Unity:", error);
         setErrorState("Failed to initialize 3D view.");
