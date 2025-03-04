@@ -93,7 +93,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
                 </div>
                 <Card.Body className="d-flex flex-column">
                   <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
-                  <Card.Text className="text-muted small mb-0 text-truncate">
+                  <Card.Text className="text-muted small mb-0 text-truncate d-none">
                     {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
                   </Card.Text>
                   {exhibition.activeRoomId && (
