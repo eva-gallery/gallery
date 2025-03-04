@@ -17,23 +17,31 @@ export async function Detail(admin: AdminType) {
     const data = await AdminGetData("admin/exhibition/" + admin.unique);
     const artwork = await AdminGetData("admin/exhibition/" + admin.unique + "/artwork");
 
-
     const artworkdata = {
         ...data,
         artworks: artwork
     }
 
+    const rooms = await AdminGetData("admin/room");
+
+    const result = rooms
+        .filter((item: any) => item.exhibition.id === admin.unique)
+        .map((item: any) => ({
+            id: item.id,
+            name: item.name
+        }));
 
     const option = {
         "gallery": await AdminGetData("admin/options/gallery"),
         "country": await AdminGetData("admin/options/country"),
         "artist_category": await AdminGetData("admin/options/artist_category"),
         "artwork": await AdminGetData("admin/options/artwork"),
+        "room": result,
     };
 
 
     const object = {
-        data,
+        data: artworkdata,
         option,
     }
 
