@@ -8,6 +8,16 @@ import ExhibitionUnityViewer from '@/app/web/components/ExhibitionUnityViewer';
 import { getData } from "@/app/web/get.data";
 import { Container, Row, Col } from 'react-bootstrap';
 
+interface Artwork {
+  id: string;
+  name: string;
+  slug: string;
+  artistName: string;
+  year: string | null;
+  imageFilename?: string;
+  thumbnailFilename?: string;
+}
+
 interface Exhibition {
   id: string;
   name: string;
@@ -23,15 +33,6 @@ interface Exhibition {
     countryCode: string;
   };
   activeRoomId: string | null;
-  artworks: Array<{
-    id: string;
-    name: string;
-    slug: string;
-    artistName: string;
-    year: string | null;
-    imageFilename?: string;
-    thumbnailFilename?: string;
-  }>;
 }
 
 interface PageProps {
@@ -55,15 +56,18 @@ export default async function ExhibitionDetail({ params }: PageProps) {
     // Fetch exhibition data
     const exhibition = await getData<Exhibition>(`/public/exhibition?slug=${encodeURIComponent(validSlug)}`);
     
-    if (!exhibition || !exhibition.name) {
+    if (!exhibition || !exhibition.name || !exhibition.id) {
       notFound();
     }
+
+    // Fetch artworks using the new endpoint
+    const artworks = await getData<Artwork[]>(`/public/exhibition/${exhibition.id}/artwork`);
 
     return (
       <>
         <NavbarComponent />
         
-        <Container className="py-5">
+        <Container className="py-3">
           {/* Exhibition Header */}
           <Row className="mb-5">
             <Col>
@@ -115,8 +119,11 @@ export default async function ExhibitionDetail({ params }: PageProps) {
             </Col>
           </Row>
           
-          {exhibition.artworks && exhibition.artworks.length > 0 ? (
-            <ArtworkGrid artworks={exhibition.artworks} seed={Math.floor(Math.random() * 1000000)} />
+          {artworks && artworks.length > 0 ? (
+            <ArtworkGrid 
+              artworks={artworks} 
+              seed={Math.floor(Math.random() * 1000000)} 
+            />
           ) : (
             <p className="text-center text-muted">No artworks found in this exhibition.</p>
           )}
