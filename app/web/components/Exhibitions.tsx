@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { format, isValid } from 'date-fns';
 import { Container, Card, Form, Row, Col } from 'react-bootstrap';
 import { Search } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL || 
@@ -37,6 +36,13 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
     return isValid(parsedDate) ? format(parsedDate, 'dd.MM.yyyy') : '';
   };
 
+  // Filter exhibitions based on search term
+  const filteredExhibitions = exhibitions.filter(exhibition => 
+    exhibition.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (exhibition.gallery?.name && exhibition.gallery.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (exhibition.curator && exhibition.curator.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
   return (
     <Container className="py-5">
       <Row className="mb-4 align-items-center">
@@ -62,7 +68,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
       </Row>
 
       <Row className="g-4">
-        {exhibitions.slice(0, 24).map((exhibition, index) => (
+        {filteredExhibitions.slice(0, 24).map((exhibition, index) => (
           <Col key={index} xs={12} sm={6} md={3}>
             <Link 
               href={`/exhibitions/${exhibition.slug}`}
@@ -71,13 +77,17 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
               <Card className="artwork-card h-100 border-0 shadow-sm">
                 <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                   <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                    <Image
+                    <Card.Img
+                      variant="top"
                       src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
                       alt={exhibition.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover object-center transition-transform duration-300"
-                      priority={index < 4}
+                      className="w-100 h-100 transition-transform duration-300"
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.onerror = null;
+                        target.src = '/images/placeholder.png';
+                      }}
                     />
                   </div>
                 </div>
@@ -95,6 +105,12 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
           </Col>
         ))}
       </Row>
+
+      {filteredExhibitions.length === 0 && (
+        <div className="text-center py-5">
+          <p className="text-muted">No exhibitions found matching your search criteria.</p>
+        </div>
+      )}
 
       <style jsx global>{`
         .artwork-card {
@@ -114,6 +130,16 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
           overflow: hidden;
           background-color: #f8f9fa;
           position: relative;
+        }
+        
+        .image-container img {
+          object-fit: cover;
+          object-position: center;
+          transition: transform 0.3s ease;
+        }
+        
+        .artwork-card:hover .image-container img {
+          transform: scale(1.1);
         }
       `}</style>
     </Container>
