@@ -6,6 +6,7 @@ import { Search } from 'lucide-react';
 import Link from 'next/link';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL || 
+const imgUrl = 'https://beta.evagallery.eu';
 
 interface Exhibition {
   slug: string;
@@ -44,7 +45,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
   );
 
   return (
-    <Container className="py-2">
+    <Container className="py-5">
       <Row className="mb-4 align-items-center">
         <Col>
           <h1 className="mb-0">Exhibitions</h1>
@@ -79,9 +80,12 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
                   <div className="image-container position-absolute top-0 start-0 w-100 h-100">
                     <Card.Img
                       variant="top"
-                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
+                      src={exhibition.artwork.thumbnailFilename 
+                        ? `${imgUrl}/protected/assets/thumbnail/${exhibition.artwork.thumbnailFilename}`
+                        : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
                       alt={exhibition.name}
                       className="w-100 h-100 transition-transform duration-300"
+                      style={{ objectFit: 'cover', objectPosition: 'center' }}
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
