@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { format, isValid } from 'date-fns';
 import NavbarComponent from '@/app/web/components/NavbarComponent';
 import Footer from '@/app/web/components/Footer';
-import ArtworkGrid from '@/app/web/components/ArtworkGallery';
+import ArtworkGrid from '@/app/web/components/ArtworkGridWithLightbox';
 import ExhibitionUnityViewer from '@/app/web/components/ExhibitionUnityViewer';
 import { getData } from "@/app/web/get.data";
 import { Container, Row, Col } from 'react-bootstrap';
