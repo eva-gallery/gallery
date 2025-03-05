@@ -21,6 +21,7 @@ interface Exhibition {
   artwork: {
     name: string;
     slug: string;
+    thumbnailFilename?: string;
   };
   activeRoomId: string | null;
 }
@@ -50,7 +51,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
         <Col>
           <h1 className="mb-0">Exhibitions</h1>
         </Col>
-        <Col xs="auto">
+        <Col xs="auto" className="d-none">
           <div className="position-relative">
             <Form.Control
               type="search"
@@ -76,15 +77,14 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
               className="text-decoration-none"
             >
               <Card className="artwork-card h-100 border-0 shadow-sm">
-                <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
-                  <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                    <Card.Img
-                      variant="top"
+                <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
+                  <div className="position-absolute top-0 start-0 w-100 h-100">
+                    <img
                       src={exhibition.artwork.thumbnailFilename 
                         ? `${imgUrl}/protected/assets/thumbnail/${exhibition.artwork.thumbnailFilename}`
                         : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
                       alt={exhibition.name}
-                      style={{ objectFit: 'cover', objectPosition: 'center' }}
+                      className="w-100 h-100"
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -96,7 +96,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
                 </div>
                 <Card.Body className="d-flex flex-column">
                   <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
-                  <Card.Text className="text-muted small mb-0 text-truncate">
+                  <Card.Text className="text-muted small mb-0 text-truncate d-none">
                     {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
                   </Card.Text>
                   {exhibition.activeRoomId && (
@@ -126,23 +126,12 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
           box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
         }
 
-        .image-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background-color: #f8f9fa;
-          position: relative;
-        }
-        
-        .image-container img {
-          object-fit: cover;
-          object-position: center;
-          transition: transform 0.3s ease;
-        }
-        
-        .artwork-card:hover .image-container img {
+        .artwork-card:hover img {
           transform: scale(1.1);
+        }
+
+        img {
+          transition: transform 0.3s ease;
         }
       `}</style>
     </Container>
