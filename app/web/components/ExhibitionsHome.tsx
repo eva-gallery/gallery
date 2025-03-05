@@ -7,47 +7,40 @@ import Link from 'next/link';
 const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL
 const imgUrl = 'https://beta.evagallery.eu';
 
-interface Artwork {
-  slug: string;
-  name: string;
-  artistName: string;
-  thumbnailFilename?: string;
-}
-
-interface Exhibition {
-  slug: string;
-  name: string;
-  artistName: string;
-  activeRoomId?: string | null;
-  artwork: Artwork;
-}
-
-// The component accepts either 'artworks' or 'exhibitions' prop
+// Make the component accept any type of exhibition data
+// as long as it has the minimum required properties
 interface ExhibitionsHomeProps {
-  artworks?: Exhibition[];
-  exhibitions?: Exhibition[];
+  exhibitions: Array<{
+    slug: string;
+    name: string;
+    artistName?: string;
+    activeRoomId?: string | null;
+    artwork?: {
+      slug: string;
+      thumbnailFilename?: string;
+    };
+    fromDate?: string | Date;
+    toDate?: string | Date;
+  }>;
 }
 
-const ExhibitionsHome: React.FC<ExhibitionsHomeProps> = ({ artworks, exhibitions }) => {
-  // Use whichever prop is provided
-  const exhibitionData = exhibitions || artworks || [];
-  
+const ExhibitionsHome: React.FC<ExhibitionsHomeProps> = ({ exhibitions }) => {
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
 
   const nextPage = () => {
     setStartIndex(prev => 
-      prev + itemsPerPage >= exhibitionData.length ? 0 : prev + itemsPerPage
+      prev + itemsPerPage >= exhibitions.length ? 0 : prev + itemsPerPage
     );
   };
 
   const previousPage = () => {
     setStartIndex(prev => 
-      prev - itemsPerPage < 0 ? Math.max(0, exhibitionData.length - itemsPerPage) : prev - itemsPerPage
+      prev - itemsPerPage < 0 ? Math.max(0, exhibitions.length - itemsPerPage) : prev - itemsPerPage
     );
   };
 
-  const visibleExhibitions = exhibitionData.slice(startIndex, startIndex + itemsPerPage);
+  const visibleExhibitions = exhibitions.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <Container className="py-3">
@@ -95,9 +88,11 @@ const ExhibitionsHome: React.FC<ExhibitionsHomeProps> = ({ artworks, exhibitions
                   <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
                     <div className="position-absolute top-0 start-0 w-100 h-100">
                       <img
-                        src={exhibition.artwork.thumbnailFilename 
+                        src={exhibition.artwork?.thumbnailFilename 
                           ? `${imgUrl}/protected/assets/thumbnail/${exhibition.artwork.thumbnailFilename}`
-                          : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
+                          : exhibition.artwork?.slug
+                            ? `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`
+                            : '/images/placeholder.png'}
                         alt={exhibition.name}
                         className="w-100 h-100"
                         style={{ objectFit: 'cover', objectPosition: 'center' }}
@@ -112,7 +107,7 @@ const ExhibitionsHome: React.FC<ExhibitionsHomeProps> = ({ artworks, exhibitions
                   <Card.Body className="d-flex flex-column">
                     <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
                     <Card.Text className="text-muted small mb-0 text-truncate">
-                      {exhibition.artistName}
+                      {exhibition.artistName || ''}
                     </Card.Text>
                     {exhibition.activeRoomId && (
                       <span className="badge bg-primary mt-2">3D View Available</span>
