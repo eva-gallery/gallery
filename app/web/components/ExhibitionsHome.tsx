@@ -22,23 +22,32 @@ interface Exhibition {
   artwork: Artwork;
 }
 
-const ArtworkGallery = ({ artworks }: { artworks: Exhibition[] }) => {
+// The component accepts either 'artworks' or 'exhibitions' prop
+interface ExhibitionsHomeProps {
+  artworks?: Exhibition[];
+  exhibitions?: Exhibition[];
+}
+
+const ExhibitionsHome: React.FC<ExhibitionsHomeProps> = ({ artworks, exhibitions }) => {
+  // Use whichever prop is provided
+  const exhibitionData = exhibitions || artworks || [];
+  
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
 
   const nextPage = () => {
     setStartIndex(prev => 
-      prev + itemsPerPage >= artworks.length ? 0 : prev + itemsPerPage
+      prev + itemsPerPage >= exhibitionData.length ? 0 : prev + itemsPerPage
     );
   };
 
   const previousPage = () => {
     setStartIndex(prev => 
-      prev - itemsPerPage < 0 ? Math.max(0, artworks.length - itemsPerPage) : prev - itemsPerPage
+      prev - itemsPerPage < 0 ? Math.max(0, exhibitionData.length - itemsPerPage) : prev - itemsPerPage
     );
   };
 
-  const visibleArtworks = artworks.slice(startIndex, startIndex + itemsPerPage);
+  const visibleExhibitions = exhibitionData.slice(startIndex, startIndex + itemsPerPage);
 
   return (
     <Container className="py-3">
@@ -77,9 +86,9 @@ const ArtworkGallery = ({ artworks }: { artworks: Exhibition[] }) => {
           <ChevronRight size={24} />
         </Button>
 
-        {/* Artworks Grid */}
+        {/* Exhibitions Grid */}
         <Row className="g-4">
-          {visibleArtworks.map((exhibition, index) => (
+          {visibleExhibitions.map((exhibition, index) => (
             <Col key={startIndex + index} xs={12} sm={6} md={3}>
               <Link href={`/exhibitions/${exhibition.slug}`} className="text-decoration-none">
                 <Card className="artwork-card h-100 border-0 shadow-sm">
@@ -167,4 +176,4 @@ const ArtworkGallery = ({ artworks }: { artworks: Exhibition[] }) => {
   );
 };
 
-export default ArtworkGallery;
+export default ExhibitionsHome;
