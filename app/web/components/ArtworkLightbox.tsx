@@ -22,6 +22,13 @@ interface LightboxProps {
 const backendUrl = 'https://evagallery.b-cdn.net';
 const imgUrl = 'https://beta.evagallery.eu';
 
+const cleanFileName = (name: string) => {
+    return name
+      .replace(/\.(jpg|jpeg|png|gif|tif|tiff|kopie|bmp|webp)$/i, '')
+      .replace(/[-_]/g, ' ')
+      .trim();
+  };
+
 const ArtworkLightbox: React.FC<LightboxProps> = ({ 
   artworks, 
   initialIndex = 0, 
@@ -233,7 +240,7 @@ const ArtworkLightbox: React.FC<LightboxProps> = ({
             textAlign: 'center'
           }}
         >
-          <h3 style={{ margin: '0 0 5px', fontSize: '20px' }}>{currentArtwork.name}</h3>
+          <h3 style={{ margin: '0 0 5px', fontSize: '20px' }}>{cleanFileName(currentArtwork.name)}</h3>
           <p style={{ margin: '0', fontSize: '16px' }}>
             by {currentArtwork.artistName}
             {currentArtwork.year && ` (${currentArtwork.year})`}
