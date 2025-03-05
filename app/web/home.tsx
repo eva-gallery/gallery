@@ -48,7 +48,7 @@ export default async function PublicHome() {
       <NavbarComponent />
       <ArtworkGallery artworks={artworks} />
       <Galleries artworks={galleries} />
-      <Exhibitions artworks={exhibitions} />
+      <Exhibitions exhibitions={exhibitions} />
       <Footer />
     </>
   );
