@@ -46,7 +46,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
   );
 
   return (
-    <Container className="py-5">
+    <Container className="py-2">
       <Row className="mb-4 align-items-center">
         <Col>
           <h1 className="mb-0">Exhibitions</h1>
