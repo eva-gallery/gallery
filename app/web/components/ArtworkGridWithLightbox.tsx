@@ -96,7 +96,7 @@ const ArtworkGrid = ({ artworks, seed }: ArtworkGridProps) => {
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-color: #f8f9fa;
+            background-color: rgba(0,0,0,0);
           }
           
           .image-container img {
