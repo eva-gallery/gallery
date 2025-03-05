@@ -1,24 +1,29 @@
 'use client'
 import React, { useState } from 'react';
-import { Container, Card, Button, Form, Row, Col } from 'react-bootstrap';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { Container, Card, Button, Row, Col } from 'react-bootstrap';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
-const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL
+const imgUrl = 'https://beta.evagallery.eu';
+
+interface Artwork {
+  slug: string;
+  name: string;
+  artistName: string;
+  thumbnailFilename?: string;
+}
 
 interface Exhibition {
   slug: string;
   name: string;
   artistName: string;
-  // Add other exhibition properties as needed
+  activeRoomId?: string | null;
+  artwork: Artwork;
 }
 
-interface ArtworkGalleryProps {
-  artworks: Exhibition[];
-}
-
-const ArtworkGallery: React.FC<ArtworkGalleryProps> = ({ artworks }) => {
+const ArtworkGallery = ({ artworks }: { artworks: Exhibition[] }) => {
   const [startIndex, setStartIndex] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 4;
 
   const nextPage = () => {
@@ -43,10 +48,10 @@ const ArtworkGallery: React.FC<ArtworkGalleryProps> = ({ artworks }) => {
           <h1 className="mb-0">Exhibitions</h1>
         </Col>
         <Col xs="auto">
-          <div 
-            className="top-50 start-0 translate-bottom-y ms-2 text-muted"
-          >
-            <a href="/galleries">All exhibitions &raquo;</a>
+          <div className="position-relative">
+            <div className="text-end">
+              <a href="/exhibitions">All exhibitions &raquo;</a>
+            </div>
           </div>
         </Col>
       </Row>
@@ -74,30 +79,44 @@ const ArtworkGallery: React.FC<ArtworkGalleryProps> = ({ artworks }) => {
 
         {/* Artworks Grid */}
         <Row className="g-4">
-          {visibleArtworks.map((artwork, index) => (
+          {visibleArtworks.map((exhibition, index) => (
             <Col key={startIndex + index} xs={12} sm={6} md={3}>
-              <Card className="artwork-card h-100 border-0 shadow-sm">
-                <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
-                  <Card.Img
-                    variant="top"
-                    src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(artwork.slug)}`} 
-                    alt={artwork.name}
-                    className="position-absolute top-0 start-0 w-100 h-100 object-cover transition-transform duration-300"
-                  />
-                </div>
-                <Card.Body className="d-flex flex-column">
-                  <Card.Title className="fs-6 text-truncate">{artwork.name}</Card.Title>
-                  <Card.Text className="text-muted small mb-0 text-truncate">
-                    {artwork.artistName}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+              <Link href={`/exhibitions/${exhibition.slug}`} className="text-decoration-none">
+                <Card className="artwork-card h-100 border-0 shadow-sm">
+                  <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
+                    <div className="position-absolute top-0 start-0 w-100 h-100">
+                      <img
+                        src={exhibition.artwork.thumbnailFilename 
+                          ? `${imgUrl}/protected/assets/thumbnail/${exhibition.artwork.thumbnailFilename}`
+                          : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
+                        alt={exhibition.name}
+                        className="w-100 h-100"
+                        style={{ objectFit: 'cover', objectPosition: 'center' }}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null;
+                          target.src = '/images/placeholder.png';
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <Card.Body className="d-flex flex-column">
+                    <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
+                    <Card.Text className="text-muted small mb-0 text-truncate">
+                      {exhibition.artistName}
+                    </Card.Text>
+                    {exhibition.activeRoomId && (
+                      <span className="badge bg-primary mt-2">3D View Available</span>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Link>
             </Col>
           ))}
         </Row>
       </div>
 
-      {/* Styles */}
+      {/* Add this style block at the end of your component */}
       <style jsx global>{`
         .gallery-container {
           padding: 0 0px;
@@ -127,6 +146,14 @@ const ArtworkGallery: React.FC<ArtworkGalleryProps> = ({ artworks }) => {
         .artwork-card:hover {
           transform: translateY(-5px);
           box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        }
+        
+        .artwork-card:hover img {
+          transform: scale(1.1);
+        }
+
+        img {
+          transition: transform 0.3s ease;
         }
 
         .start-20 {
