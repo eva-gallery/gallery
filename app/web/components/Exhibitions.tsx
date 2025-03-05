@@ -50,7 +50,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
         <Col>
           <h1 className="mb-0">Exhibitions</h1>
         </Col>
-        <Col xs="auto" className="d-none">
+        <Col xs="auto">
           <div className="position-relative">
             <Form.Control
               type="search"
@@ -84,7 +84,6 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
                         ? `${imgUrl}/protected/assets/thumbnail/${exhibition.artwork.thumbnailFilename}`
                         : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
                       alt={exhibition.name}
-                      className="w-100 h-100 transition-transform duration-300"
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
                       onError={(e) => {
@@ -97,7 +96,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
                 </div>
                 <Card.Body className="d-flex flex-column">
                   <Card.Title className="fs-6 text-truncate">{exhibition.name}</Card.Title>
-                  <Card.Text className="text-muted small mb-0 text-truncate d-none">
+                  <Card.Text className="text-muted small mb-0 text-truncate">
                     {formatDate(exhibition.fromDate)} - {formatDate(exhibition.toDate)}
                   </Card.Text>
                   {exhibition.activeRoomId && (
