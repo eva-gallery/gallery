@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 export interface LightboxArtwork {
   id: string;
@@ -20,6 +20,7 @@ interface LightboxProps {
 }
 
 const backendUrl = 'https://evagallery.b-cdn.net';
+const imgUrl = 'https://beta.evagallery.eu';
 
 const ArtworkLightbox: React.FC<LightboxProps> = ({ 
   artworks, 
@@ -29,36 +30,41 @@ const ArtworkLightbox: React.FC<LightboxProps> = ({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   
-  if (!isOpen) return null;
+  // Reset to initial index when the lightbox opens or initialIndex changes
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentIndex(initialIndex);
+    }
+  }, [isOpen, initialIndex]);
   
-  const currentArtwork = artworks[currentIndex];
-  
-  const handlePrev = (e: React.MouseEvent) => {
+  const handlePrev = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? artworks.length - 1 : prevIndex - 1
     );
-  };
+  }, [artworks.length]);
   
-  const handleNext = (e: React.MouseEvent) => {
+  const handleNext = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     setCurrentIndex((prevIndex) => 
       prevIndex === artworks.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [artworks.length]);
   
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onClose();
-  };
+  }, [onClose]);
 
-  const handleClickOutside = (e: React.MouseEvent) => {
+  const handleClickOutside = useCallback((e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       handleClose();
     }
-  };
+  }, [handleClose]);
   
   // Handle keyboard navigation
-  React.useEffect(() => {
+  useEffect(() => {
+    if (!isOpen) return;
+    
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         handleClose();
@@ -82,7 +88,11 @@ const ArtworkLightbox: React.FC<LightboxProps> = ({
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'auto';
     };
-  }, [artworks.length, handleClose]);
+  }, [isOpen, handleClose, artworks.length]);
+  
+  if (!isOpen) return null;
+  
+  const currentArtwork = artworks[currentIndex];
   
   if (!currentArtwork) return null;
   
@@ -194,7 +204,9 @@ const ArtworkLightbox: React.FC<LightboxProps> = ({
           }}
         >
           <img 
-            src={`${backendUrl}/public/artwork/image?slug=${encodeURIComponent(currentArtwork.slug)}`}
+            src={currentArtwork.imageFilename 
+              ? `${imgUrl}/protected/assets/image/${currentArtwork.imageFilename}`
+              : `${backendUrl}/public/artwork/image?slug=${encodeURIComponent(currentArtwork.slug)}`}
             alt={currentArtwork.name}
             style={{
               maxWidth: '100%',
