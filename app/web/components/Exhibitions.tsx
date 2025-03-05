@@ -6,6 +6,7 @@ import { Search } from 'lucide-react';
 import Link from 'next/link';
 
 const backendUrl = 'https://evagallery.b-cdn.net'; // process.env.NEXT_PUBLIC_BACKEND_URL || 
+const imgUrl = 'https://beta.evagallery.eu';
 
 interface Exhibition {
   slug: string;
@@ -20,6 +21,7 @@ interface Exhibition {
   artwork: {
     name: string;
     slug: string;
+    thumbnailFilename?: string;
   };
   activeRoomId: string | null;
 }
@@ -44,7 +46,7 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
   );
 
   return (
-    <Container className="py-2">
+    <Container className="py-5">
       <Row className="mb-4 align-items-center">
         <Col>
           <h1 className="mb-0">Exhibitions</h1>
@@ -75,13 +77,14 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
               className="text-decoration-none"
             >
               <Card className="artwork-card h-100 border-0 shadow-sm">
-                <div className="image-wrapper position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
-                  <div className="image-container position-absolute top-0 start-0 w-100 h-100">
-                    <Card.Img
-                      variant="top"
-                      src={`${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
+                <div className="position-relative overflow-hidden" style={{ paddingTop: '100%' }}>
+                  <div className="position-absolute top-0 start-0 w-100 h-100">
+                    <img
+                      src={exhibition.artwork.thumbnailFilename 
+                        ? `${imgUrl}/protected/assets/thumbnail/${exhibition.artwork.thumbnailFilename}`
+                        : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(exhibition.artwork.slug)}`}
                       alt={exhibition.name}
-                      className="w-100 h-100 transition-transform duration-300"
+                      className="w-100 h-100"
                       style={{ objectFit: 'cover', objectPosition: 'center' }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
@@ -123,23 +126,12 @@ const ExhibitionsGrid: React.FC<ExhibitionsGridProps> = ({ exhibitions }) => {
           box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
         }
 
-        .image-container {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background-color: #f8f9fa;
-          position: relative;
-        }
-        
-        .image-container img {
-          object-fit: cover;
-          object-position: center;
-          transition: transform 0.3s ease;
-        }
-        
-        .artwork-card:hover .image-container img {
+        .artwork-card:hover img {
           transform: scale(1.1);
+        }
+
+        img {
+          transition: transform 0.3s ease;
         }
       `}</style>
     </Container>
