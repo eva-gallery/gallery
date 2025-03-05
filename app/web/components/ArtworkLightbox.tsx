@@ -205,8 +205,8 @@ const ArtworkLightbox: React.FC<LightboxProps> = ({
         >
           <img 
             src={currentArtwork.imageFilename 
-              ? `${imgUrl}/protected/assets/image/${currentArtwork.imageFilename}`
-              : `${backendUrl}/public/artwork/image?slug=${encodeURIComponent(currentArtwork.slug)}`}
+              ? `${imgUrl}/protected/assets/thumbnail/${currentArtwork.imageFilename}`
+              : `${backendUrl}/public/artwork/thumbnail?slug=${encodeURIComponent(currentArtwork.slug)}`}
             alt={currentArtwork.name}
             style={{
               maxWidth: '100%',
