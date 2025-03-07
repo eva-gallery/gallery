@@ -27,8 +27,8 @@ const NavbarComponent = () => {
 
          {/* Middle section with search + navbar toggle */}
          <div className="d-flex align-items-center ms-auto me-lg-auto">
-            {/* Search Bar - visible only on desktop */}
-            <div className="d-none d-lg-flex position-relative mx-4" style={{ width: '500px' }}>
+            {/* Search Bar - visible only on desktop d-lg-flex */}
+            <div className="d-none position-relative mx-4" style={{ width: '500px' }}>
               <Form.Control
                 type="search"
                 placeholder="Search for art..."
