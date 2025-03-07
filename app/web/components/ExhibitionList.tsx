@@ -37,23 +37,25 @@ const ExhibitionList: React.FC<ExhibitionListProps> = ({ exhibitions }) => {
     <Row className="g-4">
       {exhibitions.map((exhibition) => (
         <Col key={exhibition.id} md={6} lg={4}>
-          <Card className="h-100 shadow-sm border-0 exhibition-card">
-            <Card.Body>
-              <Card.Title className="fs-5">{exhibition.name}</Card.Title>
-              {(exhibition.fromDate || exhibition.toDate) && (
-                <Card.Text className="text-muted mb-2">
-                  {exhibition.fromDate && formatDate(exhibition.fromDate)}
-                  {exhibition.fromDate && exhibition.toDate && " - "}
-                  {exhibition.toDate && formatDate(exhibition.toDate)}
-                </Card.Text>
-              )}
-              {exhibition.curator && (
-                <Card.Text className="mb-0">
-                  <small className="text-muted">Curator: {exhibition.curator}</small>
-                </Card.Text>
-              )}
-            </Card.Body>
-          </Card>
+          <a href={`/exhibitions/${encodeURIComponent(exhibition.slug)}`} className="text-decoration-none">
+            <Card className="h-100 shadow-sm border-0 exhibition-card">
+              <Card.Body>
+                <Card.Title className="fs-5 text-dark">{exhibition.name}</Card.Title>
+                {(exhibition.fromDate || exhibition.toDate) && (
+                  <Card.Text className="text-muted mb-2">
+                    {exhibition.fromDate && formatDate(exhibition.fromDate)}
+                    {exhibition.fromDate && exhibition.toDate && " - "}
+                    {exhibition.toDate && formatDate(exhibition.toDate)}
+                  </Card.Text>
+                )}
+                {exhibition.curator && (
+                  <Card.Text className="mb-0">
+                    <small className="text-muted">Curator: {exhibition.curator}</small>
+                  </Card.Text>
+                )}
+              </Card.Body>
+            </Card>
+          </a>
         </Col>
       ))}
       
