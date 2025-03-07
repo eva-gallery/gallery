@@ -1,9 +1,11 @@
 // app/web/galleries/[...slug]/page.tsx
 
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Card } from 'react-bootstrap'
 import ArtworkGrid from '@/app/web/components/GalleriesMore'
 import GalleryImage from '@/app/web/components/GalleryImage'
+import ExhibitionList from '@/app/web/components/ExhibitionList'
 import { getData } from "@/app/web/get.data";
+import { format, isValid } from 'date-fns';
 
 interface PageProps {
   params: {
@@ -17,12 +19,40 @@ interface Gallery {
   description?: string;
 }
 
+interface Exhibition {
+  id: string;
+  name: string;
+  fromDate: string | null;
+  toDate: string | null;
+  curator: string;
+  gallery: {
+    name: string;
+    slug: string;
+  };
+  artwork: {
+    name: string;
+    slug: string;
+  };
+  activeRoomId: string | null;
+  slug: string;
+}
+
 async function getGalleryData(slug: string) {
   try {
     return await getData(`/public/gallery?slug=${encodeURIComponent(slug)}`) as Gallery;
   } catch (error) {
     console.error('Failed to fetch gallery data:', error);
     throw error;
+  }
+}
+
+async function getGalleryExhibitions(slug: string) {
+  try {
+    const exhibitions = await getData(`/public/gallery/exhibition?slug=${encodeURIComponent(slug)}`) as Exhibition[];
+    return Array.isArray(exhibitions) ? exhibitions : [];
+  } catch (error) {
+    console.error('Failed to fetch gallery exhibitions:', error);
+    return [];
   }
 }
 
@@ -38,6 +68,7 @@ export default async function GalleryDetail({ params }: PageProps) {
   });
 
   const gallery = await getGalleryData(validSlug);
+  const exhibitions = await getGalleryExhibitions(validSlug);
   const artworksData = await getData(`/public/random/gallery?${urlParams}`);
   const artworks = Array.isArray(artworksData) ? artworksData : [];
 
@@ -65,6 +96,15 @@ export default async function GalleryDetail({ params }: PageProps) {
             )}
           </Col>
         </Row>
+        
+        {exhibitions.length > 0 && (
+          <Row className="mb-5">
+            <Col>
+              <h2 className="mb-4">Exhibitions</h2>
+              <ExhibitionList exhibitions={exhibitions} />
+            </Col>
+          </Row>
+        )}
 
         <Row className="mb-4">
           <Col>
