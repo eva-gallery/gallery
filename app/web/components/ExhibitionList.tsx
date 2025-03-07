@@ -37,7 +37,7 @@ const ExhibitionList: React.FC<ExhibitionListProps> = ({ exhibitions }) => {
     <Row className="g-4">
       {exhibitions.map((exhibition) => (
         <Col key={exhibition.id} md={6} lg={4}>
-          <a href={`/exhibitions/${encodeURIComponent(exhibition.slug)}`} className="text-decoration-none">
+          <a href={`/exhibitions/${exhibition.slug}`} className="text-decoration-none">
             <Card className="h-100 shadow-sm border-0 exhibition-card">
               <Card.Body>
                 <Card.Title className="fs-5 text-dark">{exhibition.name}</Card.Title>
