@@ -1,7 +1,8 @@
-// Corrected TypeScript file: app/web/artists/[...slug]/page.tsx
+// app/web/artists/[...slug]/page.tsx
 import NavbarComponent from '@/app/web/components/NavbarComponent';
 import Footer from '@/app/web/components/Footer';
 import ArtworkGrid from '@/app/web/components/ArtworkGallery';
+import ExhibitionList from '@/app/web/components/ExhibitionList';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getData } from "@/app/web/get.data";
 
@@ -18,10 +19,39 @@ interface Artwork {
   // Add other artwork properties as needed
 }
 
+interface Exhibition {
+  id: string;
+  name: string;
+  fromDate: string | null;
+  toDate: string | null;
+  curator: string;
+  gallery: {
+    name: string;
+    slug: string;
+  };
+  artwork: {
+    name: string;
+    slug: string;
+    thumbnailFilename?: string;
+  };
+  activeRoomId: string | null;
+  slug: string;
+}
+
 interface ArtistDetailPageProps {
   params: {
     slug: string[]; // Next.js dynamic route params
   };
+}
+
+async function getArtistExhibitions(slug: string) {
+  try {
+    const exhibitions = await getData(`/public/artist/exhibition?slug=${encodeURIComponent(slug)}`) as Exhibition[];
+    return Array.isArray(exhibitions) ? exhibitions : [];
+  } catch (error) {
+    console.error('Failed to fetch artist exhibitions:', error);
+    return [];
+  }
 }
 
 export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
@@ -39,6 +69,7 @@ export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
   // Fetch artist data and their artworks
   const artistData = await getData(`/public/artist?slug=${encodeURIComponent(validSlug)}`);
   const artworksData = await getData(`/public/random/artwork?${paramsQuery}`);
+  const exhibitions = await getArtistExhibitions(validSlug);
 
   const artist = artistData as Artist;
   const artworks = Array.isArray(artworksData) ? artworksData as Artwork[] : [];
@@ -54,12 +85,24 @@ export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
             {/* Artist Image */}
           </Col>
           <Col md={12}> 
-            <h1 className="mb-4">{artist.name} <span className={`fi fi-${artist.countryCode?.toLowerCase()} fs-6`}></span></h1>
+            <h1 className="mb-4">{artist.name} {artist.countryCode && (
+              <span className={`fi fi-${artist.countryCode?.toLowerCase()} fs-6`}></span>
+            )}</h1>
             {artist.biography && (
               <div className="mb-4" dangerouslySetInnerHTML={{ __html: artist.biography }}></div>
             )}
           </Col>
         </Row>
+
+        {/* Artist's Exhibitions Section (if any) */}
+        {exhibitions.length > 0 && (
+          <Row className="mb-5">
+            <Col>
+              <h2 className="mb-4">Exhibitions by {artist.name}</h2>
+              <ExhibitionList exhibitions={exhibitions} />
+            </Col>
+          </Row>
+        )}
 
         {/* Artist's Artworks Section */}
         <Row className="mb-4">
