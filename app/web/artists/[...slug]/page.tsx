@@ -95,10 +95,10 @@ export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
             {/* Artist Image */}
           </Col>
           <Col md={12}> 
-            <h1 className="mb-4">{artist.name} {artist.countryCode && (
+            <h1 className="mb-3">{artist.name} {artist.countryCode && (
               <span className={`fi fi-${artist.countryCode?.toLowerCase()} fs-6`}></span>
             )}</h1>
-            {prizeText && <p>{prizeText}</p>}
+            {prizeText && <p className="text-uppercase"><strong>{prizeText}</strong></p>}
             {artist.biography && (
               <div className="mb-4" dangerouslySetInnerHTML={{ __html: artist.biography }}></div>
             )}
