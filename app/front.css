@@ -12,7 +12,7 @@ footer h5 {
     color:#000 !important;
 }  
 
-footer a, .text-primary { color:#0d3c81; }
+footer a, .text-primary { color:#0d3c81 !important; }
 footer a:hover {
     color: #000 !important; 
 }
