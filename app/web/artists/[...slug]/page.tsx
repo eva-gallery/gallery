@@ -74,6 +74,16 @@ export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
   const artist = artistData as Artist;
   const artworks = Array.isArray(artworksData) ? artworksData as Artwork[] : [];
 
+  // Determine prize text based on artist slug
+  let prizeText = '';
+  if (validSlug === 'george-digalakis/george-digalakis') {
+    prizeText = 'E.V.A Gallery Prize 1st place winner';
+  } else if (validSlug === 'andreas-varro/andreas-varro') {
+    prizeText = 'E.V.A Gallery Prize 2nd place winner';
+  } else if (validSlug === 'nataly-philippou/natalia-philippou') {
+    prizeText = 'E.V.A Gallery Prize 3rd place winner';
+  }
+
   return (
     <>
       <NavbarComponent />
@@ -88,6 +98,7 @@ export default async function ArtistDetail({ params }: ArtistDetailPageProps) {
             <h1 className="mb-4">{artist.name} {artist.countryCode && (
               <span className={`fi fi-${artist.countryCode?.toLowerCase()} fs-6`}></span>
             )}</h1>
+            {prizeText && <p>{prizeText}</p>}
             {artist.biography && (
               <div className="mb-4" dangerouslySetInnerHTML={{ __html: artist.biography }}></div>
             )}
