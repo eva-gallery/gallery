@@ -18,12 +18,8 @@ export async function Transform(formData: FormData) {
          case 'activeRoomId':
             // For activeRoomId, if it's empty, send a special "null" value 
             // that the backend can interpret as NULL rather than an empty string
-            if (value && value !== '') {
+            if (value && value !== '' && value !== 'null') {
                newFormData.append(key, value);
-            } else {
-               // Either don't append it at all, or use a special value that your backend interprets as NULL
-               // For some backends, the string "null" is interpreted as a NULL value
-               newFormData.append(key, "");
             }
             break;
             
