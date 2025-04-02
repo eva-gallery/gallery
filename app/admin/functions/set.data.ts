@@ -39,14 +39,6 @@ export async function AdminSetData(
   const newFormData = await Module.Transform(formData);
   console.log("**** Transform ****", newFormData);
 
-  if (admin.modul === "exhibition" && newFormData && typeof newFormData === 'object') {
-  // Check if activeRoomId exists and is empty
-  if ('activeRoomId' in newFormData && (!newFormData.activeRoomId || newFormData.activeRoomId === '' || newFormData.activeRoomId === 'null')) {
-    // Set it to null explicitly so it's properly serialized as JSON null
-    newFormData.activeRoomId = null;
-    console.log("Set empty activeRoomId to null for JSON serialization");
-  }
-}
   /*let newFormData = new FormData();
     Object.keys(json).forEach((key) => {
         newFormData.set(key, json[key]);
@@ -149,6 +141,16 @@ export async function AdminSetDataJson(
 
   const json = await Module.Transform(formData);
   console.log("**** Transform ****", json);
+
+  // Handle the activeRoomId issue - this is where the fix belongs
+  if (admin.modul === "exhibition" && json && typeof json === 'object') {
+    // Check if activeRoomId exists and is empty or "null" string
+    if ('activeRoomId' in json && (!json.activeRoomId || json.activeRoomId === '' || json.activeRoomId === 'null')) {
+      // Set it to null explicitly so it's properly serialized as JSON null
+      json.activeRoomId = null;
+      console.log("Set empty activeRoomId to null for JSON serialization");
+    }
+  }
 
   body = JSON.stringify(json);
   headers = {
