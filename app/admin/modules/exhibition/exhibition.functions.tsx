@@ -23,7 +23,7 @@ export async function Transform(formData: FormData) {
             } else {
                // Either don't append it at all, or use a special value that your backend interprets as NULL
                // For some backends, the string "null" is interpreted as a NULL value
-               newFormData.append(key, "null");
+               newFormData.append(key, "");
             }
             break;
             
