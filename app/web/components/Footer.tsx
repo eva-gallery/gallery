@@ -88,7 +88,7 @@ const Footer = () => {
                   <img src="/images/STU-FIIT.png" alt="STU FIIT" className="img-fluid" style={{maxHeight: '80px'}} />
                 </a>
                 <a target="_blank" href="https://www.atbxr.com/" rel="noopener noreferrer">
-                  <img src="/images/atb-logo.png" alt="ATB XR" className="img-fluid" style={{maxHeight: '50px'}} />
+                  <img src="/images/atb-logo.png" alt="ATB XR" className="img-fluid" style={{maxHeight: '80px'}} />
                 </a>
               </div>
             </div>
