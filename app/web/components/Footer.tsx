@@ -53,7 +53,7 @@ const Footer = () => {
             <ul className="list-unstyled">
               <li className="mb-3 d-flex align-items-center gap-2">
                 <MapPin size={18} className='text-black' />
-                <span className="text-light-emphasis"><a target="_blank" href="https://zdruzenie.euforion.sk/" rel="noopener noreferrer">euforion.sk</a></span>
+                <span className="text-light-emphasis"><a target="_blank" href="https://zdruzenie.euforion.sk/" rel="noopener noreferrer">Euforion NGO</a></span>
               </li>
               <li className="mb-3 d-flex align-items-center gap-2">
                 <Mail size={18} className='text-black' />
@@ -88,7 +88,7 @@ const Footer = () => {
                   <img src="/images/STU-FIIT.png" alt="STU FIIT" className="img-fluid" style={{maxHeight: '80px'}} />
                 </a>
                 <a target="_blank" href="https://www.atbxr.com/" rel="noopener noreferrer">
-                  <img src="/images/atb-logo.png" alt="ATB XR" className="img-fluid" style={{maxHeight: '80px'}} />
+                  <img src="/images/atb-logo-new.png" alt="ATB XR" className="img-fluid" style={{maxHeight: '80px'}} />
                 </a>
               </div>
             </div>
