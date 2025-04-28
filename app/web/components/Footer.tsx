@@ -87,8 +87,8 @@ const Footer = () => {
                 <a target="_blank" href="https://www.fiit.stuba.sk/" rel="noopener noreferrer">
                   <img src="/images/STU-FIIT.png" alt="STU FIIT" className="img-fluid" style={{maxHeight: '80px'}} />
                 </a>
-                <a target="_blank" href="https://www.netfire.com/" rel="noopener noreferrer">
-                  <img src="/images/netfire2.png" alt="NETFIRE" className="img-fluid" style={{maxHeight: '40px'}} />
+                <a target="_blank" href="https://www.atbxr.com/" rel="noopener noreferrer">
+                  <img src="/images/atb-logo.png" alt="ATB XR" className="img-fluid" style={{maxHeight: '50px'}} />
                 </a>
               </div>
             </div>
