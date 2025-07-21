@@ -83,7 +83,7 @@ const NavbarComponent = () => {
                 href="/eva-gallery-prize" 
                 className="mx-1 text-dark hover:text-primary"
               >
-                EVA Prize
+                E.V.A. Prize
               </Nav.Link>
               <Nav.Link 
                 as={Link} 
