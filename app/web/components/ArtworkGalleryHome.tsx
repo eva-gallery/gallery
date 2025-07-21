@@ -62,7 +62,7 @@ const ArtworkGallery = ({ artworks }: ArtworkGalleryProps) => {
   return (
     <Container className="py-3">
 
-       <a class="d-none" href="/eva-gallery-prize"><div className="blue-stripe w-100 mb-4" style={{ height: '8px', backgroundColor: '#0d3c81' }}></div>
+       <a className="d-none" href="/eva-gallery-prize"><div className="blue-stripe w-100 mb-4" style={{ height: '8px', backgroundColor: '#0d3c81' }}></div>
       <div className="text-center mb-4">
         <h1 className="display-7 fw-bold mb-4" style={{ color: '#0d3c81', fontSize: '2.2rem' }}>INTRODUCING THE WINNERS OF THE 1ST EVA GALLERY PRIZE!</h1>
       </div>
