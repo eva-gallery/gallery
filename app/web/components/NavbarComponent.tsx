@@ -78,6 +78,13 @@ const NavbarComponent = () => {
               >
                 Exhibitions
               </Nav.Link>
+               <Nav.Link 
+                as={Link} 
+                href="/eva-gallery-prize" 
+                className="mx-1 text-dark hover:text-primary"
+              >
+                EVA Prize
+              </Nav.Link>
               <Nav.Link 
                 as={Link} 
                 href="/nfts" 
